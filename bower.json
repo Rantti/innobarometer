@@ -1,0 +1,27 @@
+{
+  "name": "bootstrap",
+  "version": "3.3.5",
+  "description": "Bootstrap for Css/HMTL configurations",
+  "main": "web\\assets\\vendor\\bootstrap",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "Bootstrap",
+    "html",
+    "css",
+    "jquery"
+  ],
+  "authors": [
+    "PopoSensei"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ]
+}
