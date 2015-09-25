@@ -1,0 +1,29 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="statement")
+ */
+class Statement
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $statementID;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $statement;
+
+    /**
+     * @ORM\Column(type="string", scale=255)
+     */
+    protected $category;
+
+}
