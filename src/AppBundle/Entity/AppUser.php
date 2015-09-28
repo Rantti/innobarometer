@@ -30,6 +30,20 @@ class AppUser
      * @ORM\Column(type="integer")
      */
     protected $admin;
+	
+	protected $AppUser;
+	
+	/**
+	* Setting and getting form for user
+	*/
+	
+	public function getAppUser() {
+		return $this->AppUser;
+	}
+	
+	public function setAppUser($appUser) {
+		$this->AppUser= $appUser;
+	}
 
     /**
      * Get id
