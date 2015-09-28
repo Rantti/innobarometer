@@ -23,7 +23,7 @@
             <li class="active"><a href="dashboard.php" >Overview <span class="sr-only">(current)</span></a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a href="{{ path('login') }}">Login<span class="pull-right hidden-xs showopacity glyphicon glyphicon-sunglasses"></span></a></li>  
+            <li><a href="{{ path('login_route') }}">Login<span class="pull-right hidden-xs showopacity glyphicon glyphicon-sunglasses"></span></a></li>  
         </ul>
         <ul class="nav nav-sidebar">
             <li><a href="{{ path('signUp') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
@@ -41,8 +41,11 @@
           </li>
       </ul>
   </div>
-
+<div class="container-fluid">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   {% block body %}{% endblock %}
+  </div>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/ie10-viewport-bug-workaround.js"></script>

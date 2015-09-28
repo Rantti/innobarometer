@@ -1,3 +1,10 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+login_route:
+    path:     /login
+    defaults: { _controller: AppBundle:Security:login }
+
+login_check:
+    path: /login_check
