@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{# app/Resources/views/default/new.html.twig #}
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+<?php echo $view['form']->start($form) ?>
+<?php echo $view['form']->widget($form) ?>
+<?php echo $view['form']->end($form) ?>
+
+<!--	<div class="container">
+		<form class="form-signin" action="UserSignUpController.php" method="POST">
+		  <h2 class="form-signin-heading">Sign up!</h2>
+		  <label for="nickName" class="sr-only">Username</label>
+		  <input type="text" id="nickName" class="form-control" placeholder="Username" required autofocus>
+		  <label for="userPassword" class="sr-only">Password</label>
+		  <input type="password" id="userPassword" class="form-control" placeholder="Password" required>
+		  <label for="userPasswordCheck" class="sr-only">Repeat password</label>
+		  <input type="password" id="userPasswordCheck" class="form-control" placeholder="Repeat password" required>
+		  <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign up">
+		  <a href="{{ path('Created') }}" class="btn btn-info btn-block" role="button">debug-dash</a>
+		</form>
+	</div> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+{% endblock %}
