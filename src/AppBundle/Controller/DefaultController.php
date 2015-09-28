@@ -73,5 +73,17 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
 	}
+	
+	Public function getUsers($id){
+		$appUser = $this->getDoctrine()
+			->getRepository('AppBundle:AppUser')
+			->find($id);
+		
+		if(!appUser) {
+			throw $this->createNotFoundException(
+				'No user found for id '.$id
+			);
+		}
+	}
 }
 ?>
