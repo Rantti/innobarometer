@@ -1,0 +1,44 @@
+{% if error %}
+<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet"
+    href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet"
+    href="{{ asset('assets/vendor/css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  
+  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MobileBarometer</title>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+    <body>
+
+      <div class="container">
+        {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <form class="form-signin" action="{{ path('login_check') }}" method="post">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <label for="username" class="sr-only">Username</label>
+          <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required autofocus>
+          <label class="sr-only" for="userPassword" >Password</label>
+          <input class="form-control" type="password" id="password" name="_password" required>
+          <input type="hidden" name="_target_path" value="/jeesus">
+          <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign in">
+          <a href="signup.php" class="btn btn-info btn-block" role="button">Sign up</a>
+        </form>
+      </div> 
+      <script src="{{asset('assets/vendor/js/jquery.min.js')}}"></script>
+      <script src="{{asset('assets/vendor/js/bootstrap.min.js')}}"></script>
+    </body>
+    </html>
