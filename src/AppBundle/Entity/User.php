@@ -15,22 +15,24 @@ class User implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      */
-    protected $username;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
-    protected $password;
+    private $password;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    
 
     /**
      * @ORM\Column(type="integer")
@@ -114,29 +116,7 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    /**
-     * Set nickName
-     *
-     * @param string $nickName
-     *
-     * @return AppUser
-     */
-    public function setNickName($nickName)
-    {
-        $this->nickName = $nickName;
 
-        return $this;
-    }
-
-    /**
-     * Get nickName
-     *
-     * @return string
-     */
-    public function getNickName()
-    {
-        return $this->nickName;
-    }
 
     /**
      * Set password

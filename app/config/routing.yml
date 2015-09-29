@@ -8,3 +8,11 @@ login_route:
 
 login_check:
     path: /login_check
+
+user_signup:
+    path:     /signup
+    defaults: { _controller: AppBundle:User:signup }
+
+account_create:
+    path:     /signup/create
+    defaults: { _controller: AppBundle:User:create }

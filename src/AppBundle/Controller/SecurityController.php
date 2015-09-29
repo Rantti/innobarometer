@@ -5,6 +5,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
+use AppBundle\Form\Type\UserType;
 
 class SecurityController extends Controller
 {
@@ -34,6 +35,50 @@ class SecurityController extends Controller
 	 * @Route("/login_check", name="login_check")
 	 */
 	public function loginCheckAction(){}
+
+
+	/**
+	 * @Route("/signup", name="signup")
+	 */
+	public function signUpAction()
+    {  
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user, array(
+            'action' => $this->generateUrl('account_create'),
+        ));
+
+        return $this->render(
+            'user/signup.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
+    /**
+     * @Route ("/signup/create")
+     */
+    public function createUserAction(Request $request)
+{
+    $em = $this->getDoctrine()->getManager();
+    $user = new User();
+    $form = $this->createForm(new UserType(), $user);
+
+    $form->handleRequest($request);
+
+    if ($form->isValid()) {
+        $user = $form->getData();
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    return $this->render(
+        'user/signup.html.twig',
+        array('form' => $form->createView())
+    );
+}
+
 }
 
 ?>
