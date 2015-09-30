@@ -4,21 +4,33 @@
     <h1 class="page-header">Dashboard</h1>
     <div class="row placeholders">
       <div class="col-xs-6 col-sm-3 placeholder">
-        <h4>20 Answers</h4>
-        <span class="text-muted">20 questions answered, you da man</span>
-      </div>
-      <div class="col-xs-6 col-sm-3 placeholder">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} | 
+                <ul>
+                {% for role in app.user.roles %}
+                    <li>{{ role }}</li>
+                {% endfor %}
+                </ul>
 
-        <h4>4.5/5</h4>
-        <span class="text-muted">You dont always taste the pepperoni in pizza</span>
-      </div>
-      <div class="col-xs-6 col-sm-3 placeholder">
-        <h4>527 answers and growing</h4>
-        <span class="text-muted">Productive feedback</span>
-      </div>
-      <div class="col-xs-6 col-sm-3 placeholder">
-        <h4>4 new projects</h4>
-        <span class="text-muted">This week answers/minute raised by 6</span>
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+
+        {% for type, messages in app.session.flashBag.all %}
+            {% for message in messages %}
+                <div class="{{ type }}">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
       </div>
     </div>
     <h2 class="sub-header">Performance data - Select view</h2>
