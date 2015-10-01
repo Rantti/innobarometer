@@ -13,20 +13,20 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">MobileBarometer</a>
+      <a class="navbar-brand" href="#">MobileBarometer</a>
     </div>
   </div>
 </nav>
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="dashboard.php" >Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="#" >Overview <span class="sr-only">(current)</span></a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a href="{{ path('login_route') }}">Login<span class="pull-right hidden-xs showopacity glyphicon glyphicon-sunglasses"></span></a></li>  
+            <li><a href="#">Login<span class="pull-right hidden-xs showopacity glyphicon glyphicon-sunglasses"></span></a></li>  
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a href="{{ path('signUp') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
+            <li><a href="{{ path('fos_user_registration_register') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
             <li><a href="">Charts & Data<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
             <li class="dropdown" >
                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin-tools <span class="caret"></span><span class="pull-right hidden-xs showopacity glyphicon glyphicon-wrench"></span></a>
@@ -48,6 +48,7 @@
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  
   <script src="js/ie10-viewport-bug-workaround.js"></script>
   {% block javascripts %}{% endblock %}
 </body>

@@ -2,17 +2,6 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-login_route:
-    path:     /login
-    defaults: { _controller: AppBundle:Security:login }
 
-login_check:
-    path: /login_check
-
-user_signup:
-    path:     /signup
-    defaults: { _controller: AppBundle:User:signup }
-
-account_create:
-    path:     /signup/create
-    defaults: { _controller: AppBundle:User:create }
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
