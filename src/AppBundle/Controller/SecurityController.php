@@ -41,7 +41,7 @@ class SecurityController extends Controller
 	 * @Route("/signup", name="signup")
 	 */
 	public function signUpAction()
-    {  
+    {
         $user = new User();
         $form = $this->createForm(new UserType(), $user, array(
             'action' => $this->generateUrl('account_create'),
