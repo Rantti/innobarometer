@@ -45,7 +45,7 @@ class statementController extends controller {
    * Creates new Statement entity.
    *
    * @Route("/new", name="statement_post_new")
-   * @Method({"GET", "STATEMENT", "POST"})
+   * @Method({"GET", "STATEMENT", "POST", "DELETE"})
    *
    * NOTE: the Method annotation is optional, but it's a recommended practice
    * to constraint the HTTP methods each controller responds to (by default
@@ -96,14 +96,14 @@ class statementController extends controller {
    /**
     * Displays a form to edit an existing statement entity.
     *
-    * @Route("/{id}/eidt", requirements={"id" = "\d+"}, name="statement_post_edit")
-    * @Method({"GET", "STATEMENT"})
+    * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="statement_post_edit")
+    * @Method({"GET", "STATEMENT", "POST"})
     */
    public function editAction(Statement $statement, Request $request)
    {
      $em = $this->getDoctrine()->getManager();
 
-     $editForm = $tihs->createForm(new StatementType(), $statement);
+     $editForm = $this->createForm(new StatementType(), $statement);
      $deleteForm = $this->createDeleteForm($statement);
 
      $editForm->handleRequest($request);
@@ -111,10 +111,10 @@ class statementController extends controller {
      if ($editForm->isSubmitted() && $editForm->isValid()) {
        $em->flush();
 
-       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getId()));
+       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getStatementID()));
      }
 
-     return $tih->render('Questionnaire/Statement/edit.html.twig', array(
+     return $this->render('Questionnaire/Statement/edit.html.twig', array(
        'statement'    => $statement,
        'edit_form'    => $editForm->createView(),
        'delete_form'  => $deleteForm->createView(),
@@ -157,7 +157,7 @@ class statementController extends controller {
    private function createDeleteForm(Statement $statement)
    {
      return $this->createFormBuilder()
-          ->setAction($this->generateUrl('admin_post_delete', array('id' => $statement->getId())))
+          ->setAction($this->generateUrl('statement_post_delete', array('id' => $statement->getStatementID())))
           ->setMethod('DELETE')
           ->getForm();
    }

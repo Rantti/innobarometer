@@ -2,8 +2,14 @@
 
 {% block body %}
 
-
+{% block main %}
     <h1>{{ 'statement.statement_new'|trans }}</h1>
 
     {{ include('Questionnaire/Statement/_form.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+{% endblock %}
 {% endblock %}

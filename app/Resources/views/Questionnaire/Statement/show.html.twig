@@ -1,27 +1,19 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block body_id 'admin_post_show' %}
+{% block body %}
 
 {% block main %}
-    <h1>{{ post.title }}</h1>
+    <h1>{{ statement.statement }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'label.summary'|trans }}</th>
-                <td>{{ post.summary|md2html }}</td>
+                <th>{{ 'label.statement'|trans }}</th>
+                <td>{{ statement.statement }}</td>
             </tr>
             <tr>
-                <th>{{ 'label.content'|trans }}</th>
-                <td>{{ post.content|md2html }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'label.author'|trans }}</th>
-                <td><p>{{ post.authorEmail }}</p></td>
-            </tr>
-            <tr>
-                <th>{{ 'label.published_at'|trans }}</th>
-                <td><p>{{ post.publishedAt|localizeddate('long', 'medium') }}</p></td>
+                <th>{{ 'label.category'|trans }}</th>
+                <td>{{ statement.category }}</td>
             </tr>
         </tbody>
     </table>
@@ -29,19 +21,19 @@
 
 {% block sidebar %}
     <div class="section">
-        <a href="{{ path('admin_post_edit', { id: post.id }) }}" class="btn btn-lg btn-block btn-success">
+        <a href="{{ path('statement_post_edit', { id: statement.getStatementID }) }}" class="btn btn-lg btn-block btn-success">
             <i class="fa fa-edit"></i> {{ 'action.edit_contents'|trans }}
         </a>
     </div>
 
     <div class="section">
-        {{ include('admin/blog/_form.html.twig', {
+        {{ include('Questionnaire/Statement/_form.html.twig', {
             form: delete_form,
-            button_label: 'action.delete_post'|trans,
+            button_label: 'action.delete_statement'|trans,
             button_css: 'btn btn-lg btn-block btn-danger',
             include_back_to_home_link: false
         }, with_context = false) }}
     </div>
 
-    {{ show_source_code(_self) }}
+{% endblock %}
 {% endblock %}

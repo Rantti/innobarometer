@@ -1,11 +1,11 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block body_id 'admin_post_edit' %}
+{% block body %}
 
 {% block main %}
-    <h1>{{ 'title.edit_post'|trans({'%id%': post.id}) }}</h1>
+    <h1>{{ 'statement.edit_statement'|trans({'%id%': statement.getStatementID}) }}</h1>
 
-    {{ include('admin/blog/_form.html.twig', {
+    {{ include('Questionnaire/Statement/_form.html.twig', {
         form: edit_form,
         button_label: 'action.save'|trans,
     }, with_context = false) }}
@@ -13,9 +13,9 @@
 
 {% block sidebar %}
     <div class="section actions">
-        {{ include('admin/blog/_form.html.twig', {
+        {{ include('Questionnaire/Statement/_form.html.twig', {
             form: delete_form,
-            button_label: 'action.delete_post'|trans,
+            button_label: 'action.delete_statement'|trans,
             button_css: 'btn btn-lg btn-block btn-danger',
             include_back_to_home_link: false
         }, with_context = false) }}
@@ -23,5 +23,5 @@
 
     {{ parent() }}
 
-    {{ show_source_code(_self) }}
+{% endblock %}
 {% endblock %}
