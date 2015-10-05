@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1 class="page-header">Dashboard</h1>
+
+<h2 class="sub-header">Performance data - Select view</h2>
+<ul class="nav nav-pills">
+  <li role="presentation" class="active"><a href="#">Answers to Questionnaires</a></li>
+  <li role="presentation"><a href="#">Profile</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>
+</ul>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>{{ 'label.statement'|trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for statement in statements %}
+      <tr>
+        <td>{{ statement.statementID }}</td>
+        <td>{{ statement.statement }}</td>
+        <td>{{ statement.category }}</td>
+
+        <td>
+          <div class="item-actions">
+            <a href="{{ path('statement_post_show', { id: statement.getStatementID }) }}" class="btn btn-sm btn-default">
+              {{ 'action.show'|trans }}
+            </a>
+            <a href="{{ path('statement_post_edit', { id: statement.getStatementID }) }}" class="btn btn-sm btn-primary">
+              <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="section actions">
+  <a href="{{ path('statement_post_new') }}" class="btn btn-lg btn-block btn-success">
+    <i class="fa fa-plus"></i> {{ 'action.create_statement'|trans }}
+  </a>
+</div>
+
+{{ parent() }}
+
+
+{% endblock %}
