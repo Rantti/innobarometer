@@ -45,49 +45,26 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Users</th>
-          <th>Projects</th>
-          <th>Teams</th>
-          <th>Header</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Project</th>
+          <th>Team</th>
+          <th>Roles</th>
+          <th>Last Login</th>
+
         </tr>
       </thead>
-      <tbody>
+      {% for user in users %}
         <tr>
-          <td>1,001</td>
-          <td>Lorem</td>
-          <td>ipsum</td>
-          <td>dolor</td>
-          <td>sit</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>N/A</td>
+          <td>N/A</td>
+          <td>{%for role in user.roles%}{{role}}, {% endfor %}
+          <td>{{ user.lastLogin|date('d-M-y H:i:s') }}</td>
+          <td><a href="{{ path('removeuser', { id: user.id }) }}"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
         </tr>
-        <tr>
-          <td>1,002</td>
-          <td>amet</td>
-          <td>consectetur</td>
-          <td>adipiscing</td>
-          <td>elit</td>
-        </tr>
-        <tr>
-          <td>1,003</td>
-          <td>Integer</td>
-          <td>nec</td>
-          <td>odio</td>
-          <td>Praesent</td>
-        </tr>
-        <tr>
-          <td>1,003</td>
-          <td>libero</td>
-          <td>Sed</td>
-          <td>cursus</td>
-          <td>ante</td>
-        </tr>
-        <tr>
-          <td>1,004</td>
-          <td>dapibus</td>
-          <td>diam</td>
-          <td>Sed</td>
-          <td>nisi</td>
-        </tr>
+       {% endfor %}
       </tbody>
     </table>
   </div>

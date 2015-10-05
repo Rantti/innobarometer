@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Mobile Barometer{% endblock %}</title>
-    <link rel="stylesheet"
-    href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet"
-    href="{{ asset('assets/vendor/css/style.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <meta charset="UTF-8" />
+  <title>{% block title %}Mobile Barometer{% endblock %}</title>
+  <link rel="stylesheet"
+  href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet"
+  href="{{ asset('assets/vendor/css/style.css') }}">
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">MobileBarometer</a>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">MobileBarometer</a>
+      </div>
     </div>
-  </div>
-</nav>
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="#" >Overview <span class="sr-only">(current)</span></a></li>
-        </ul>
-        <ul class="nav nav-sidebar">
-            <li><a href="#">Login<span class="pull-right hidden-xs showopacity glyphicon glyphicon-sunglasses"></span></a></li>  
-        </ul>
-        <ul class="nav nav-sidebar">
-            <li><a href="{{ path('fos_user_registration_register') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
-            <li><a href="">Charts & Data<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
-            <li class="dropdown" >
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin-tools <span class="caret"></span><span class="pull-right hidden-xs showopacity glyphicon glyphicon-wrench"></span></a>
-               <ul class="dropdown-menu" role="menu">
-                  <li ><a href="adminusers.php">Users</a></li>
-                  <li><a href="adminteams.php">Teams</a></li>
-                  <li><a href="adminprojects.php">Projects</a></li>
-                  <li class="divider"></li>
-                  <li><a href="adminquestionnaires.php">Questionnaires</a></li>
-                  <li><a href="adminstatements.php">Statements</a></li>
-              </ul>
-          </li>
+
+  </nav>
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a href="#" >Overview </a></li>
       </ul>
-  </div>
-<div class="container-fluid">
+
+        <ul class="nav nav-sidebar">
+          <li><a href="{{ path('fos_user_registration_register') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <li><a href="">Profile<pan class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a></li>
+          <li><a href="">My Questionnaires<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
+        </ul>
+          
+                {% if is_granted("ROLE_ADMIN") %}
+                <ul class="nav nav-sidebar">
+                <li><a href="{{ path('users') }}">Users<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
+                <li><a href="{#{ path('team') }#}">Teams<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
+                <li><a href="#">Projects<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
+              </ul>
+                {% endif %}
+                
+                <ul class="nav nav-sidebar">
+                <li><a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a></li>
+              </ul>
+            {% endif %}
+       
+     </div>
+     <div class="container-fluid">
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-  {% block body %}{% endblock %}
-  </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  
-  <script src="js/ie10-viewport-bug-workaround.js"></script>
-  {% block javascripts %}{% endblock %}
-</body>
-</html>
+        {% block body %}{% endblock %}
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    {% block javascripts %}{% endblock %}
+  </body>
+  </html>
