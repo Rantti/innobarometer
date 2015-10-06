@@ -3,7 +3,7 @@
 {% block body %}
 
 {% block main %}
-    <h1>{{ 'statement.edit_statement'|trans({'%id%': statement.getStatement_id}) }}</h1>
+    <h1>{{ 'statement.edit_statement'|trans({'%id%': statement.getStatementID}) }}</h1>
 
     {{ include('Questionnaire/Statement/_form.html.twig', {
         form: edit_form,

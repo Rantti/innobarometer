@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Statement creation class
- * @author Turo Mikkonen 3.10.2015
- */
+* Statement creation class
+* @author Turo Mikkonen 3.10.2015
+*/
 
 namespace AppBundle\Questionnaire;
 
@@ -15,9 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class StatementType extends AbstractType
 {
   /**
-   * @param FormBuilderInterface $builder
-   * @param $array               $options
-   */
+  * @param FormBuilderInterface $builder
+  * @param $array               $options
+  */
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
@@ -26,22 +26,22 @@ class StatementType extends AbstractType
   }
 
   /**
-   * @param OptionsResolver $resolver
-   */
+  * @param OptionsResolver $resolver
+  */
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults(array('data_class' => 'AppBundle\Entity\Statement',
-    ));
-  }
+  ));
+}
 
-  /**
-   * @return string
-   */
+/**
+* @return string
+*/
 
-  public function getName()
-  {
-    return 'app_statement';
-  }
+public function getName()
+{
+  return 'app_statement';
+}
 }
 
 ?>

@@ -45,7 +45,7 @@ class statementController extends controller {
    * Creates new Statement entity.
    *
    * @Route("/new", name="statement_post_new")
-   * @Method({"GET", "STATEMENT", "POST", "DELETE"})
+   * @Method({"GET", "POST", "DELETE"})
    *
    * NOTE: the Method annotation is optional, but it's a recommended practice
    * to constraint the HTTP methods each controller responds to (by default
@@ -97,7 +97,7 @@ class statementController extends controller {
     * Displays a form to edit an existing statement entity.
     *
     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="statement_post_edit")
-    * @Method({"GET", "STATEMENT", "POST"})
+    * @Method({"GET", "POST"})
     */
    public function editAction(Statement $statement, Request $request)
    {
@@ -111,7 +111,7 @@ class statementController extends controller {
      if ($editForm->isSubmitted() && $editForm->isValid()) {
        $em->flush();
 
-       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getStatementID()));
+       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getStatement_id()));
      }
 
      return $this->render('Questionnaire/Statement/edit.html.twig', array(
@@ -157,7 +157,7 @@ class statementController extends controller {
    private function createDeleteForm(Statement $statement)
    {
      return $this->createFormBuilder()
-          ->setAction($this->generateUrl('statement_post_delete', array('id' => $statement->getStatementID())))
+          ->setAction($this->generateUrl('statement_post_delete', array('id' => $statement->getStatement_id())))
           ->setMethod('DELETE')
           ->getForm();
    }
