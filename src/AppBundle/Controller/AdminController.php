@@ -9,10 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdminController extends Controller
 {
-    
+
     /**
      * @Route("/users", name="users")
      */
@@ -23,37 +24,37 @@ class AdminController extends Controller
         return $this->render('admin/users.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
             'users' =>   $users,
-        ));
+            ));
     }
 
     /**
-     * @Route("/removeuser", name="removeuser")
+     * @Route("/removeuser", name="removeuser",
+     * requirements = { "id" = "\d+" },
+ *    methods = { "GET" })
      * 
      */
-    public function userRemoveAction(Request $request ){
+    public function userRemoveAction(Request $request){
+        $id = $this->getRequest()->get('id');
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+        if (!$user instanceof User) {
+            throw new NotFoundHttpException('User not found for id ' . $id);
+        }
+        $userManager->deleteUser($user);
+        return new RedirectResponse("users");
+    }
+    
 
-    }
     /**
-     * Creates a form to delete a Post entity by id.
-     *
-     * This is necessary because browsers don't support HTTP methods different
-     * from GET and POST. Since the controller that removes the blog posts expects
-     * a DELETE method, the trick is to create a simple form that *fakes* the
-     * HTTP DELETE method.
-     * See http://symfony.com/doc/current/cookbook/routing/method_parameters.html.
-     *
-     * @param Post $post The post object
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @Route("/teams", name="teams")
      */
-    private function createDeleteForm(Post $post)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_post_delete', array('id' => $post->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+    public function teamAction(Request $request){
+        return $this->render('admin/teams.html.twig', array(
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            
+            ));
     }
+    
 
 }
 ?>

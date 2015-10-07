@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="page-header">Dashboard</h1>
+    <div class="row placeholders">
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <form>
+<input type="text" placeholder="testings :-D">
+<input type="submit">
+        </form>
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+      </div>
+    </div>
+    <h2 class="sub-header">Performance data - Select view</h2>
+    <ul class="nav nav-pills">
+     <li role="presentation" class="active"><a href="#">Answers to Questionnaires</a></li>
+     <li role="presentation"><a href="#">Profile</a></li>
+     <li role="presentation"><a href="#">Messages</a></li>
+   </ul>
+   <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Project</th>
+          <th>Team</th>
+          <th>Roles</th>
+          <th>Last Login</th>
+
+        </tr>
+      </thead>
+      <td>you</td>
+      <td>are</td>
+      <td>still</td>
+      <td>a</td>
+      <td>young</td>
+      <td>conehead</td>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+
+
