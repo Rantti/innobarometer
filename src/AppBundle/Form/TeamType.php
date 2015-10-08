@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Team;
 
 /**
  * @author Antti Eloranta anttioeloranta+job@gmail.com
@@ -40,13 +41,19 @@ class TeamType extends AbstractType
 
         //$userManager = $this->get('fos_user.user_manager');
         //$users = $userManager->findUsers();
+        $users = $options['users'];
+        $formFactory = $builder->getFormFactory();
+        
         $builder
             ->add('teamName', 'text', array('label' => 'label.teamName'))
-            ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Female', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'),
-    'required' => true,
-))
-            
-        ;
+            ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'), 
+                'required' => true,))
+            ->add($formFactory->createNamed("selectedusers", "choices", null, array(
+                            "multiple" => true,
+                            "expanded" => true,
+                            "label" => "Users without teams.",
+                            "choices" => $users,
+                        )));
     }
 
     /**

@@ -14,7 +14,7 @@ use AppBundle\Entity\Questionnaire;
 * @author Turo Mikkonen
 */
 
-class questionnaireController extends controller {
+class QuestionnaireController extends controller {
   /**
   * Lists all questionnaire entities.
   *

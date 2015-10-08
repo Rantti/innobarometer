@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="page-header">Dashboard</h1>
+    <div class="row placeholders">
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <form>
+<input type="text" placeholder="testings :-D">
+<input type="submit">
+        </form>
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+      </div>
+    </div>
+    <h2 class="sub-header">Performance data - Select view</h2>
+    <ul class="nav nav-pills">
+     <li role="presentation" class="active"><a href="#">Answers to Questionnaires</a></li>
+     <li role="presentation"><a href="#">Profile</a></li>
+     <li role="presentation"><a href="#">Messages</a></li>
+   </ul>
+   {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="{{ button_label|default('label.create_statement'|trans) }}"
+           class="{{ button_css|default("btn btn-primary") }}" />
+
+    {% if include_back_to_home_link is not defined or include_back_to_home_link == true %}
+        <a href="{{ path('statement_post_index') }}" class="btn btn-link">
+            {{ 'action.back_to_list'|trans }}
+        </a>
+    {% endif %}
+{{ form_end(form) }}
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+
+
+
+
+
+
+
