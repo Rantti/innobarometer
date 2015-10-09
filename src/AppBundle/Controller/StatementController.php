@@ -11,7 +11,7 @@ use AppBundle\Entity\Statement;
 
 /**
  * @Route("/statement")
- * @author Turo Mikkonen
+ * @author Turo Mikkonen <turo.mikkonen@gmail.com>
  */
 
 class StatementController extends controller {
@@ -63,7 +63,7 @@ class StatementController extends controller {
      // However, we explicitly add it to improve code readability.
      // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
      if ($form->isSubmitted() && $form->isValid()) {
-      
+
        $em = $this->getDoctrine()->getManager();
        $em->persist($statement);
        $em->flush();

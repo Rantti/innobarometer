@@ -18,7 +18,7 @@ class Questionnaire
   protected $id;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="statements")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="questionnaire")
   */
   protected $statements;
 
