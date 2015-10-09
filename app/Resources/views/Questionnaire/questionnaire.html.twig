@@ -20,7 +20,7 @@
     <tbody>
       {% for questionnaire in questionnaires %}
       <tr>
-        <td>{{ questionnaire.questionnaireID }}</td>
+        <td>{{ questionnaire.questionnaire_id }}</td>
         <td>{{ questionnaire.sprintRound }}</td>
         {% for statement in questionnaire.statements %}
           <td>{{ statement.statement }}</td>

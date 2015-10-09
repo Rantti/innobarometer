@@ -22,6 +22,12 @@ class Questionnaire
   */
   protected $statements;
 
+  /**
+   * add statements
+   *
+   * @param AppBundle\Entity\Statement $statement
+   */
+
   public function __construct(){
     $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
   }
@@ -40,15 +46,6 @@ class Questionnaire
   }
 
   /**
-   * Get Statements
-   * @return \Doctrine\Common\Collections\Collection
-   */
-  public function getStatements()
-  {
-    return $this->statements;
-  }
-
-  /**
    * Remove statements
    * @param  AppBundle\Entity\Statement $statements
    * @return AppBundle\Entity\Statement
@@ -59,7 +56,6 @@ class Questionnaire
           $this->statements->remove($statement);
         }
   }
-
 
   /**
    * Get questionnaire
@@ -87,9 +83,9 @@ class Questionnaire
   *
   * @return integer
   */
-  public function getQuestionnaire_id()
+  public function getQuestionnaireID()
   {
-    return $this->questionnaire_id;
+    return $this->questionnaireID;
   }
 
   /**

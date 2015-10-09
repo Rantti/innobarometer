@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Questionnaire;
 
 /**
 * @ORM\Entity
@@ -17,31 +18,51 @@ class Statement
   protected $statement_id;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", mappedBy="statements")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="questionnaire")
+  * @ORM\JoinTable(name="questionnaire_statements")
   */
 
-  private $questionnaires;
+  protected $questionnaire;
 
+
+
+  public function __construct()
+  {
+    $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+  }
   /**
   * Add questionnaires
   * @param AppBundle\Entity\Questionnaire $questionnaires
   */
 
-  public function addQuestionnaires(AppBundle\Entity\Questionnaire $questionnaires)
+  public function addQuestionnaire(Questionnaire $questionnaire)
   {
-    $item->addStatement($this);
-    $this->questionnaires[] = $questionnaire;
+      if (!$this->questionnaire->contains($questionnaire)){
+          $this->questionnaire->add($questionnaire);
+        }
+      return $this;
   }
 
+  /**
+   * Remove questionnaire
+   * @param  AppBundle\Entity\Questionnaire $questionnaires
+   * @return AppBundle\Entity\Questionnaire
+   */
+  public function removeQuestionnaire(Questionnaire $questionnaire)
+  {
+      if ($this->questionnaire->contains($questionnaire)){
+          $this->questionnaire->remove($questionnaire);
+        }
+  }
 
   /**
-  * Get Questionnaires
-  * @return Doctrine\Common\Collections\Collection
-  */
-
-  public function getQuestionnaires()
+   * Get questionnaire
+   *
+   * @return \AppBundle\Entity\Questionnaire
+   */
+  public function getQuestionnaire()
   {
-    return $this->questionnaires;
+      return $this->questionnaire;
   }
 
   /**

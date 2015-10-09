@@ -9,10 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Questionnaire\QuestionnaireType;
 use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Statement;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
 * @Route("/questionnaire")
-* @author Turo Mikkonen
+* @author Turo Mikkonen <turo.mikkonen@gmail.com>
 */
 
 class QuestionnaireController extends controller {
@@ -52,8 +53,9 @@ class QuestionnaireController extends controller {
    public function newAction(Request $request)
    {
      $questionnaire = new Questionnaire();
-    //  $statement = new Statement();
-     $form = $this->createForm(new QuestionnaireType(), $questionnaire);
+     $em = $this->getDoctrine()->getManager();
+
+     $form = $this->createForm(new QuestionnaireType($em), $questionnaire);
 
      $form->handleRequest($request);
 
@@ -63,12 +65,21 @@ class QuestionnaireController extends controller {
      // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
      if ($form->isSubmitted() && $form->isValid()) {
 
-      //  for ($statements=0; $statements > 0; $statements--) {
-      //    $statement->
-      //  }
-       $em = $this->getDoctrine()->getManager();
        $em->persist($questionnaire);
        $em->flush();
+
+       $statements = $form["statements"]->getData();
+       foreach ($statements as $statement) {
+         $id = $statement->getStatement_id();
+         $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
+
+         if (!$dbStatement) {
+           throw $this-createNotFoundException(
+           'No dbStatement found for id '.$id);
+         }
+         $dbStatement->addQuestionnaire($questionnaire);
+         $em->flush();
+       }
 
        return $this->redirectToRoute('questionnaire_post_index');
      }
