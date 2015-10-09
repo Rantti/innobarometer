@@ -15,18 +15,12 @@ class Questionnaire
   * @ORM\Id
   * @ORM\GeneratedValue(strategy="AUTO")
   */
-  protected $questionnaire_id;
+  protected $id;
 
   /**
   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="statements")
   */
   protected $statements;
-
-  /**
-   * add statements
-   *
-   * @param AppBundle\Entity\Statement $statement
-   */
 
   public function __construct(){
     $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
@@ -46,6 +40,15 @@ class Questionnaire
   }
 
   /**
+   * Get Statements
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getStatements()
+  {
+    return $this->statements;
+  }
+
+  /**
    * Remove statements
    * @param  AppBundle\Entity\Statement $statements
    * @return AppBundle\Entity\Statement
@@ -56,6 +59,7 @@ class Questionnaire
           $this->statements->remove($statement);
         }
   }
+
 
   /**
    * Get questionnaire
@@ -79,13 +83,13 @@ class Questionnaire
 
 
   /**
-  * Get questionnaire_id
+  * Get id
   *
   * @return integer
   */
-  public function getQuestionnaireID()
+  public function getId()
   {
-    return $this->questionnaireID;
+    return $this->id;
   }
 
   /**
@@ -132,4 +136,3 @@ class Questionnaire
     return $this->extraRound;
   }
 }
-?>

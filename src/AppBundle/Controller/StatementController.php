@@ -14,7 +14,7 @@ use AppBundle\Entity\Statement;
  * @author Turo Mikkonen
  */
 
-class statementController extends controller {
+class StatementController extends controller {
 
 
   /**
@@ -112,7 +112,7 @@ class statementController extends controller {
      if ($editForm->isSubmitted() && $editForm->isValid()) {
        $em->flush();
 
-       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getStatement_id()));
+       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getId()));
      }
 
      return $this->render('Questionnaire/Statement/edit.html.twig', array(
@@ -158,7 +158,7 @@ class statementController extends controller {
    private function createDeleteForm(Statement $statement)
    {
      return $this->createFormBuilder()
-          ->setAction($this->generateUrl('statement_post_delete', array('id' => $statement->getStatement_id())))
+          ->setAction($this->generateUrl('statement_post_delete', array('id' => $statement->getId())))
           ->setMethod('DELETE')
           ->getForm();
    }

@@ -26,10 +26,10 @@
 
         <td>
           <div class="item-actions">
-            <a href="{{ path('statement_post_show', { id: statement.getStatement_id }) }}" class="btn btn-sm btn-default">
+            <a href="{{ path('statement_post_show', { id: statement.getId }) }}" class="btn btn-sm btn-default">
               {{ 'action.show'|trans }}
             </a>
-            <a href="{{ path('statement_post_edit', { id: statement.getStatement_id }) }}" class="btn btn-sm btn-primary">
+            <a href="{{ path('statement_post_edit', { id: statement.getId }) }}" class="btn btn-sm btn-primary">
               <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
             </a>
           </div>

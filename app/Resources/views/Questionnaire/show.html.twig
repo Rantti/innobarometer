@@ -25,7 +25,7 @@
 
 {% block sidebar %}
     <div class="section">
-        <a href="{{ path('questionnaire_post_edit', { id: questionnaire.getQuestionnaireID }) }}" class="btn btn-lg btn-block btn-success">
+        <a href="{{ path('questionnaire_post_edit', { id: questionnaire.getId }) }}" class="btn btn-lg btn-block btn-success">
             <i class="fa fa-edit"></i> {{ 'action.edit_contents'|trans }}
         </a>
     </div>

@@ -125,7 +125,7 @@ class QuestionnaireController extends controller {
      if ($editForm->isSubmitted() && $editForm->isValid()) {
        $em->flush();
 
-       return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getQuestionnaire_id()));
+       return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getId()));
      }
 
      return $this->render('Questionnaire/edit.html.twig', array(

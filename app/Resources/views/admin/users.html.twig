@@ -49,7 +49,22 @@
           <th>Email</th>
           <th>Project</th>
           <th>Team</th>
-          <th>Roles</th>
+          <th>Roles</th>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} | 
+                <ul>
+                {% for role in app.user.roles %}
+                    <li>{{ role }}</li>
+                {% endfor %}
+
+                </ul>
+                
+
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
           <th>Last Login</th>
 
         </tr>
@@ -59,7 +74,13 @@
           <td>{{ user.username }}</td>
           <td>{{ user.email }}</td>
           <td>N/A</td>
-          <td>{{ user.team }}</td>
+          <td>
+          {% if user.team %}
+            {{ user.team.teamName }}
+          {% else %}
+            N/A
+          {% endif %}
+          </td>
           <td>{%for role in user.roles%}{{role}}, {% endfor %}
           <td>{{ user.lastLogin|date('d-M-y H:i:s') }}</td>
           <td><a href="{{ path('removeuser', { id: user.id }) }}"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
