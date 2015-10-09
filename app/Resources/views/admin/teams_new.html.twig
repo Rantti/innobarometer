@@ -10,8 +10,7 @@
         </form>
 
         <div>
-            {% block fos_user_content %}
-            {% endblock fos_user_content %}
+           
       </div>
     </div>
     <h2 class="sub-header">Performance data - Select view</h2>
@@ -23,7 +22,9 @@
    {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <input type="submit" value="{{ button_label|default('label.create_statement'|trans) }}"
+        
+
+    <input type="submit" value="Create Team"
            class="{{ button_css|default("btn btn-primary") }}" />
 
     {% if include_back_to_home_link is not defined or include_back_to_home_link == true %}

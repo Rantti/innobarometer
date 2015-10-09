@@ -60,38 +60,52 @@ class AdminController extends Controller
 
     /**
      * New team action
-     * @Route("/newteam", name="team_new")
+     * @Route("/teams/new", name="team_new")
      */
-public function newTeamAction(Request $request)
-   {
-    $team = new Team();
-    $em = $this->getDoctrine()->getManager();
-    $users = $em->getRepository('AppBundle:User')->findBy(array('team' => null));
-    foreach($users as $user)
+    public function newTeamAction(Request $request)
     {
-    $teamlessUsers[] = array($user->getUsername()=>$user->getUsername());
-    }
-     $form = $this->createForm(new TeamType(), $team, $users);
-
-     $form->handleRequest($request);
+        $team = new Team();
+        $em = $this->getDoctrine()->getManager();
+        
+        
+        
+        //$form = $this->createForm(new TeamType($em), $team);
+        $form = $this->createForm(new TeamType($em), $team);
+        $form->handleRequest($request);
 
      // the isSubmitted() method is completely optional because the other
      // isValid() method already checks whether the form is submitted.
      // However, we explicitly add it to improve code readability.
      // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
-     if ($form->isSubmitted() && $form->isValid()) {
-       $em = $this->getDoctrine()->getManager();
-       $em->persist($team);
-       $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-       return $this->redirectToRoute('teams');
-     }
-     return $this->render('admin/teams_new.html.twig', array(
-       'team' => $team,
-       'form' => $form->createView(),
+
+         $em->persist($team);
+
+        $em->flush();
+//        $teamId = $team->getId();
+         $users = $form["users"]->getData();
+         foreach($users as $user){
+            $id = $user->getId();
+            $dbUser = $em->getRepository('AppBundle:User')->find($id);
+
+            if (!$dbUser) {
+                throw $this->createNotFoundException(
+                    'No dbUser found for id '.$id
+                    );
+            }
+
+            $dbUser->setTeam($team);
+            $em->flush();
+        }
+        return $this->redirectToRoute('teams');
+    }
+    return $this->render('admin/teams_new.html.twig', array(
+     'team' => $team,
+     'form' => $form->createView(),
      ));
-   }
-    
+}
+
 
 }
 ?>

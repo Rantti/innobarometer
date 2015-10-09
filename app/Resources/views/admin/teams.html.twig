@@ -8,18 +8,13 @@
 <input type="text" placeholder="testings :-D">
 <input type="submit">
         </form>
-
+        <a href="{{ path("team_new") }}">add-new</a>
         <div>
             {% block fos_user_content %}
             {% endblock fos_user_content %}
       </div>
     </div>
-    <h2 class="sub-header">Performance data - Select view</h2>
-    <ul class="nav nav-pills">
-     <li role="presentation" class="active"><a href="#">Answers to Questionnaires</a></li>
-     <li role="presentation"><a href="#">Profile</a></li>
-     <li role="presentation"><a href="#">Messages</a></li>
-   </ul>
+    
    <div class="table-responsive">
     <table class="table table-striped">
       <thead>
