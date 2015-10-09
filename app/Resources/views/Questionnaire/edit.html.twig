@@ -3,7 +3,7 @@
 {% block body %}
 
 {% block main %}
-    <h1>{{ 'questionnaire.edit_questionnaire'|trans({'%id%': questionnaire.getQuestionnaireID}) }}</h1>
+    <h1>{{ 'questionnaire.edit_questionnaire'|trans({'%id%': questionnaire.getId}) }}</h1>
 
     {{ include('Questionnaire/_form.html.twig', {
         form: edit_form,

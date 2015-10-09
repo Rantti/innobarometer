@@ -70,7 +70,7 @@ class QuestionnaireController extends controller {
 
        $statements = $form["statements"]->getData();
        foreach ($statements as $statement) {
-         $id = $statement->getStatement_id();
+         $id = $statement->getId();
          $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
 
          if (!$dbStatement) {
@@ -125,7 +125,7 @@ class QuestionnaireController extends controller {
      if ($editForm->isSubmitted() && $editForm->isValid()) {
        $em->flush();
 
-       return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getQuestionnaire_id()));
+       return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getId()));
      }
 
      return $this->render('Questionnaire/edit.html.twig', array(
@@ -171,7 +171,7 @@ class QuestionnaireController extends controller {
    private function createDeleteForm(Questionnaire $questionnaire)
    {
      return $this->createFormBuilder()
-          ->setAction($this->generateUrl('questionnaire_post_delete', array('id' => $questionnaire->getQuestionnaire_id())))
+          ->setAction($this->generateUrl('questionnaire_post_delete', array('id' => $questionnaire->getId())))
           ->setMethod('DELETE')
           ->getForm();
    }

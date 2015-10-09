@@ -15,10 +15,10 @@ class Statement
   * @ORM\Id
   * @ORM\GeneratedValue(strategy="AUTO")
   */
-  protected $statement_id;
+  protected $id;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="questionnaire")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="statements")
   * @ORM\JoinTable(name="questionnaire_statements")
   */
 
@@ -77,13 +77,13 @@ class Statement
 
 
   /**
-  * Get $statement_id
+  * Get id
   *
   * @return integer
   */
-  public function getStatement_id()
+  public function getId()
   {
-    return $this->statement_id;
+    return $this->id;
   }
 
   /**

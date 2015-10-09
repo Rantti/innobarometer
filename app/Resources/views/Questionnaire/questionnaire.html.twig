@@ -20,7 +20,7 @@
     <tbody>
       {% for questionnaire in questionnaires %}
       <tr>
-        <td>{{ questionnaire.questionnaire_id }}</td>
+        <td>{{ questionnaire.id }}</td>
         <td>{{ questionnaire.sprintRound }}</td>
         {% for statement in questionnaire.statements %}
           <td>{{ statement.statement }}</td>
@@ -29,10 +29,10 @@
 
         <td>
           <div class="item-actions">
-            <a href="{{ path('questionnaire_post_show', { id: questionnaire.getQuestionnaireID }) }}" class="btn btn-sm btn-default">
+            <a href="{{ path('questionnaire_post_show', { id: questionnaire.getId }) }}" class="btn btn-sm btn-default">
               {{ 'action.show'|trans }}
             </a>
-            <a href="{{ path('questionnaire_post_edit', { id: questionnaire.getQuestionnaireID }) }}" class="btn btn-sm btn-primary">
+            <a href="{{ path('questionnaire_post_edit', { id: questionnaire.getId }) }}" class="btn btn-sm btn-primary">
               <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
             </a>
           </div>

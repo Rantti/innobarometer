@@ -11,7 +11,7 @@ use AppBundle\Entity\Statement;
 
 /**
  * @Route("/statement")
- * @author Turo Mikkonen
+ * @author Turo Mikkonen <turo.mikkonen@gmail.com>
  */
 
 class statementController extends controller {
@@ -63,7 +63,7 @@ class statementController extends controller {
      // However, we explicitly add it to improve code readability.
      // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
      if ($form->isSubmitted() && $form->isValid()) {
-      
+
        $em = $this->getDoctrine()->getManager();
        $em->persist($statement);
        $em->flush();
@@ -112,7 +112,7 @@ class statementController extends controller {
      if ($editForm->isSubmitted() && $editForm->isValid()) {
        $em->flush();
 
-       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getStatement_id()));
+       return $this->redirectToRoute('statement_post_edit', array('id' => $statement->getId()));
      }
 
      return $this->render('Questionnaire/Statement/edit.html.twig', array(
@@ -158,7 +158,7 @@ class statementController extends controller {
    private function createDeleteForm(Statement $statement)
    {
      return $this->createFormBuilder()
-          ->setAction($this->generateUrl('statement_post_delete', array('id' => $statement->getStatement_id())))
+          ->setAction($this->generateUrl('statement_post_delete', array('id' => $statement->getId())))
           ->setMethod('DELETE')
           ->getForm();
    }

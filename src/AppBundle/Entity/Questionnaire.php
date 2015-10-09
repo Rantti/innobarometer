@@ -15,10 +15,10 @@ class Questionnaire
   * @ORM\Id
   * @ORM\GeneratedValue(strategy="AUTO")
   */
-  protected $questionnaire_id;
+  protected $id;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="statements")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="questionnaire")
   */
   protected $statements;
 
@@ -83,13 +83,13 @@ class Questionnaire
 
 
   /**
-  * Get questionnaire_id
+  * Get id
   *
   * @return integer
   */
-  public function getQuestionnaire_id()
+  public function getId()
   {
-    return $this->questionnaire_id;
+    return $this->id;
   }
 
   /**
@@ -136,4 +136,3 @@ class Questionnaire
     return $this->extraRound;
   }
 }
-?>
