@@ -13,14 +13,25 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Forms;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Team;
+
 
 /**
  * @author Antti Eloranta anttioeloranta+job@gmail.com
  */
 class TeamType extends AbstractType
 {
+
+    protected $em;
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -36,27 +47,66 @@ class TeamType extends AbstractType
         // this validation, set the 'required' attribute to 'false':
         //
         //     $builder->add('title', null, array('required' => false, ...));
-        
 
         //$userManager = $this->get('fos_user.user_manager');
         //$users = $userManager->findUsers();
+        $em = $this->em;
+
+        $users = $em->getRepository('AppBundle:User')->findBy(array('team' => null));
+
+        
         $builder
-            ->add('teamName', 'text', array('label' => 'label.teamName'))
-            ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Female', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'),
-    'required' => true,
-))
-            
-        ;
+        ->add('teamName', 'text', array('label' => 'label.teamName'))
+        ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'), 
+            'required' => true,))
+
+        ->add('users', 'entity', array(
+            'class' => 'AppBundle:User',
+            'choice_label' => 'username',
+            'property' => 'user',
+            'multiple' => 'true',
+            'expanded' => 'true'
+           // 'choices' => $em->getRepository('AppBundle:User')->findBy(array('team' => null)),
+            ));
     }
+
+/*
+->add($formFactory->createNamed("selectedusers", "choice", null, array(
+                            "multiple" => true,
+                            "expanded" => true,
+                            "label" => "Users without teams.",
+                            "choices" => $teamlessUsers,
+                        ))
+ */
+
+/* handling users without teams
+$manager = $this->getDoctrine()->getManager();
+        $users = $manager->getRepository('AppBundle:User')->findBy(array('team' => null));
+        $teamlessUsers = array();
+        foreach($users as $user)
+        {
+        $teamlessUsers[] = array($user->getEmail()=>$user->getUsername());
+        }
+        $formFactory = $builder->getFormFactory();
+
+->add($formFactory->createNamed("selectedusers", "choices", null, array(
+                            "multiple" => true,
+                            "expanded" => true,
+                            "label" => "Users without teams.",
+                            "choices" => $teamlessUsers,
+                        )))
+ */
 
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Team',
-        ));
+            ));
+
     }
 
     /**

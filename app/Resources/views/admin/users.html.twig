@@ -59,7 +59,7 @@
           <td>{{ user.username }}</td>
           <td>{{ user.email }}</td>
           <td>N/A</td>
-          <td>N/A</td>
+          <td>{{ user.team }}</td>
           <td>{%for role in user.roles%}{{role}}, {% endfor %}
           <td>{{ user.lastLogin|date('d-M-y H:i:s') }}</td>
           <td><a href="{{ path('removeuser', { id: user.id }) }}"><span class="glyphicon glyphicon-remove-circle"></span></a></td>

@@ -28,7 +28,10 @@ class User extends BaseUser
      **/
     protected $team;
 
-
+    public function __construct(){
+        parent::__construct();
+        $this->team = $team;
+    }
 
 
     /**
