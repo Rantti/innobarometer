@@ -17,15 +17,30 @@ class Questionnaire
   protected $questionnaire_id;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", inversedBy="questionnaire")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", inversedBy="questionnaires")
   * @ORM\JoinTable(name="questionnaires_statements",
   * 		joinColumns={@ORM\JoinColumn(name="questionnaire_id", referencedColumnName="questionnaire_id")},
  *      inverseJoinColumns={@ORM\JoinColumn(name="statement_id", referencedColumnName="statement_id")})
   */
   private $statements;
 
-  public function __construct(){
-    $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
+  /**
+   * add statements
+   *
+   * @param AppBundle\Entity\Statement $statement
+   */
+
+  public function addStatements(AppBundle\Entity\Statement $statement){
+    $this->statements[] = $statements;
+  }
+
+  /**
+   * Get statements
+   * @return Doctrine\Common\Collections\Collection
+   */
+  public function getStatements()
+  {
+    return $this->statements;
   }
 
   /**

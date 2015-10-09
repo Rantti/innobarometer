@@ -15,7 +15,7 @@ class QuestionnaireType extends AbstractType
   /**
    * In this formBuilder we use StatementType form builder
    * to get statementFields in QuestionnaireForm
-   * 
+   *
    * @param FormBuilderInterface $builder
    * @param $array               $options
    */
@@ -23,10 +23,13 @@ class QuestionnaireType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-    ->add('Questionnaire', null, array('label' => 'label.questionnaire'))
-    ->add('statementFields', 'collection', array('type' => new StatementType())
     ->add('sprintRound', 'integer', array(
-        'label' => 'label.sprintRound',)
+        'label' => 'label.sprintRound'))
+    ->add('statements', 'entity', array(
+      'class' => 'AppBundle:Statement',
+      'property' => 'statement',
+      'multiple' => true,
+      'expanded' => true))
     ->add('extraRound', null, array('label' => 'label.extraRound'));
   }
 

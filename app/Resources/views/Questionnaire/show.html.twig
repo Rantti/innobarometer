@@ -3,17 +3,21 @@
 {% block body %}
 
 {% block main %}
-    <h1>{{ statement.statement }}</h1>
+    <h1>{{ questionnaire.questionnaire }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'label.statement'|trans }}</th>
+                <th>{{ 'label.sprintRound'|trans }}</th>
+                <td>{{ questionnaire.sprintRound }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.statements'|trans }}</th>
                 <td>{{ statement.statement }}</td>
             </tr>
             <tr>
-                <th>{{ 'label.category'|trans }}</th>
-                <td>{{ statement.category }}</td>
+                <th>{{ 'label.extraRound'|trans }}</th>
+                <td>{{ questionnaire.extraRound }}</td>
             </tr>
         </tbody>
     </table>
@@ -21,15 +25,15 @@
 
 {% block sidebar %}
     <div class="section">
-        <a href="{{ path('statement_post_edit', { id: statement.getStatementID }) }}" class="btn btn-lg btn-block btn-success">
+        <a href="{{ path('questionnaire_post_edit', { id: questionnaire.getQuestionnaireID }) }}" class="btn btn-lg btn-block btn-success">
             <i class="fa fa-edit"></i> {{ 'action.edit_contents'|trans }}
         </a>
     </div>
 
     <div class="section">
-        {{ include('Questionnaire/Statement/_form.html.twig', {
+        {{ include('Questionnaire/_form.html.twig', {
             form: delete_form,
-            button_label: 'action.delete_statement'|trans,
+            button_label: 'action.delete_questionnaire'|trans,
             button_css: 'btn btn-lg btn-block btn-danger',
             include_back_to_home_link: false
         }, with_context = false) }}

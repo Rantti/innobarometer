@@ -22,9 +22,26 @@ class Statement
 
   private $questionnaires;
 
-  public function __construct()
+  /**
+  * Add questionnaires
+  * @param AppBundle\Entity\Questionnaire $questionnaires
+  */
+
+  public function addQuestionnaires(AppBundle\Entity\Questionnaire $questionnaires)
   {
-    $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+    $item->addStatement($this);
+    $this->questionnaires[] = $questionnaire;
+  }
+
+
+  /**
+  * Get Questionnaires
+  * @return Doctrine\Common\Collections\Collection
+  */
+
+  public function getQuestionnaires()
+  {
+    return $this->questionnaires;
   }
 
   /**

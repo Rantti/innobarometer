@@ -3,9 +3,9 @@
 {% block body %}
 
 {% block main %}
-    <h1>{{ 'statement.edit_statement'|trans({'%id%': statement.getStatementID}) }}</h1>
+    <h1>{{ 'questionnaire.edit_questionnaire'|trans({'%id%': questionnaire.getQuestionnaireID}) }}</h1>
 
-    {{ include('Questionnaire/Statement/_form.html.twig', {
+    {{ include('Questionnaire/_form.html.twig', {
         form: edit_form,
         button_label: 'action.save'|trans,
     }, with_context = false) }}
@@ -13,9 +13,9 @@
 
 {% block sidebar %}
     <div class="section actions">
-        {{ include('Questionnaire/Statement/_form.html.twig', {
+        {{ include('Questionnaire/_form.html.twig', {
             form: delete_form,
-            button_label: 'action.delete_statement'|trans,
+            button_label: 'action.delete_questionnaire'|trans,
             button_css: 'btn btn-lg btn-block btn-danger',
             include_back_to_home_link: false
         }, with_context = false) }}

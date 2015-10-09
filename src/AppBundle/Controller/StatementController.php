@@ -14,7 +14,7 @@ use AppBundle\Entity\Statement;
  * @author Turo Mikkonen
  */
 
-class StatementController extends controller {
+class statementController extends controller {
 
 
   /**

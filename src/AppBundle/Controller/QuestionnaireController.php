@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Questionnaire\QuestionnaireType;
 use AppBundle\Entity\Questionnaire;
+use AppBundle\Entity\Statement;
 
 /**
 * @Route("/questionnaire")
@@ -26,14 +27,14 @@ class questionnaireController extends controller {
   *     could move this annotation to any other controller while maintaining
   *     the route name and therefore, without breaking any existing link.
   *
-  * @Route("/questionnaire", name="questionnaire_index")
+  * @Route("/questionnaire", name="questionnaire")
   * @Route("/questionnaire_post", name="questionnaire_post_index")
   * @Method("GET")
   */
   public function questionnaireAction()
   {
     $em = $this->getDoctrine()->getManager();
-    $questionnaires = $em->getRepository('AppBundle:questionnaire')->findAll();
+    $questionnaires = $em->getRepository('AppBundle:Questionnaire')->findAll();
 
     return $this->render('Questionnaire/questionnaire.html.twig', array('questionnaires' => $questionnaires));
   }
@@ -51,6 +52,7 @@ class questionnaireController extends controller {
    public function newAction(Request $request)
    {
      $questionnaire = new Questionnaire();
+    //  $statement = new Statement();
      $form = $this->createForm(new QuestionnaireType(), $questionnaire);
 
      $form->handleRequest($request);
@@ -60,6 +62,10 @@ class questionnaireController extends controller {
      // However, we explicitly add it to improve code readability.
      // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
      if ($form->isSubmitted() && $form->isValid()) {
+
+      //  for ($statements=0; $statements > 0; $statements--) {
+      //    $statement->
+      //  }
        $em = $this->getDoctrine()->getManager();
        $em->persist($questionnaire);
        $em->flush();

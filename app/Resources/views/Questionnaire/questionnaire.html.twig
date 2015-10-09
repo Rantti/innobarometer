@@ -4,32 +4,35 @@
 
 <h1 class="page-header">Dashboard</h1>
 
-<h2 class="sub-header">Statement overview</h2>
+<h2 class="sub-header">Questionnaire overview</h2>
 <ul class="nav nav-pills">
-  <li role="presentation" class="active"><a href="#">Statements</a></li>
-  <li role="presentation"><a href="{{ path('statement_post_new')}}">Create statements</a></li>
+  <li role="presentation" class="active"><a href="#">Questionnaires</a></li>
+  <li role="presentation"><a href="{{ path('questionnaire_post_new')}}">Create questionnaires</a></li>
 </ul>
 
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>{{ 'label.statement'|trans }}</th>
+        <th>{{ 'label.questionnaire'|trans }}</th>
       </tr>
     </thead>
     <tbody>
-      {% for statement in statements %}
+      {% for questionnaire in questionnaires %}
       <tr>
-        <td>{{ statement.statementID }}</td>
-        <td>{{ statement.statement }}</td>
-        <td>{{ statement.category }}</td>
+        <td>{{ questionnaire.questionnaireID }}</td>
+        <td>{{ questionnaire.sprintRound }}</td>
+        {% for statement in questionnaire.statements %}
+          <td>{{ statement.statement }}</td>
+        {% endfor %}
+        <td>{{ questionnaire.extraRound }}</td>
 
         <td>
           <div class="item-actions">
-            <a href="{{ path('statement_post_show', { id: statement.getStatementID }) }}" class="btn btn-sm btn-default">
+            <a href="{{ path('questionnaire_post_show', { id: questionnaire.getQuestionnaireID }) }}" class="btn btn-sm btn-default">
               {{ 'action.show'|trans }}
             </a>
-            <a href="{{ path('statement_post_edit', { id: statement.getStatementID }) }}" class="btn btn-sm btn-primary">
+            <a href="{{ path('questionnaire_post_edit', { id: questionnaire.getQuestionnaireID }) }}" class="btn btn-sm btn-primary">
               <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
             </a>
           </div>
@@ -43,8 +46,8 @@
 
 {% block sidebar %}
 <div class="section actions">
-  <a href="{{ path('statement_post_new') }}" class="btn btn-lg btn-block btn-success">
-    <i class="fa fa-plus"></i> {{ 'action.create_statement'|trans }}
+  <a href="{{ path('questionnaire_post_new') }}" class="btn btn-lg btn-block btn-success">
+    <i class="fa fa-plus"></i> {{ 'action.create_questionnaire'|trans }}
   </a>
 </div>
 

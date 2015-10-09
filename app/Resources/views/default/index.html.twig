@@ -12,7 +12,7 @@
                 {% endfor %}
 
                 </ul>
-                
+
 
                 <a href="{{ path('fos_user_security_logout') }}">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
@@ -37,8 +37,9 @@
     </div>
     <h2 class="sub-header">Performance data - Select view</h2>
     <ul class="nav nav-pills">
-     <li role="presentation" class="active"><a href="{{ path('statement')}}">Statements</a></li>
-     <li role="presentation"><a href="#">Profile</a></li>
+      <li role="presentation" class="active">Profile</li>
+     <li role="presentation"><a href="{{ path('statement') }}">Statements</a></li>
+     <li role="presentation"><a href="{{ path('questionnaire') }}">Questionnaire</a></li>
      <li role="presentation"><a href="#">Messages</a></li>
    </ul>
    <div class="table-responsive">
