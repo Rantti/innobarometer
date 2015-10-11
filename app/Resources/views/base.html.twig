@@ -28,9 +28,9 @@
           <li><a href="{{ path('fos_user_registration_register') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
           <li><a href="">Profile<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a></li>
-          <li><a href="">My Questionnaires<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
+          <li><a href="{{ path('questionnaire') }}">My Questionnaires<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
         </ul>
-          
+
                 {% if is_granted("ROLE_ADMIN") %}
                 <ul class="nav nav-sidebar">
                 <li><a href="{{ path('users') }}">Users<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
@@ -38,14 +38,14 @@
                 <li><a href="#">Projects<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
               </ul>
                 {% endif %}
-                
+
                 <ul class="nav nav-sidebar">
                 <li><a href="{{ path('fos_user_security_logout') }}">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a></li>
               </ul>
             {% endif %}
-       
+
      </div>
      <div class="container-fluid">
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

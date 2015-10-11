@@ -3,7 +3,7 @@
 {% block body %}
 
 {% block main %}
-    <h1>{{ questionnaire.questionnaire }}</h1>
+    <h1> Questionnaire{# questionnaire.questionnaire #}</h1>
 
     <table class="table">
         <tbody>
@@ -13,7 +13,9 @@
             </tr>
             <tr>
                 <th>{{ 'label.statements'|trans }}</th>
-                <td>{{ statement.statement }}</td>
+                {% for statement in questionnaire.statements %}
+                  <td>{{ statement.statement }}</td>
+                {% endfor %}
             </tr>
             <tr>
                 <th>{{ 'label.extraRound'|trans }}</th>

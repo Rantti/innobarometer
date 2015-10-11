@@ -123,8 +123,17 @@ class QuestionnaireController extends controller {
      $editForm->handleRequest($request);
 
      if ($editForm->isSubmitted() && $editForm->isValid()) {
-       $em->flush();
 
+       $statements = $editForm["statements"]->getData();
+       foreach ($statements as $statement) {
+         $id = $statement->getId();
+         $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
+         if ($em->getRepository('AppBundle:Statement')) {
+           $dbStatement->addQuestionnaire($questionnaire);;
+         }
+       }
+       $em->persist($questionnaire);
+       $em->flush();
        return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getId()));
      }
 
