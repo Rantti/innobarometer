@@ -21,8 +21,8 @@ class StatementType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-    ->add('statement', null, array('label' => 'label.statement'))
-    ->add('category', 'textarea', array('label' => 'label.category'));
+    ->add('statement', 'text', array('label' => 'label.statement'))
+    ->add('category', 'text', array('label' => 'label.category'));
   }
 
   /**
