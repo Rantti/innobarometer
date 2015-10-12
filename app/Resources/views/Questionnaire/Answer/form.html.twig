@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1 class="page-header">My questionnaires</h1>
+<div class="row placeholders">
+  <div class="col-xs-6 col-sm-3 placeholder">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% else %}
+    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+    {% endif %}
+</div>
+</div>
+<form class="form-horizontal" action="{{ path('postnew')}}" method="post">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Fill in the Q</legend>
+        
+        {% for statement in statements %}
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+
+          <label class="col-md-4 control-label" for="radios">{{statement.statement}}</label>
+          <div class="col-md-4"> 
+
+            <label class="radio-inline" for="radios-0">
+              <input name="{{statement.id}}" id="radios-0" value="1" checked="checked" type="radio">
+              1
+          </label> 
+          <label class="radio-inline" for="radios-1">
+              <input name="{{statement.id}}" id="radios-1" value="2" type="radio">
+              2
+          </label> 
+          <label class="radio-inline" for="radios-2">
+              <input name="{{statement.id}}" id="radios-2" value="3" type="radio">
+              3
+          </label> 
+          <label class="radio-inline" for="radios-3">
+              <input name="{{statement.id}}" id="radios-3" value="4" type="radio">
+              4
+          </label>
+      </div>
+  </div>
+  {% endfor %}
+  <input name ="questionnaireid" value="{{ id }}" type="hidden">
+
+  <!-- Button (Double) -->
+  <div class="form-group">
+      <div class="col-md-4">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</div>
+
+</fieldset>
+</form>
+
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+
+

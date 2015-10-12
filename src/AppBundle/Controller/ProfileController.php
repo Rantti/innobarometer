@@ -7,10 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 
+/**
+* @Route("/profile")
+* @author Antti Eloranta <anttioeloranta@gmail.com>
+*/
+
 class ProfileController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/profile", name="profile")
      */
     public function indexAction(Request $request)
     {

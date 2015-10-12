@@ -22,7 +22,7 @@ use AppBundle\Entity\Team;
 
 
 /**
- * @author Antti Eloranta anttioeloranta+job@gmail.com
+ * @author Antti Eloranta anttioeloranta@gmail.com
  */
 class TeamType extends AbstractType
 {

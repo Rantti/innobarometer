@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="page-header">My questionnaireszzzz</h1>
+    <div class="row placeholders">
+      <div class="col-xs-6 col-sm-3 placeholder">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>sprint #</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for questionnaire in questionnaires %}
+        <tr>
+          <td>{{ questionnaire.id }}</td>
+          <td>{{ questionnaire.sprintRound }}</td>
+<!--          <td><a href="{{ path('answerform', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a></td>-->
+        </tr>
+       {% endfor %}
+        <tr>
+          <td></td>
+          <td>Lorem</td>
+          <td>ipsum</td>
+          <td>dolor</td>
+          <td>sit</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+
+
