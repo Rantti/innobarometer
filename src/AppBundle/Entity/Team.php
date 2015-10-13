@@ -9,7 +9,7 @@ use AppBundle\Entity\User;
  * @ORM\Entity
  * @ORM\Table(name="team")
  *
- * @author  Antti Eloranta <anttioeloranta+job@gmail.com>
+ * @author  Antti Eloranta <anttioeloranta@gmail.com>
  */
 
 class Team

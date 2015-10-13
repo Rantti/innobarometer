@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>{% block title %}Mobile Barometer{% endblock %}</title>
+  <title>MobileBarometer</title>
   <link rel="stylesheet"
   href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
   <link rel="stylesheet"
@@ -28,15 +28,20 @@
           <li><a href="{{ path('fos_user_registration_register') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
           <li><a href="">Profile<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a></li>
-          <li><a href="{{ path('questionnaire') }}">My Questionnaires<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
+          <li><a href="{{ path('answer') }}">My Questionnaires<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
         </ul>
 
                 {% if is_granted("ROLE_ADMIN") %}
                 <ul class="nav nav-sidebar">
+                <li>User-Management</li>
                 <li><a href="{{ path('users') }}">Users<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
                 <li><a href="{{ path('teams') }}">Teams<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
                 <li><a href="#">Projects<span class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a> </li>
               </ul>
+                <ul class="nav nav-sidebar">
+                <li>Q - Management</li>
+                <li><a href="{{ path('questionnaire') }}">Questionnaires</a></li>
+                <li><a href="{{ path('statement') }}">Statements</a></li>
                 {% endif %}
 
                 <ul class="nav nav-sidebar">
