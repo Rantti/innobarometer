@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="page-header">My questionnaireszzzz</h1>
+    <h1 class="page-header">My questionnaires</h1>
     <div class="row placeholders">
       <div class="col-xs-6 col-sm-3 placeholder">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -10,6 +10,7 @@
             {% endif %}
         </div>
     </div>
+    
     <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -36,6 +37,7 @@
       </tbody>
     </table>
   </div>
+
 </div>
 
 

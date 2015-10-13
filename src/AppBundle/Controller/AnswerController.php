@@ -38,16 +38,26 @@ class AnswerController extends Controller
     }
 
     /**
+     * @Route("/show", name="showanswers")
+     */
+    public function showAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
+        return $this->render('Questionnaire/Answer/show.html.twig', array('answers' => $answers));
+    }
+
+
+    /**
      * @Route("/form", name="answerform")
      */
     public function answerAction(Request $request)
     {   
-    $id = $this->getRequest()->get('id');
-    $em = $this->getDoctrine()->getManager();
-    $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
-    $statements = $questionnaire->getStatements();
-    return $this->render('Questionnaire/Answer/form.html.twig', array('statements' => $statements, 'id' => $id));
-}
+        $id = $this->getRequest()->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
+        $statements = $questionnaire->getStatements();
+        return $this->render('Questionnaire/Answer/form.html.twig', array('statements' => $statements, 'id' => $id));
+    }
     /**
      * @Route("/post", name="postnew")
      * @Method("POST")
@@ -55,24 +65,24 @@ class AnswerController extends Controller
     public function postAnswerAction(Request $request)
     {
         $qid = $this->get('request')->request->get('questionnaireid');
-            
+        
             //$qid = $post->request->get('questionnaireid');
-            $em = $this->getDoctrine()->getManager();
-            $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
-            $statements = $questionnaire->getStatements();
-            foreach ($statements as $statement) {
-                $answer = new Answer();
-                $answer->setStatement($statement);
+        $em = $this->getDoctrine()->getManager();
+        $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
+        $statements = $questionnaire->getStatements();
+        foreach ($statements as $statement) {
+            $answer = new Answer();
+            $answer->setStatement($statement);
                 // $value = $post->request->get($statement->getId());
-                $value = $this->get('request')->request->get($statement->getId());
-                $answer->setValue($value);
-                $answer->setQuestionnaire($questionnaire);
-                $em->persist($answer);
-                $em->flush();
-            }
-            return $this->redirectToRoute('answer');
+            $value = $this->get('request')->request->get($statement->getId());
+            $answer->setValue($value);
+            $answer->setQuestionnaire($questionnaire);
+            $em->persist($answer);
+            $em->flush();
+        }
+        return $this->redirectToRoute('answer');
 
-            
+        
     }
 
 }

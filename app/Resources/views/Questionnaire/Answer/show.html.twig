@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="page-header">My questionnaires</h1>
+    <h1 class="page-header">Answers</h1>
     <div class="row placeholders">
       <div class="col-xs-6 col-sm-3 placeholder">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -14,23 +14,24 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>sprint #</th>
+          <th>Statement</th>
+          <th>Questionnaire</th>
+          <th>Value</th>
         </tr>
       </thead>
       <tbody>
-        {% for questionnaire in questionnaires %}
+        {% for answer in answers %}
         <tr>
-          <td>{{ questionnaire.id }}</td>
-          <td>{{ questionnaire.sprintRound }}</td>
-          <td><a href="{{ path('answerform', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a></td>
+          <td>{{ answer.statement.statement }}</td>
+          <td>{{ answer.questionnaire.id }}</td>
+          <td>{{ answer.value }}</td>
+<!--          <td><a href="{{ path('answerform', { id: answer.id }) }}" class="btn btn-success">Fill answer</a></td>-->
         </tr>
        {% endfor %}
-        
+
       </tbody>
     </table>
   </div>
-  <a href="{{path('showanswers')}}" class="btn btn-success">Show answers</a>
 </div>
 
 
