@@ -33,8 +33,7 @@ class Project{
   protected $endDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Team", inversedBy="teams")
-     * @ORM\JoinTable(name="teams_projects")
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="teams")
      **/
   protected $teams;
 

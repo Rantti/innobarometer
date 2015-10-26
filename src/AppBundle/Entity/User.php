@@ -10,7 +10,7 @@ use AppBundle\Entity\Team;
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  *
- * @author  Antti Eloranta <anttioeloranta+job@gmail.com>
+ * @author  Antti Eloranta <antti.o.eloranta@gmail.com>
  */
 class User extends BaseUser
 {
@@ -23,7 +23,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="team")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      **/
     protected $team;

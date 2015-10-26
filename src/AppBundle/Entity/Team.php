@@ -46,9 +46,10 @@ class Team
     protected $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Project", mappedBy="projects")
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="project")
+     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      **/
-    protected $projects;
+    protected $project;
 
 
     /**
@@ -152,37 +153,29 @@ class Team
         return $this->users;
     }
 
+    
+
     /**
-     * Add project
+     * Set project
      *
      * @param \AppBundle\Entity\Project $project
      *
      * @return Team
      */
-    public function addProject(\AppBundle\Entity\Project $project)
+    public function setProject(\AppBundle\Entity\Project $project = null)
     {
-        $this->projects[] = $project;
+        $this->project = $project;
 
         return $this;
     }
 
     /**
-     * Remove project
+     * Get project
      *
-     * @param \AppBundle\Entity\Project $project
+     * @return \AppBundle\Entity\Project
      */
-    public function removeProject(\AppBundle\Entity\Project $project)
+    public function getProject()
     {
-        $this->projects->removeElement($project);
-    }
-
-    /**
-     * Get projects
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProjects()
-    {
-        return $this->projects;
+        return $this->project;
     }
 }

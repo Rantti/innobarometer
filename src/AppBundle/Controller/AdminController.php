@@ -52,9 +52,11 @@ class AdminController extends Controller
      */
     public function teamAction(Request $request){
         //$form = $this->createForm(new TeamType(), $post);
+        $em = $this->getDoctrine()->getManager();
+        $teams = $em->getRepository('AppBundle:Team')->findAll();
         return $this->render('admin/teams.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            
+            'teams' => $teams,
             ));
     }
 

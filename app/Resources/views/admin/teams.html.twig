@@ -1,38 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="page-header">Dashboard</h1>
-    <div class="row placeholders">
-      <div class="col-xs-6 col-sm-3 placeholder">
-        <a href="{{ path("team_new") }}">add-new</a>
-        <div>
-            {% block fos_user_content %}
-            {% endblock fos_user_content %}
-      </div>
-    </div>
+<h1 class="page-header">Dashboard</h1>
+<div class="row">
+  <a class="btn btn-info" href="{{ path("team_new") }}">New Team</a>
+  <div class="col-xs-6 col-sm-3">
     
-   <div class="table-responsive">
+    <div>
+      {% block fos_user_content %}
+      {% endblock fos_user_content %}
+    </div>
+  </div>
+
+  <div class="table-responsive">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Username</th>
-          <th>Email</th>
+          <th>Team Name</th>
+          <th>Country</th>
           <th>Project</th>
-          <th>Team</th>
-          <th>Roles</th>
-          <th>Last Login</th>
-
         </tr>
       </thead>
-      <td>you</td>
-      <td>are</td>
-      <td>still</td>
-      <td>a</td>
-      <td>young</td>
-      <td>conehead</td>
-      </tbody>
-    </table>
-  </div>
+      <tbody>
+        {% for team in teams %}
+        <tr>
+          <td>{{ team.teamName }}</td>
+          <td>{{ team.country }}</td>
+          <td>
+            {% if team.project %}
+              {{ team.project.projectName }}
+            {% else %}
+            n-a
+            {% endif %}
+         </td>
+       </tr>
+       {% endfor %}
+
+     </tbody>
+   </table>
+ </div>
 </div>
 
 
