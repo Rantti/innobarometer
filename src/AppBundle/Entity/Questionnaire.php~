@@ -7,6 +7,8 @@ use AppBundle\Entity\Statement;
 /**
 * @ORM\Entity
 * @ORM\Table(name="questionnaire")
+*
+* @author Antti Eloranta <antti.o.eloranta@gmail.com>
 */
 class Questionnaire
 {
@@ -81,6 +83,10 @@ class Questionnaire
   */
   protected $extraRound;
 
+  /**
+   * @ORM\ManyToMany(targetEntity="Project", mappedBy="projects")
+   */
+  protected $projects;
 
   /**
   * Get id

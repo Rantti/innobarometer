@@ -70,33 +70,6 @@ class TeamType extends AbstractType
             ));
     }
 
-/*
-->add($formFactory->createNamed("selectedusers", "choice", null, array(
-                            "multiple" => true,
-                            "expanded" => true,
-                            "label" => "Users without teams.",
-                            "choices" => $teamlessUsers,
-                        ))
- */
-
-/* handling users without teams
-$manager = $this->getDoctrine()->getManager();
-        $users = $manager->getRepository('AppBundle:User')->findBy(array('team' => null));
-        $teamlessUsers = array();
-        foreach($users as $user)
-        {
-        $teamlessUsers[] = array($user->getEmail()=>$user->getUsername());
-        }
-        $formFactory = $builder->getFormFactory();
-
-->add($formFactory->createNamed("selectedusers", "choices", null, array(
-                            "multiple" => true,
-                            "expanded" => true,
-                            "label" => "Users without teams.",
-                            "choices" => $teamlessUsers,
-                        )))
- */
-
     /**
      * @param OptionsResolver $resolver
      */

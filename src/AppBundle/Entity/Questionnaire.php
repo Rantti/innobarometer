@@ -7,6 +7,8 @@ use AppBundle\Entity\Statement;
 /**
 * @ORM\Entity
 * @ORM\Table(name="questionnaire")
+*
+* @author Antti Eloranta <antti.o.eloranta@gmail.com>
 */
 class Questionnaire
 {
@@ -81,6 +83,10 @@ class Questionnaire
   */
   protected $extraRound;
 
+  /**
+   * @ORM\ManyToMany(targetEntity="Project", mappedBy="projects")
+   */
+  protected $projects;
 
   /**
   * Get id
@@ -135,4 +141,38 @@ class Questionnaire
   {
     return $this->extraRound;
   }
+
+    /**
+     * Add project
+     *
+     * @param \AppBundle\Entity\Project $project
+     *
+     * @return Questionnaire
+     */
+    public function addProject(\AppBundle\Entity\Project $project)
+    {
+        $this->projects[] = $project;
+
+        return $this;
+    }
+
+    /**
+     * Remove project
+     *
+     * @param \AppBundle\Entity\Project $project
+     */
+    public function removeProject(\AppBundle\Entity\Project $project)
+    {
+        $this->projects->removeElement($project);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
 }
