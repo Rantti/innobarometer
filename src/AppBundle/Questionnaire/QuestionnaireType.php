@@ -29,7 +29,8 @@ class QuestionnaireType extends AbstractType
       'class' => 'AppBundle:Statement',
       'property' => 'statement',
       'multiple' => true,
-      'expanded' => true))
+      'expanded' => true,
+      'max_length' => 5))
     ->add('extraRound', null, array('label' => 'label.extraRound'));
   }
 

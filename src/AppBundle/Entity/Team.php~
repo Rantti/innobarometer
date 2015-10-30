@@ -178,28 +178,4 @@ class Team
     {
         return $this->project;
     }
-
-    /**
-     * Add project
-     *
-     * @param \AppBundle\Entity\Project $project
-     *
-     * @return Team
-     */
-    public function addProject(\AppBundle\Entity\Project $project)
-    {
-        $this->project[] = $project;
-
-        return $this;
-    }
-
-    /**
-     * Remove project
-     *
-     * @param \AppBundle\Entity\Project $project
-     */
-    public function removeProject(\AppBundle\Entity\Project $project)
-    {
-        $this->project->removeElement($project);
-    }
 }
