@@ -1,7 +1,7 @@
 <?php
 /**
 * Questionnaire creation class
-* @author Turo Mikkonen 6.10.2015
+* @author Turo Mikkonen <turo.mikkonen@gmail.com> 6.10.2015
 */
 
 namespace AppBundle\Questionnaire;

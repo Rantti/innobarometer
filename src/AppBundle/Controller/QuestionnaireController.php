@@ -103,7 +103,7 @@ class QuestionnaireController extends controller {
 
      return $this->render('Questionnaire/show.html.twig', array(
        'questionnaire'   => $questionnaire,
-       'delete_form' => $deleteForm->createView(),
+       'delete_form'     => $deleteForm->createView(),
      ));
    }
 
@@ -115,6 +115,9 @@ class QuestionnaireController extends controller {
     */
    public function editAction(Questionnaire $questionnaire, Request $request)
    {
+     $response = $this->forward('AppBundle:AnswerController', array(
+        'statements' => $statements,
+      ));
      $em = $this->getDoctrine()->getManager();
 
      $editForm = $this->createForm(new QuestionnaireType(), $questionnaire);
@@ -165,7 +168,7 @@ class QuestionnaireController extends controller {
      return $this->redirectToRoute('questionnaire_post_index');
    }
 
-   
+
 
    /**
     * Creates a form to delete a Questionnaire entity by id.

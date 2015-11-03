@@ -123,7 +123,7 @@ class StatementController extends controller {
    }
 
    /**
-    * Deletes a Statement entity.
+    * Deletes Statement entity.
     *
     * @Route("/{id}", name="statement_post_delete")
     * @Method("DELETE")

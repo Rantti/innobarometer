@@ -49,6 +49,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, role: ROLE_ADMIN }
         - { path: ^/teams, role: ROLE_ADMIN }
-        - { path: ^/projects, role: ROLE_ADMIN }
         - { path: ^/, role: ROLE_USER}
-

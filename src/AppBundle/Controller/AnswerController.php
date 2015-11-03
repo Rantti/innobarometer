@@ -10,10 +10,12 @@ use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Statement;
 use AppBundle\Entity\Answer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use AppBundle\Controller\QuestionnaireController
 
 /**
 * @Route("/answer")
 * @author Antti Eloranta <anttioeloranta@gmail.com>
+* @author Turo Mikkonen <turo.mikkonen@gmail.com>
 */
 
 class AnswerController extends Controller
@@ -38,12 +40,18 @@ class AnswerController extends Controller
     }
 
     /**
+     * Finds and displays Answer entity.
+     *
      * @Route("/show", name="showanswers")
+     * @Method("GET")
      */
-    public function showAction(Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $answers = $em->getRepository('AppBundle:Answer')->findAll();
-        return $this->render('Questionnaire/Answer/show.html.twig', array('answers' => $answers));
+    public function showAction(Answer $answer){
+        $deleteForm = $this->createDeleteForm($answer);
+
+        return $this->render('Questionnaire/Answer/show.html.twig', array(
+          'answers' => $answers,
+          'delete_form' => $deleteForm->createView(),
+        ));
     }
 
 
@@ -51,7 +59,7 @@ class AnswerController extends Controller
      * @Route("/form", name="answerform")
      */
     public function answerAction(Request $request)
-    {   
+    {
         $id = $this->getRequest()->get('id');
         $em = $this->getDoctrine()->getManager();
         $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
@@ -65,7 +73,7 @@ class AnswerController extends Controller
     public function postAnswerAction(Request $request)
     {
         $qid = $this->get('request')->request->get('questionnaireid');
-        
+
             //$qid = $post->request->get('questionnaireid');
         $em = $this->getDoctrine()->getManager();
         $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
@@ -82,7 +90,56 @@ class AnswerController extends Controller
         }
         return $this->redirectToRoute('answer');
 
-        
+
+    }
+    public function EditAnswer(Answer $answer, $statements, Request $request)
+    {
+      em = $this->getDoctrine()->getManager();
+
+      $editForm = $this->createForm(new AnswerType(), $answer);
+      $deleteForm = $this->createDeleteForm($answer);
+
+      $editForm->handleRequest($request);
+
+      if($editForm->isSubmitted() && $editForm->isValid()) {
+        $em->flush();
+
+        $questionnaire = $editForm["questionnaire"]->getData();
+        return $this->redirectToRoute('answer_post_edit', array('id' => $statement , );)
+
+      }
+    }
+
+  /**
+   * Deletes Answer entity.
+   * @Route("/{id}", name="answer_post_delete")
+   * @Method("DELETE")
+   */
+    public function deleteAction(Request $request, Answer $answer)
+    {
+      $form = $this->createDeleteForm($answer);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($answer);
+        $em->flush();
+      }
+      return $this->redirectToRoute('answer')
+    }
+
+  /**
+   * Creates a form to delete Answer entity by id.
+   * @param  Answer $answer The answer object
+   * @return \Symfony\Component\Form the form
+   */
+    private function createDeleteForm(Answer $answer)
+    {
+      return $this->createFormBuilder()
+        ->setAction($this->generateUrl('answer_post_delete', array('id' => $answer->getId())))
+        ->setMethod('DELETE')
+        ->getForm();
     }
 
 }
