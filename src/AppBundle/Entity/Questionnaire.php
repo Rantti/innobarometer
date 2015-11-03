@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Statement;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
 * @ORM\Entity
@@ -21,11 +22,37 @@ class Questionnaire
 
   /**
   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="questionnaire")
+  *
+  * @Assert\Count(
+  *      min = "5",
+  *      max = "5",
+  *      minMessage = "Only 5 statements per questionnaire. :(",
+  *      maxMessage = "You cannot specify more than {{ limit }} statements"
+  * ) 
   */
   protected $statements;
 
+  /**
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", inversedBy="questionnaires")
+  * @ORM\JoinTable(name="project_questionnaires")
+  */
+  protected $project;
+
+  /**
+  * @ORM\Column(type="integer")
+  */
+  protected $sprintRound;
+
+  /**
+  * @ORM\Column(type="integer")
+  */
+  protected $extraRound;
+
+
+
   public function __construct(){
     $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
   }
 
   /**
@@ -72,21 +99,6 @@ class Questionnaire
   {
       return $this->questionnaire;
   }
-
-  /**
-  * @ORM\Column(type="integer")
-  */
-  protected $sprintRound;
-
-  /**
-  * @ORM\Column(type="integer")
-  */
-  protected $extraRound;
-
-  /**
-   * @ORM\ManyToMany(targetEntity="Project", mappedBy="projects")
-   */
-  protected $projects;
 
   /**
   * Get id
@@ -149,11 +161,12 @@ class Questionnaire
      *
      * @return Questionnaire
      */
-    public function addProject(\AppBundle\Entity\Project $project)
+    public function addProject(Project $project)
     {
-        $this->projects[] = $project;
-
-        return $this;
+        if (!$this->project->contains($project)){
+          $this->project->add($project);
+        }
+      return $this;
     }
 
     /**
@@ -161,9 +174,11 @@ class Questionnaire
      *
      * @param \AppBundle\Entity\Project $project
      */
-    public function removeProject(\AppBundle\Entity\Project $project)
+    public function removeProject(Project $project)
     {
-        $this->projects->removeElement($project);
+        if ($this->project->contains($project)){
+          $this->project->remove($project);
+        }
     }
 
     /**
@@ -171,8 +186,8 @@ class Questionnaire
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProjects()
+    public function getProject()
     {
-        return $this->projects;
+        return $this->project;
     }
 }

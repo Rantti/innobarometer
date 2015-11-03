@@ -8,12 +8,20 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'label.statement'|trans }}</th>
+                <th>Statement</th>
                 <td>{{ statement.statement }}</td>
             </tr>
             <tr>
-                <th>{{ 'label.category'|trans }}</th>
+                <th>Category</th>
                 <td>{{ statement.category }}</td>
+            </tr>
+            <tr>
+                <th>Questionnaires</th>
+                <td>{% for questionnaire in statement.questionnaire %}
+                    {{ questionnaire.id }},
+                    {% endfor %}
+                </td>
+
             </tr>
         </tbody>
     </table>
@@ -22,17 +30,17 @@
 {% block sidebar %}
     <div class="section">
         <a href="{{ path('statement_post_edit', { id: statement.getId }) }}" class="btn btn-lg btn-block btn-success">
-            <i class="fa fa-edit"></i> {{ 'action.edit_contents'|trans }}
+            <i class="fa fa-edit"></i> Edit Statement
         </a>
     </div>
 
     <div class="section">
         {{ include('Questionnaire/Statement/_form.html.twig', {
             form: delete_form,
-            button_label: 'action.delete_statement'|trans,
+            button_label: "Delete Statement",
             button_css: 'btn btn-lg btn-block btn-danger',
             include_back_to_home_link: false
-        }, with_context = false) }}
+        }, with_context = true) }}
     </div>
 
 {% endblock %}

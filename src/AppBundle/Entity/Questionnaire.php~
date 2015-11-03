@@ -4,6 +4,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Statement;
 
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
 * @ORM\Entity
 * @ORM\Table(name="questionnaire")
@@ -26,6 +30,39 @@ class Questionnaire
 
   public function __construct(){
     $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
+
+  *
+  * @Assert\Count(
+  *      min = "5",
+  *      max = "5",
+  *      minMessage = "Only 5 statements per questionnaire. :(",
+  *      maxMessage = "You cannot specify more than {{ limit }} statements"
+  * )
+  */
+  protected $statements;
+
+  /**
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", inversedBy="questionnaires")
+  * @ORM\JoinTable(name="project_questionnaires")
+  */
+  protected $project;
+
+  /**
+  * @ORM\Column(type="integer")
+  */
+  protected $sprintRound;
+
+  /**
+  * @ORM\Column(type="integer")
+  */
+  protected $extraRound;
+
+
+
+  public function __construct(){
+    $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
+
   }
 
   /**
@@ -154,6 +191,12 @@ class Questionnaire
         $this->projects[] = $project;
 
         return $this;
+    public function addProject(Project $project)
+    {
+        if (!$this->project->contains($project)){
+          $this->project->add($project);
+        }
+      return $this;
     }
 
     /**
@@ -164,6 +207,11 @@ class Questionnaire
     public function removeProject(\AppBundle\Entity\Project $project)
     {
         $this->projects->removeElement($project);
+    public function removeProject(Project $project)
+    {
+        if ($this->project->contains($project)){
+          $this->project->remove($project);
+        }
     }
 
     /**
@@ -174,5 +222,8 @@ class Questionnaire
     public function getProjects()
     {
         return $this->projects;
+    public function getProject()
+    {
+        return $this->project;
     }
 }
