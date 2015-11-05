@@ -27,7 +27,7 @@
           <td>{{ team.teamName }}</td>
           <td>{{ team.country }}</td>
           <td>
-            {% if team.project %}
+            {% if team.project is not empty %}
               {{ team.project.projectName }}
             {% else %}
             n-a

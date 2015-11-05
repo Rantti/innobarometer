@@ -23,7 +23,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="team")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="users")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      **/
     protected $team;

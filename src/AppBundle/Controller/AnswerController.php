@@ -45,12 +45,11 @@ class AnswerController extends Controller
      * @Route("/show", name="showanswers")
      * @Method("GET")
      */
-    public function showAction(Answer $answer){
-        $deleteForm = $this->createDeleteForm($answer);
-
+    public function showAction(){
+        $em = $this->getDoctrine()->getManager();
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
         return $this->render('Questionnaire/Answer/show.html.twig', array(
           'answers' => $answers,
-          'delete_form' => $deleteForm->createView(),
         ));
     }
 

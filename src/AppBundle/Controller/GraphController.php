@@ -25,4 +25,16 @@ class GraphController extends Controller
         $questionnaires = $em->getRepository('AppBundle:Questionnaire')->findAll();
         return $this->render('default/graph.html.twig', array('questionnaires'=>$questionnaires));
     }
+
+    /**
+     * @Route("/graphs/{id}/show", name="graph_show")
+     */
+    public function showAction(Questionnaire $Questionnaire)
+    {
+        
+        // $projects = array();    
+        // foreach ($userprojects as $userproject) {
+        //     $projects[] = $userproject->getProject();
+        // }
+    }
 }

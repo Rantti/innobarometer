@@ -116,7 +116,7 @@ class QuestionnaireController extends controller {
    public function editAction(Questionnaire $questionnaire, Request $request)
    {
      $response = $this->forward('AppBundle:AnswerController', array(
-        'statements' => $statements,
+        'statements' => $questionnaire->getStatements(),
       ));
      $em = $this->getDoctrine()->getManager();
 

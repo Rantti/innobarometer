@@ -41,7 +41,7 @@ class Team
 
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="team")
      **/
     protected $users;
 
