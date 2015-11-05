@@ -22,7 +22,7 @@ class GraphController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-    $questionnaires = $em->getRepository('AppBundle:Questionnaire')->findAll();
+        $questionnaires = $em->getRepository('AppBundle:Questionnaire')->findAll();
         return $this->render('default/graph.html.twig', array('questionnaires'=>$questionnaires));
     }
 }

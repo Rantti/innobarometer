@@ -10,7 +10,7 @@ use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Statement;
 use AppBundle\Entity\Answer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use AppBundle\Controller\QuestionnaireController
+use AppBundle\Controller\QuestionnaireController;
 
 /**
 * @Route("/answer")
@@ -94,7 +94,7 @@ class AnswerController extends Controller
     }
     public function EditAnswer(Answer $answer, $statements, Request $request)
     {
-      em = $this->getDoctrine()->getManager();
+      $em = $this->getDoctrine()->getManager();
 
       $editForm = $this->createForm(new AnswerType(), $answer);
       $deleteForm = $this->createDeleteForm($answer);
@@ -105,7 +105,7 @@ class AnswerController extends Controller
         $em->flush();
 
         $questionnaire = $editForm["questionnaire"]->getData();
-        return $this->redirectToRoute('answer_post_edit', array('id' => $statement , );)
+        return $this->redirectToRoute('answer_post_edit', array('id' => $statement , ));
 
       }
     }
@@ -126,7 +126,7 @@ class AnswerController extends Controller
         $em->remove($answer);
         $em->flush();
       }
-      return $this->redirectToRoute('answer')
+      return $this->redirectToRoute('answer');
     }
 
   /**
