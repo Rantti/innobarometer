@@ -10,7 +10,7 @@ use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Statement;
 use AppBundle\Entity\Answer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use AppBundle\Controller\QuestionnaireController
+use AppBundle\Controller\QuestionnaireController;
 
 /**
 * @Route("/answer")
