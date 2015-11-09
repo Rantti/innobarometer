@@ -19,5 +19,26 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * Render overview of the app
+     * @Route("/overview", name="overview")
+     */
+    public function overviewAction(Request $request)
+    {
+      return $this->render('Overview/overview.html.twig', array(
+          'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+      ));
+    }
+    /**
+     * Render more info for the anonymous user
+     * @Route("/more", name="more")
+     */
+    public function moreAction(Request $request)
+    {
+      return $this->render('Overview/more.html.twig', array(
+          'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+      ));
+    }
+
 }
 ?>

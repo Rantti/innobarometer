@@ -13,56 +13,74 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="{{ path('homepage') }}">MobileBarometer</a>
+        <a class="navbar-brand" href="{{ path('overview') }}">MobileBarometer</a>
       </div>
+      <ul class="nav navbar-nav navbar-right">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li><p class="navbar-text"> {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+        </li>
+        <li><a href="/logout">LOG OUT</a></li>
+        {% else %}
+        <li><a href="{{ path('fos_user_security_login') }}">Sign Up / Login</a> </li>
+        {% endif %}
+      </ul>
     </div>
 
   </nav>
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+  <div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+      <li> Your Roles: <br>
+        {% for role in app.user.roles %}
+          {{ role }} <br>
+        {% endfor %}
+      </li>
+      <li><a href="{{ path('homepage') }}" class="">Overview </a></li>
+    </ul>
+
+    <ul class="nav nav-sidebar">
+
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+      <li><a class="{% if app.request.attributes.get('_route') == 'profile'%}active{% endif %}" href="">Profile</a></li>
+      <li><a  href="{{ path('answer') }}">My Questionnaires</a> </li>
+      <li><a href="{{ path('graphs') }}">Graphs</a> </li>
+    </ul>
+
+    {% if is_granted("ROLE_ADMIN") %}
+    <ul class="nav nav-sidebar">
+      <li>User-Management</li>
+      <li><a href="{{ path('users') }}">Users</a> </li>
+      <li><a href="{{ path('teams') }}">Teams</a> </li>
+      <li><a href="#">Projects</a> </li>
+    </ul>
+    <ul class="nav nav-sidebar">
+      <li>Q - Management</li>
+      <li><a href="{{ path('questionnaire') }}">Questionnaires</a></li>
+      <li><a href="{{ path('statement') }}">Statements</a></li>
+      {% endif %}
+
       <ul class="nav nav-sidebar">
-        <li><a href="{{ path('homepage') }}" class="">Overview </a></li>
+        <li><a href="{{ path('fos_user_security_logout') }}">
+          {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+        </a></li>
       </ul>
+      {% else %}
+      <li><a href="{{ path('fos_user_registration_register') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
+      {% endif %}
 
-        <ul class="nav nav-sidebar">
-          
-          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          <li><a class="{% if app.request.attributes.get('_route') == 'profile'%}active{% endif %}" href="">Profile</a></li>
-          <li><a  href="{{ path('answer') }}">My Questionnaires</a> </li>
-          <li><a href="{{ path('graphs') }}">Graphs</a> </li>
-        </ul>
 
-                {% if is_granted("ROLE_ADMIN") %}
-                <ul class="nav nav-sidebar">
-                <li>User-Management</li>
-                <li><a href="{{ path('users') }}">Users</a> </li>
-                <li><a href="{{ path('teams') }}">Teams</a> </li>
-                <li><a href="#">Projects</a> </li>
-              </ul>
-                <ul class="nav nav-sidebar">
-                <li>Q - Management</li>
-                <li><a href="{{ path('questionnaire') }}">Questionnaires</a></li>
-                <li><a href="{{ path('statement') }}">Statements</a></li>
-                {% endif %}
+    </div>
 
-                <ul class="nav nav-sidebar">
-                <li><a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a></li>
-              </ul>
-              {% else %}
-                <li><a href="{{ path('fos_user_registration_register') }}">Sign Up<span class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a> </li>
-            {% endif %}
-            
-
-     </div>
-     <div class="container-fluid">
+    <div class="container-fluid">
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% endif %}
         {% block body %}{% endblock %}
       </div>
     </div>
+
+
     <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     {% block javascripts %}{% endblock %}
   </body>
   </html>
