@@ -33,6 +33,10 @@ class Questionnaire
   protected $statements;
 
   /**
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire")
+   */
+  protected $answers;
+  /**
   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", inversedBy="questionnaires")
   * @ORM\JoinTable(name="project_questionnaires")
   */
@@ -53,6 +57,7 @@ class Questionnaire
   public function __construct(){
     $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
     $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
   }
 
   /**
@@ -189,5 +194,39 @@ class Questionnaire
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Add answer
+     *
+     * @param \AppBundle\Entity\Answer $answer
+     *
+     * @return Questionnaire
+     */
+    public function addAnswer(\AppBundle\Entity\Answer $answer)
+    {
+        $this->answers[] = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Remove answer
+     *
+     * @param \AppBundle\Entity\Answer $answer
+     */
+    public function removeAnswer(\AppBundle\Entity\Answer $answer)
+    {
+        $this->answers->removeElement($answer);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
     }
 }

@@ -17,10 +17,11 @@ class Answer{
  */
 protected $id;
     /**
-     * @ORM\ManyToOne(targetEntity="Questionnaire")
+     * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="answers")
      * @ORM\JoinColumn(name="questionnaire_id", referencedColumnName="id")
      **/
 protected $questionnaire;
+
     /**
      * @ORM\ManyToOne(targetEntity="Statement")
      * @ORM\JoinColumn(name="statement_id", referencedColumnName="id")

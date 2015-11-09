@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
+<h3>Graphs</h3>
+<p>Which statistics would you like to see?</p>
 {% for questionnaire in questionnaires %}
-    
+    <a href="{{path('graph_show', { id: questionnaire.id })}}">Questionnaire {{questionnaire.id}}</a>
 {% endfor %}
 
 <script src="{{ asset('assets/js/Chart.min.js') }}"></script>
