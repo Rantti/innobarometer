@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+        <script src="{{ asset('assets/js/Chart.min.js') }}"></script>
+<h4>Demos</h4>
+<p>Questionnaire statement averages</p>
+<div style="width: 50%">
+            <canvas id="statementAveragesCanvas" height="450" width="600"></canvas>
+</div>
+<p>Statement progression through sprints in questionnaire.</p>
+<div style="width: 50%">
+    <canvas id="statementCanvas" height="450" width="600"></canvas>
+</div>
+
+  <script>
+    var barChartData = {
+        labels : ["Workplace is clean", "Communication is instant", "I'm confident with my skills", "There is nothing to fear", "Schedule is on time"],
+        datasets : [
+            {
+                fillColor : "rgba(88, 143, 185, 0.9)",
+                strokeColor : "rgba(220,220,220,0.8)",
+                highlightFill: "rgba(220,220,220,0.75)",
+                highlightStroke: "rgba(220,220,220,1)",
+                data : [2.4, 4, 3.5, 1.7, 1]
+            },
+        ]
+    }
+
+    var lineChartData = {
+            labels : ["Sprint 1","Sprint 2","Sprint 3","Sprint 4"],
+            datasets : [
+                {
+                    label: "Progression through sprints",
+                    fillColor : "rgba(76, 139, 185, 0.9)",
+                    strokeColor : "rgba(220,220,220,1)",
+                    pointColor : "rgba(8, 25, 73, 1)",
+                    pointStrokeColor : "#fff",
+                    pointHighlightFill : "#fff",
+                    pointHighlightStroke : "rgba(220,220,220,1)",
+                    data : [1.5, 3.5, 2.7, 3.33]
+                },
+            ]
+        }
+    window.onload = function(){
+        var stmtAvg = document.getElementById("statementAveragesCanvas").getContext("2d");
+
+        var ctx = document.getElementById("statementCanvas").getContext("2d");
+        window.myLine = new Chart(ctx).Line(lineChartData, {
+            scaleOverride : true,
+            scaleSteps : 4,
+            scaleStepWidth : 1,
+            scaleStartValue : 0, 
+            responsive: true
+        });
+
+        window.myBar = new Chart(stmtAvg).Bar(barChartData, {
+            responsive : true
+        });
+
+    }
+    </script>
+{% endblock %}

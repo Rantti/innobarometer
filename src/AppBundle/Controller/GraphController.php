@@ -59,4 +59,11 @@ class GraphController extends Controller
         // }
         return $this->render('graph/show.html.twig', array('answers'=>$answers, 'averages'=>$averages, 'labels'=>$labels, 'values'=>$chartValues));   
     }
+
+    /**
+     * @Route("/graphs/demos", name="demos")
+     */
+    public function demoAction(){
+        return $this->render('graph/demo.html.twig');
+    }
 }

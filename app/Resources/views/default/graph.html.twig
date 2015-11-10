@@ -5,4 +5,5 @@
 {% for questionnaire in questionnaires %}
     <a href="{{path('graph_show', { id: questionnaire.id })}}">Questionnaire {{questionnaire.id}}</a>
 {% endfor %}
+<h2><a href="{{path('demos')}}">Demos</a></h2>
 {% endblock %}
