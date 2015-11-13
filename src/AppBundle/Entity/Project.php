@@ -32,14 +32,10 @@ class Project{
   /** @ORM\Column(type="datetime", name="endDate") */
   protected $endDate;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Team", mappedBy="teams")
-     **/
   /**
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Team", mappedBy="project")
-   * @ORM\JoinTable(name="project_teams")
-   */
-  protected $teams;
+     * @ORM\OneToMany(targetEntity="Collaborator", mappedBy="project")
+     * */
+    protected $collaborators;
 
   /**
    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", mappedBy="project")
@@ -51,6 +47,7 @@ class Project{
    * @ORM\Column(type="integer")
    */
   protected $sprintRound;
+  
     /**
      * Constructor
      */

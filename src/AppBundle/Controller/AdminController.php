@@ -96,7 +96,7 @@ class AdminController extends Controller
                     'No dbUser found for id '.$id
                     );
             }
-
+            
             $dbUser->setTeam($team);
             $em->flush();
         }

@@ -23,10 +23,9 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="users")
-     * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
-     **/
-    protected $team;
+     * @ORM\OneToMany(targetEntity="TeamMember", mappedBy="user")
+     * */
+    protected $teams;
 
     public function __construct(){
         parent::__construct();

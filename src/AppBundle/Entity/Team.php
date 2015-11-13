@@ -41,15 +41,14 @@ class Team
 
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="team")
-     **/
-    protected $users;
+    * @ORM\OneToMany(targetEntity="TeamMember" , mappedBy="team")
+    * */
+    protected $members;
 
     /**
-      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", inversedBy="teams")
-      * @ORM\JoinTable(name="project_teams")
-      */
-      protected $project;
+     * @ORM\OneToMany(targetEntity="Collaborator", mappedBy="team")
+     * */
+    protected $projects;
 
 
     /**

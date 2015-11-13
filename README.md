@@ -23,7 +23,9 @@ The project uses Friends of Symphony UserBundle to work with the users.
   + `$php app/console server:run`
 
 ###Some useful commands for cmd
-`$php app/console fos:user:promote username ROLE_ADMIN`
++ `$php app/console fos:user:promote username ROLE_ADMIN`  
++ `$php app/console doctrine:database:create`  
++ `$php app/console doctrine:schema:update --force`  
 
 
 
@@ -38,6 +40,11 @@ For updates and more explained, check  out the [blog](https://slothfuldesigns.wo
 
 #TODO
 
++ päivitä entityt
++ korjaa kontrolleriin tiimin luonti (lisää jäsenet ja tiimit teammember-tauluun)
++ tee uusi projektikontrolleri
++ muuta answer+entity niin että siihen tallennetaan ihan kaikki
++ uuden questionnairen yhteydessä kehitetään vastaukset jotka on tyhjiä -> täytetään kun käyttäjä täyttää, muutoin näytetään sivuilla questionnaire saatavilla olevana
 
 + tiimi projektiin kiinni
 + projekti kyselyyn kiinni
