@@ -201,48 +201,4 @@ class Team
     {
         $this->project->removeElement($project);
     }
-
-    /**
-     * Add member
-     *
-     * @param \AppBundle\Entity\TeamMember $member
-     *
-     * @return Team
-     */
-    public function addMember(\AppBundle\Entity\TeamMember $member)
-    {
-        $this->members[] = $member;
-
-        return $this;
-    }
-
-    /**
-     * Remove member
-     *
-     * @param \AppBundle\Entity\TeamMember $member
-     */
-    public function removeMember(\AppBundle\Entity\TeamMember $member)
-    {
-        $this->members->removeElement($member);
-    }
-
-    /**
-     * Get members
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMembers()
-    {
-        return $this->members;
-    }
-
-    /**
-     * Get projects
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProjects()
-    {
-        return $this->projects;
-    }
 }
