@@ -89,22 +89,9 @@ class AdminController extends Controller
             $teamUser->setTeam($team);
             $teamUser->setRole("user");
             $id = $user->getId();
-<<<<<<< HEAD
-            $dbUser = $em->getRepository('AppBundle:User')->find($id);
-
-            if (!$dbUser) {
-                throw $this->createNotFoundException(
-                    'No dbUser found for id '.$id
-                    );
-            }
-
-            $dbUser->setTeam($team);
-            $em->flush();
-=======
             $user->addTeam($teamUser);
             $team->addMember($teamUser);
             $em->persist($teamUser);
->>>>>>> 16c7b5ae090caa9257ce73c9d6983b7d10460549
         }
         $em->flush();
         return $this->redirectToRoute('teams');
