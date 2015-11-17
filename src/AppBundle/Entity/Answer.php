@@ -18,13 +18,13 @@ class Answer{
 protected $id;
     /**
      * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="answers")
-     * @ORM\JoinColumn(name="questionnaire_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="questionnaire_id", referencedColumnName="id", nullable=FALSE)
      **/
 protected $questionnaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="Statement")
-     * @ORM\JoinColumn(name="statement_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="statement_id", referencedColumnName="id", nullable=FALSE)
      **/
 protected $statement;
     /**

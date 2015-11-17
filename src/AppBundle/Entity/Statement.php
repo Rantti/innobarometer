@@ -5,9 +5,10 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Questionnaire;
 
 /**
-* @ORM\Entity
-* @ORM\Table(name="statement")
-*/
+ * @author Turo Mikkonen <turo.mikkonen@gmail.com>
+ * @ORM\Entity
+ * @ORM\Table(name="statement")
+ */
 class Statement
 {
   /**

@@ -230,4 +230,38 @@ class Project{
     {
         return $this->questionnaires;
     }
+
+    /**
+     * Add collaborator
+     *
+     * @param \AppBundle\Entity\Collaborator $collaborator
+     *
+     * @return Project
+     */
+    public function addCollaborator(\AppBundle\Entity\Collaborator $collaborator)
+    {
+        $this->collaborators[] = $collaborator;
+
+        return $this;
+    }
+
+    /**
+     * Remove collaborator
+     *
+     * @param \AppBundle\Entity\Collaborator $collaborator
+     */
+    public function removeCollaborator(\AppBundle\Entity\Collaborator $collaborator)
+    {
+        $this->collaborators->removeElement($collaborator);
+    }
+
+    /**
+     * Get collaborators
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCollaborators()
+    {
+        return $this->collaborators;
+    }
 }

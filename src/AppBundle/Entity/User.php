@@ -18,7 +18,7 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * 
+     *
      */
     protected $id;
 
@@ -27,9 +27,14 @@ class User extends BaseUser
      * */
     protected $teams;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Assignment", mappedBy="user")
+     */
+    protected $assignments;
+
     public function __construct(){
         parent::__construct();
-        
+
     }
 
 
@@ -89,5 +94,39 @@ class User extends BaseUser
     public function getTeams()
     {
         return $this->teams;
+    }
+
+    /**
+     * Add assignment
+     *
+     * @param \AppBundle\Entity\Assignment $assignment
+     *
+     * @return User
+     */
+    public function addAssignment(\AppBundle\Entity\Assignment $assignment)
+    {
+        $this->assignments[] = $assignment;
+
+        return $this;
+    }
+
+    /**
+     * Remove assignment
+     *
+     * @param \AppBundle\Entity\Assignment $assignment
+     */
+    public function removeAssignment(\AppBundle\Entity\Assignment $assignment)
+    {
+        $this->assignments->removeElement($assignment);
+    }
+
+    /**
+     * Get assignments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAssignments()
+    {
+        return $this->assignments;
     }
 }

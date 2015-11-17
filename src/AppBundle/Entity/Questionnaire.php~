@@ -28,12 +28,17 @@ class Questionnaire
   *      max = "5",
   *      minMessage = "Only 5 statements per questionnaire. :(",
   *      maxMessage = "You cannot specify more than {{ limit }} statements"
-  * ) 
+  * )
   */
   protected $statements;
 
   /**
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire")
+   * @ORM\OneToMany(targetEntity="Assignment", mappedBy="questionnaire")
+   */
+  protected $assignedUsers;
+
+  /**
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire", cascade={"persist", "remove"}, orphanRemoval=TRUE)
    */
   protected $answers;
   /**
@@ -228,5 +233,39 @@ class Questionnaire
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Add assignedUser
+     *
+     * @param \AppBundle\Entity\Assignment $assignedUser
+     *
+     * @return Questionnaire
+     */
+    public function addAssignedUser(\AppBundle\Entity\Assignment $assignedUser)
+    {
+        $this->assignedUsers[] = $assignedUser;
+
+        return $this;
+    }
+
+    /**
+     * Remove assignedUser
+     *
+     * @param \AppBundle\Entity\Assignment $assignedUser
+     */
+    public function removeAssignedUser(\AppBundle\Entity\Assignment $assignedUser)
+    {
+        $this->assignedUsers->removeElement($assignedUser);
+    }
+
+    /**
+     * Get assignedUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAssignedUsers()
+    {
+        return $this->assignedUsers;
     }
 }
