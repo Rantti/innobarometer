@@ -118,55 +118,7 @@ class Team
         return $this->country;
     }
 
-    /**
-     * Add user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return Team
-     */
-    public function addUser(\AppBundle\Entity\User $user)
-    {
-        $this->users[] = $user;
 
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \AppBundle\Entity\User $user
-     */
-    public function removeUser(\AppBundle\Entity\User $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    
-
-    /**
-     * Set project
-     *
-     * @param \AppBundle\Entity\Project $project
-     *
-     * @return Team
-     */
-    public function setProject(\AppBundle\Entity\Project $project = null)
-    {
-        $this->project = $project;
-
-        return $this;
-    }
 
     /**
      * Get project
@@ -200,6 +152,50 @@ class Team
     public function removeProject(\AppBundle\Entity\Project $project)
     {
         $this->project->removeElement($project);
+    }
+
+    /**
+     * Add member
+     *
+     * @param \AppBundle\Entity\TeamMember $member
+     *
+     * @return Team
+     */
+    public function addMember(\AppBundle\Entity\TeamMember $member)
+    {
+        $this->members[] = $member;
+
+        return $this;
+    }
+
+    /**
+     * Remove member
+     *
+     * @param \AppBundle\Entity\TeamMember $member
+     */
+    public function removeMember(\AppBundle\Entity\TeamMember $member)
+    {
+        $this->members->removeElement($member);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 
     /**

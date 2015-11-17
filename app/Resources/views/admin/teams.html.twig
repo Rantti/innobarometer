@@ -19,6 +19,7 @@
           <th>Team Name</th>
           <th>Country</th>
           <th>Project</th>
+          <th>Users</th>
         </tr>
       </thead>
       <tbody>
@@ -27,15 +28,25 @@
           <td>{{ team.teamName }}</td>
           <td>{{ team.country }}</td>
           <td>
-            {% if team.project is not empty %}
-              {{ team.project.projectName }}
-            {% else %}
+            {% for project in team.projects if team.projects is not empty %}
+            {{project.projectName}}, 
+            {% endfor %}
+            {% if team.projects is empty %}
             n-a
             {% endif %}
-         </td>
+       
+       </td>
+       <td>
+            {% for member in team.members if team.members is not empty %}
+            {{member.user.username}}, 
+            {% endfor %}
+            {% if team.members is empty %}
+            n-a
+            {% endif %}
+       
+       </td>
        </tr>
        {% endfor %}
-
      </tbody>
    </table>
  </div>

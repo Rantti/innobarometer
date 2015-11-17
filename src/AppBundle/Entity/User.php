@@ -37,29 +37,38 @@ class User extends BaseUser
 
     }
 
-
     /**
-     * Set team
+     * Add team
      *
-     * @param \AppBundle\Entity\Team $team
+     * @param \AppBundle\Entity\TeamMember $team
      *
      * @return User
      */
-    public function setTeam(\AppBundle\Entity\Team $team = null)
+    public function addTeam(\AppBundle\Entity\TeamMember $team)
     {
-        $this->team = $team;
+        $this->teams[] = $team;
 
         return $this;
     }
 
     /**
-     * Get team
+     * Remove team
      *
-     * @return \AppBundle\Entity\Team
+     * @param \AppBundle\Entity\TeamMember $team
      */
-    public function getTeam()
+    public function removeTeam(\AppBundle\Entity\TeamMember $team)
     {
-        return $this->team;
+        $this->teams->removeElement($team);
+    }
+
+    /**
+     * Get teams
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeams()
+    {
+        return $this->teams;
     }
 
     /**

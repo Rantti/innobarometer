@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Team;
+use AppBundle\Entity\TeamMember;
 use AppBundle\Form\TeamType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -80,15 +81,15 @@ class AdminController extends Controller
      // However, we explicitly add it to improve code readability.
      // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-         $em->persist($team);
-
-        $em->flush();
-//        $teamId = $team->getId();
+            $em->persist($team);
          $users = $form["users"]->getData();
          foreach($users as $user){
+            $teamUser = new TeamMember();
+            $teamUser->setUser($user);
+            $teamUser->setTeam($team);
+            $teamUser->setRole("user");
             $id = $user->getId();
+<<<<<<< HEAD
             $dbUser = $em->getRepository('AppBundle:User')->find($id);
 
             if (!$dbUser) {
@@ -99,7 +100,13 @@ class AdminController extends Controller
 
             $dbUser->setTeam($team);
             $em->flush();
+=======
+            $user->addTeam($teamUser);
+            $team->addMember($teamUser);
+            $em->persist($teamUser);
+>>>>>>> 16c7b5ae090caa9257ce73c9d6983b7d10460549
         }
+        $em->flush();
         return $this->redirectToRoute('teams');
     }
     return $this->render('admin/teams_new.html.twig', array(
