@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @Route("\assignment")
  * @author Turo Mikkonen <turo.mikkonen@gmail.com>
  */
-class assignmentController extends Controller
+class AssignmentController extends Controller
 {
   /**
    * Lists questionnaires and the teams/projects that you can

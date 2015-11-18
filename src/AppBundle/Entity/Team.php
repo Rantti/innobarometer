@@ -45,10 +45,11 @@ class Team
     * */
     protected $members;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Collaborator", mappedBy="team")
-     * */
-    protected $projects;
+  /**
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="teams")
+  *
+  */
+  protected $projects;
 
 
     /**
@@ -57,7 +58,6 @@ class Team
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -118,42 +118,6 @@ class Team
         return $this->country;
     }
 
-
-
-    /**
-     * Get project
-     *
-     * @return \AppBundle\Entity\Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * Add project
-     *
-     * @param \AppBundle\Entity\Project $project
-     *
-     * @return Team
-     */
-    public function addProject(\AppBundle\Entity\Project $project)
-    {
-        $this->project[] = $project;
-
-        return $this;
-    }
-
-    /**
-     * Remove project
-     *
-     * @param \AppBundle\Entity\Project $project
-     */
-    public function removeProject(\AppBundle\Entity\Project $project)
-    {
-        $this->project->removeElement($project);
-    }
-
     /**
      * Add member
      *
@@ -186,6 +150,30 @@ class Team
     public function getMembers()
     {
         return $this->members;
+    }
+
+    /**
+     * Add project
+     *
+     * @param \AppBundle\Entity\Project $project
+     *
+     * @return Team
+     */
+    public function addProject(\AppBundle\Entity\Project $project)
+    {
+        $this->projects[] = $project;
+
+        return $this;
+    }
+
+    /**
+     * Remove project
+     *
+     * @param \AppBundle\Entity\Project $project
+     */
+    public function removeProject(\AppBundle\Entity\Project $project)
+    {
+        $this->projects->removeElement($project);
     }
 
     /**

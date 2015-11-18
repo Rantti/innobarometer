@@ -125,7 +125,7 @@ class QuestionnaireController extends controller {
 
      $editForm->handleRequest($request);
 
-     $result = $questionnaire->getStatements();
+     $result = $questionnaire->getStatements(,);
 
      if ($editForm->isSubmitted() && $editForm->isValid()) {
 
