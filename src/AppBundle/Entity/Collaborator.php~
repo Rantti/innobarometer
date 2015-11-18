@@ -35,19 +35,6 @@ class Collaborator
     protected $team;
 
 
-     /**
-      * Does the user have a certain role
-      *
-      * @return boolean
-      */
-     public function isRole($roleToCheck){
-        if ($this->role == $roleToCheck){
-            return True;
-        }
-        else{
-            return False;
-        }
-     }
      
 
 

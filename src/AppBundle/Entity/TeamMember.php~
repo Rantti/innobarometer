@@ -23,7 +23,7 @@ class TeamMember
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="team")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="teams")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * */
     protected $user;

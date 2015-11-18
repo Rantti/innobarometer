@@ -125,14 +125,24 @@ class QuestionnaireController extends controller {
 
      $editForm->handleRequest($request);
 
+     $result = $questionnaire->getStatements();
+
      if ($editForm->isSubmitted() && $editForm->isValid()) {
 
        $statements = $editForm["statements"]->getData();
-
-        // foreach (!$questionnaire->getStatements() as $statement) {
-        //   $em->removeStatement();
-        // }
        foreach ($statements as $statement) {
+
+
+         $resultData = array_diff($result, $questionnaire);
+         if ($statement->getId() == $resultData) {
+           $statements->removeElement($statement);
+         }
+         // $elements = $alergenosUser->getAlergenos();
+         // foreach ($elements as $element) {
+         //     if ($element->getId() == $id_from_array_diff_or_whatever) {
+         //         $elements->removeElement($element);
+         //     }
+         // }
 
          $id = $statement->getId();
          $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
@@ -140,7 +150,6 @@ class QuestionnaireController extends controller {
            $dbStatement->addQuestionnaire($questionnaire);;
          }
        }
-       $em->persist($questionnaire);
        $em->flush();
        return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getId()));
      }
