@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Questionnaire;
- 
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="team")
@@ -46,7 +46,7 @@ class Team
     protected $members;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="teams", onDelete="SET NULL", cascade={"all"})
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="teams")
   *
   */
   protected $projects;
@@ -118,8 +118,6 @@ class Team
         return $this->country;
     }
 
-
-
     /**
      * Add member
      *
@@ -155,16 +153,6 @@ class Team
     }
 
     /**
-     * Get projects
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProjects()
-    {
-        return $this->projects;
-    }
-
-    /**
      * Add project
      *
      * @param \AppBundle\Entity\Project $project
@@ -186,5 +174,15 @@ class Team
     public function removeProject(\AppBundle\Entity\Project $project)
     {
         $this->projects->removeElement($project);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }

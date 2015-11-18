@@ -34,7 +34,7 @@ class AdminController extends Controller
      * @Route("/removeuser", name="removeuser",
      * requirements = { "id" = "\d+" },
      * methods = { "GET" })
-     * 
+     *
      */
     public function userRemoveAction(Request $request){
         $id = $this->getRequest()->get('id');
@@ -46,7 +46,7 @@ class AdminController extends Controller
         $userManager->deleteUser($user);
         return new RedirectResponse("users");
     }
-    
+
 
     /**
      * @Route("/teams", name="teams")
@@ -69,9 +69,9 @@ class AdminController extends Controller
     {
         $team = new Team();
         $em = $this->getDoctrine()->getManager();
-        
-        
-        
+
+
+
         //$form = $this->createForm(new TeamType($em), $team);
         $form = $this->createForm(new TeamType($em), $team);
         $form->handleRequest($request);

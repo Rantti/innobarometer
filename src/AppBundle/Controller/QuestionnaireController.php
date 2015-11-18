@@ -128,7 +128,12 @@ class QuestionnaireController extends controller {
      if ($editForm->isSubmitted() && $editForm->isValid()) {
 
        $statements = $editForm["statements"]->getData();
+
+        // foreach (!$questionnaire->getStatements() as $statement) {
+        //   $em->removeStatement();
+        // }
        foreach ($statements as $statement) {
+
          $id = $statement->getId();
          $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
          if ($em->getRepository('AppBundle:Statement')) {
