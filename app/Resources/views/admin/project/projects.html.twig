@@ -15,12 +15,15 @@
       </thead>
       <tbody>
         
-        <tr>
-          <td>testings</td>
-          
-          <td>destings
-       </td>
-       </tr>
+        
+          {% for project in projects %}
+             <tr> <td>{{project.projectName}}</td><td>{% for team in project.teams %}
+                  {{team.teamName}}, 
+              {% endfor %}
+              </td></tr>
+          {% endfor %}
+       
+       
 
      </tbody>
    </table>

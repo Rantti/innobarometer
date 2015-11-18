@@ -32,10 +32,13 @@ class Project{
   /** @ORM\Column(type="datetime", name="endDate") */
   protected $endDate;
 
-  /**
-     * @ORM\OneToMany(targetEntity="Collaborator", mappedBy="project")
-     * */
-    protected $collaborators;
+
+ 
+ /**
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Team", inversedBy="projects", onDelete="SET NULL" cascade={"all"})
+  * @ORM\JoinTable(name="projects_teams")
+  */
+  protected $teams;
 
   /**
    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", mappedBy="project")
@@ -53,7 +56,6 @@ class Project{
      */
     public function __construct()
     {
-        $this->teams = new \Doctrine\Common\Collections\ArrayCollection();
         $this->questionnaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -163,39 +165,7 @@ class Project{
         return $this->sprintRound;
     }
 
-    /**
-     * Add team
-     *
-     * @param \AppBundle\Entity\Team $team
-     *
-     * @return Project
-     */
-    public function addTeam(\AppBundle\Entity\Team $team)
-    {
-        $this->teams[] = $team;
-
-        return $this;
-    }
-
-    /**
-     * Remove team
-     *
-     * @param \AppBundle\Entity\Team $team
-     */
-    public function removeTeam(\AppBundle\Entity\Team $team)
-    {
-        $this->teams->removeElement($team);
-    }
-
-    /**
-     * Get teams
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTeams()
-    {
-        return $this->teams;
-    }
+    
 
     /**
      * Add questionnaire
@@ -231,37 +201,39 @@ class Project{
         return $this->questionnaires;
     }
 
+
+
     /**
-     * Add collaborator
+     * Add team
      *
-     * @param \AppBundle\Entity\Collaborator $collaborator
+     * @param \AppBundle\Entity\Team $team
      *
      * @return Project
      */
-    public function addCollaborator(\AppBundle\Entity\Collaborator $collaborator)
+    public function addTeam(\AppBundle\Entity\Team $team)
     {
-        $this->collaborators[] = $collaborator;
+        $this->teams[] = $team;
 
         return $this;
     }
 
     /**
-     * Remove collaborator
+     * Remove team
      *
-     * @param \AppBundle\Entity\Collaborator $collaborator
+     * @param \AppBundle\Entity\Team $team
      */
-    public function removeCollaborator(\AppBundle\Entity\Collaborator $collaborator)
+    public function removeTeam(\AppBundle\Entity\Team $team)
     {
-        $this->collaborators->removeElement($collaborator);
+        $this->teams->removeElement($team);
     }
 
     /**
-     * Get collaborators
+     * Get teams
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCollaborators()
+    public function getTeams()
     {
-        return $this->collaborators;
+        return $this->teams;
     }
 }
