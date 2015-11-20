@@ -20,9 +20,11 @@ class Questionnaire
   */
   protected $id;
 
- /**
-  * @ORM\OneToMany(targetEntity="Assignment", mappedBy="questionnaire")
-  * 
+
+  /**
+   * @var \Doctrine\Common\Collections\ArrayCollection
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="questionnaire")
+  *
   * @Assert\Count(
   *      min = "5",
   *      max = "5",
@@ -33,7 +35,7 @@ class Questionnaire
   protected $statements;
 
   /**
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire", cascade={"persist", "remove"}, orphanRemoval=TRUE)
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire")
    */
   protected $answers;
 
@@ -268,5 +270,10 @@ class Questionnaire
     public function getAssignedUsers()
     {
         return $this->assignedUsers;
+    }
+
+    public function __toString()
+    {
+        return strval($this->id);
     }
 }

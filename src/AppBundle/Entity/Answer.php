@@ -23,7 +23,7 @@ protected $id;
 protected $questionnaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Statement")
+     * @ORM\ManyToOne(targetEntity="Statement", inversedBy="answers")
      * @ORM\JoinColumn(name="statement_id", referencedColumnName="id", nullable=FALSE)
      **/
 protected $statement;

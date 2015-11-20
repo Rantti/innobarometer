@@ -19,11 +19,16 @@ class Statement
   protected $id;
 
   /**
-  * @ORM\OneToMany(targetEntity="Assignment", inversedBy="statement")
-  *
+   * @var \Doctrine\Common\Collections\ArrayCollection
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="statements")
+  * @ORM\JoinTable(name="questionnaire_statements")
   */
   protected $questionnaire;
 
+  /**
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="statement")
+   */
+  protected $answers;
 
 
   public function __construct()
@@ -133,4 +138,43 @@ class Statement
   {
     return $this->category;
   }
+
+  public function __toString()
+  {
+      return strval($this->id);
+  }
+
+    /**
+     * Add answer
+     *
+     * @param \AppBundle\Entity\Answer $answer
+     *
+     * @return Statement
+     */
+    public function addAnswer(\AppBundle\Entity\Answer $answer)
+    {
+        $this->answers[] = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Remove answer
+     *
+     * @param \AppBundle\Entity\Answer $answer
+     */
+    public function removeAnswer(\AppBundle\Entity\Answer $answer)
+    {
+        $this->answers->removeElement($answer);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
 }
