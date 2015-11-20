@@ -76,7 +76,7 @@ class AdminController extends Controller
                 $member = new TeamMember();
                 $member->setUser($user);
                 $member->setRole("user");
-                $team->addMember($teamUser);
+                $team->addMember($member);
             }
             $em->persist($team);
             $em->flush();

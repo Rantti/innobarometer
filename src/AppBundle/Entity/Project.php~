@@ -32,13 +32,6 @@ class Project{
   /** @ORM\Column(type="datetime", name="endDate") */
   protected $endDate;
 
-    /**
-   * @var \Doctrine\Common\Collections\ArrayCollection
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Team", inversedBy="projects")
-  * @ORM\JoinTable(name="teams_projects")
-  */
-  protected $teams;
-
   /**
    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", mappedBy="project")
    * @ORM\JoinTable(name="project_questionnaires")

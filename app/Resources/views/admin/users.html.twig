@@ -36,8 +36,10 @@
           <td>{{ user.email }}</td>
           <td>N/A</td>
           <td>
-          {% if user.team %}
-            {{ user.team.teamName }}
+          {% if user.teams is not empty %}
+            {% for team in user.teams %}
+                {{ team.team.teamName }}
+            {% endfor %}
           {% else %}
             N/A
           {% endif %}

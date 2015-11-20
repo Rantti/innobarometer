@@ -17,9 +17,9 @@
         
         
           {% for project in projects %}
-             <tr> <td>{{project.projectName}}</td><td>{% for team in project.teams %}
+             <tr> <td>{{project.projectName}}</td><td>{#{% for team in project.teams %}
                   {{team.teamName}}, 
-              {% endfor %}
+              {% endfor %} #}
               </td></tr>
           {% endfor %}
        

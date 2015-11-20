@@ -28,13 +28,13 @@
           <td>{{ team.teamName }}</td>
           <td>{{ team.country }}</td>
           <td>
-            {% for project in team.projects if team.projects is not empty %}
+           {#  {% for project in team.projects if team.projects is not empty %}
             {{project.projectName}}, 
             {% endfor %}
             {% if team.projects is empty %}
             n-a
             {% endif %}
-       
+       #}
        </td>
        <td>
             {% for member in team.members if team.members is not empty %}

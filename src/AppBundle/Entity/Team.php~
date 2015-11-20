@@ -45,11 +45,6 @@ class Team
     * */
     protected $members;
 
-      /**
-      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="teams")
-        */
-  protected $projects;
-
 
     /**
      * Constructor
