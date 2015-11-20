@@ -50,45 +50,39 @@ class QuestionnaireController extends controller {
    * to constraint the HTTP methods each controller responds to (by default
    * it responds to all methods).
    */
-   public function newAction(Request $request)
-   {
-     $questionnaire = new Questionnaire();
-     $em = $this->getDoctrine()->getManager();
+  public function newAction(Request $request)
+  {
+   $questionnaire = new Questionnaire();
+   $em = $this->getDoctrine()->getManager();
 
-     $form = $this->createForm(new QuestionnaireType($em), $questionnaire);
+   $form = $this->createForm(new QuestionnaireType($em), $questionnaire);
 
-     $form->handleRequest($request);
+   $form->handleRequest($request);
 
-     // the isSubmitted() method is completely optional because the other
-     // isValid() method already checks whether the form is submitted.
-     // However, we explicitly add it to improve code readability.
-     // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
-     if ($form->isSubmitted() && $form->isValid()) {
+   if ($form->isSubmitted() && $form->isValid()) {
 
-       $em->persist($questionnaire);
-       $em->flush();
+     $em->persist($questionnaire);
+     $statements = $form["statements"]->getData();
+     foreach ($statements as $statement) {
+       $id = $statement->getId();
+       $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
 
-       $statements = $form["statements"]->getData();
-       foreach ($statements as $statement) {
-         $id = $statement->getId();
-         $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
-
-         if (!$dbStatement) {
-           throw $this-createNotFoundException(
+       if (!$dbStatement) {
+         throw $this-createNotFoundException(
            'No dbStatement found for id '.$id);
-         }
-         $dbStatement->addQuestionnaire($questionnaire);
-         $em->flush();
        }
-
-       return $this->redirectToRoute('questionnaire_post_index');
+       $dbStatement->addQuestionnaire($questionnaire);
+       
      }
-
-     return $this->render('Questionnaire/new.html.twig', array(
-       'questionnaire' => $questionnaire,
-       'form' => $form->createView(),
-     ));
+     $em->flush();
+     return $this->redirectToRoute('questionnaire_post_index');
    }
+
+   return $this->render('Questionnaire/new.html.twig', array(
+     'questionnaire' => $questionnaire,
+     'form' => $form->createView(),
+     ));
+ }
 
    /**
     * Finds and displays Questionnaire entity.
@@ -104,7 +98,7 @@ class QuestionnaireController extends controller {
      return $this->render('Questionnaire/show.html.twig', array(
        'questionnaire'   => $questionnaire,
        'delete_form'     => $deleteForm->createView(),
-     ));
+       ));
    }
 
    /**
@@ -115,42 +109,77 @@ class QuestionnaireController extends controller {
     */
    public function editAction(Questionnaire $questionnaire, Request $request)
    {
-     $response = $this->forward('AppBundle:AnswerController', array(
-        'statements' => $questionnaire->getStatements(),
-      ));
-     $em = $this->getDoctrine()->getManager();
 
+     $em = $this->getDoctrine()->getManager();
      $editForm = $this->createForm(new QuestionnaireType(), $questionnaire);
      $deleteForm = $this->createDeleteForm($questionnaire);
 
      $editForm->handleRequest($request);
 
-     if ($editForm->isSubmitted() && $editForm->isValid()) {
+     if ($editForm->isValid()) {
+        $ihanVittuKaikki = $em->getRepository('AppBundle:Statement')->findAll();
+        foreach ($ihanVittuKaikki as $vittuSaatana) {
+          if($vittuSaatana->getQuestionnaire()->contains($questionnaire)){
+            $vittuSaatana->removeQuestionnaire($questionnaire);
+          }
+          $questionnaire->clearStatements();
+        }
+        foreach ($questionnaire->getStatements() as $statement) {
+        $statement->addQuestionnaire($questionnaire);
+        $questionnaire->addStatement($statement);
+      }
+        $em->flush();  
 
-       $statements = $editForm["statements"]->getData();
+      // $repository = $this->getDoctrine()->getRepository('AppBundle:Statement');
+      // $query = $repository->createQueryBuilder('s')
+      // ->where('s.questionnaire > :price')
+      // ->setParameter('price', '19.99')
+      // ->orderBy('s.price', 'ASC')
+      // ->getQuery();
 
-        // foreach (!$questionnaire->getStatements() as $statement) {
-        //   $em->removeStatement();
-        // }
-       foreach ($statements as $statement) {
+      // $products = $query->getResult();
+      // $statements = $editForm["statements"]->getData();
+      // $oldQ = $em->getRepository('AppBundle:Questionnaire')->find($questionnaire->getId());
+      // $oldStatements = $oldQ->getStatements();
+      // foreach ($oldStatements as $oldStatement) {
+      //   $oldStatement->getQuestionnaire()->clear();
+      //   $questionnaire->removeStatement($oldStatement);
+      // }
+      
+      // $questionnaire->clearStatements();
+      // foreach ( $statements as $statement) {
+      //   $questionnaire->addStatement($statement);
+      //   $statement->addQuestionnaire($questionnaire);
+      // }
+      // $em->flush();
+      return $this->redirectToRoute('questionnaire');
+    }
 
-         $id = $statement->getId();
-         $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
-         if ($em->getRepository('AppBundle:Statement')) {
-           $dbStatement->addQuestionnaire($questionnaire);;
-         }
-       }
-       $em->persist($questionnaire);
-       $em->flush();
-       return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getId()));
-     }
-
-     return $this->render('Questionnaire/edit.html.twig', array(
-       'questionnaire'    => $questionnaire,
-       'edit_form'    => $editForm->createView(),
-       'delete_form'  => $deleteForm->createView(),
+    foreach ($questionnaire->getStatements() as $statement) {
+        $statement->getQuestionnaire()->clear();
+      }
+    $questionnaire->clearStatements();
+    return $this->render('Questionnaire/edit.html.twig', array(
+     'edit_form'    => $editForm->createView(),
+     'delete_form'  => $deleteForm->createView(),
+     'questionnaire' => $questionnaire,
      ));
-   }
+  }
+
+  private function deleteCollections($em, $init, $final)
+{
+   $em = $this->getDoctrine()->getManager();
+    if (empty($init)) {
+        return;
+    }
+
+    if (!$final->getStatements() instanceof \Doctrine\ORM\PersistentCollection) {
+        foreach ($init['statements'] as $addr) {
+            $em->remove($addr);
+        }
+    }
+}
+
 
    /**
     * Deletes a Questionnaire entity.
@@ -190,10 +219,10 @@ class QuestionnaireController extends controller {
    private function createDeleteForm(Questionnaire $questionnaire)
    {
      return $this->createFormBuilder()
-          ->setAction($this->generateUrl('questionnaire_post_delete', array('id' => $questionnaire->getId())))
-          ->setMethod('DELETE')
-          ->getForm();
+     ->setAction($this->generateUrl('questionnaire_post_delete', array('id' => $questionnaire->getId())))
+     ->setMethod('DELETE')
+     ->getForm();
    }
-  }
+ }
 
-  ?>
+ ?>

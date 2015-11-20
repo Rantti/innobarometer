@@ -41,12 +41,12 @@ class Team
 
 
     /**
-    * @ORM\OneToMany(targetEntity="TeamMember" , mappedBy="team")
+    * @ORM\OneToMany(targetEntity="TeamMember" , mappedBy="team", cascade={"persist", "remove"})
     * */
     protected $members;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="teams")
+  * @ORM\OneToMany(targetEntity="ProjectTeam", mappedBy="team", cascade={"remove"})
   *
   */
   protected $projects;

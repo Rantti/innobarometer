@@ -69,38 +69,24 @@ class AdminController extends Controller
     {
         $team = new Team();
         $em = $this->getDoctrine()->getManager();
-
-
-
-        //$form = $this->createForm(new TeamType($em), $team);
         $form = $this->createForm(new TeamType($em), $team);
         $form->handleRequest($request);
-
-     // the isSubmitted() method is completely optional because the other
-     // isValid() method already checks whether the form is submitted.
-     // However, we explicitly add it to improve code readability.
-     // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach($form["users"]->getData() as $user){
+                $member = new TeamMember();
+                $member->setUser($user);
+                $member->setRole("user");
+                $team->addMember($teamUser);
+            }
             $em->persist($team);
-         $users = $form["users"]->getData();
-         foreach($users as $user){
-            $teamUser = new TeamMember();
-            $teamUser->setUser($user);
-            $teamUser->setTeam($team);
-            $teamUser->setRole("user");
-            $id = $user->getId();
-            $user->addTeam($teamUser);
-            $team->addMember($teamUser);
-            $em->persist($teamUser);
+            $em->flush();
+            return $this->redirectToRoute('teams');
         }
-        $em->flush();
-        return $this->redirectToRoute('teams');
+        return $this->render('admin/teams_new.html.twig', array(
+           'team' => $team,
+           'form' => $form->createView(),
+           ));
     }
-    return $this->render('admin/teams_new.html.twig', array(
-     'team' => $team,
-     'form' => $form->createView(),
-     ));
-}
 
 
 }

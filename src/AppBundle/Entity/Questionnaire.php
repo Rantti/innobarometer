@@ -20,9 +20,9 @@ class Questionnaire
   */
   protected $id;
 
-  /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="questionnaire")
-  *
+ /**
+  * @ORM\OneToMany(targetEntity="Assignment", mappedBy="questionnaire")
+  * 
   * @Assert\Count(
   *      min = "5",
   *      max = "5",
@@ -33,14 +33,10 @@ class Questionnaire
   protected $statements;
 
   /**
-   * @ORM\OneToMany(targetEntity="Assignment", mappedBy="questionnaire")
-   */
-  protected $assignedUsers;
-
-  /**
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire", cascade={"persist", "remove"}, orphanRemoval=TRUE)
    */
   protected $answers;
+
   /**
   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", inversedBy="questionnaires")
   * @ORM\JoinTable(name="project_questionnaires")
@@ -63,6 +59,11 @@ class Questionnaire
     $this->statements = new \Doctrine\Common\Collections\ArrayCollection();
     $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
     $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+  }
+
+  public function clearStatements(){
+    $this->getStatements()->clear();
+    return $this;
   }
 
   /**

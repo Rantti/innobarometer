@@ -19,8 +19,8 @@ class Statement
   protected $id;
 
   /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="statements")
-  * @ORM\JoinTable(name="questionnaire_statements")
+  * @ORM\OneToMany(targetEntity="Assignment", inversedBy="statement")
+  *
   */
   protected $questionnaire;
 

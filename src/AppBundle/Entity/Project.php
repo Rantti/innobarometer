@@ -32,11 +32,9 @@ class Project{
   /** @ORM\Column(type="datetime", name="endDate") */
   protected $endDate;
 
-
- 
- /**
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Team", inversedBy="projects")
-  * @ORM\JoinTable(name="projects_teams")
+/**
+  * @ORM\OneToMany(targetEntity="ProjectTeam", mappedBy="project")
+  * 
   */
   protected $teams;
 

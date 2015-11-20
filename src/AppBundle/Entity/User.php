@@ -23,14 +23,9 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="TeamMember", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="TeamMember", mappedBy="user", cascade={"remove"})
      * */
     protected $teams;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Assignment", mappedBy="user")
-     */
-    protected $assignments;
 
     public function __construct(){
         parent::__construct();
