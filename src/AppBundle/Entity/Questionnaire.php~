@@ -22,7 +22,7 @@ class Questionnaire
 
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="questionnaire")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Statement", mappedBy="questionnaire", orphanRemoval=true)
   *
   * @Assert\Count(
   *      min = "5",
@@ -39,7 +39,7 @@ class Questionnaire
   protected $assignedUsers;
 
   /**
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire")
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire", cascade={"all"}, orphanRemoval=TRUE)
    */
   protected $answers;
   /**

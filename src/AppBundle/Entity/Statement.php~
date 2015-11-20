@@ -20,13 +20,13 @@ class Statement
 
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="statements")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="statements", orphanRemoval=true)
   * @ORM\JoinTable(name="questionnaire_statements")
   */
   protected $questionnaire;
 
   /**
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="statement")
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="statement", orphanRemoval=TRUE)
    */
   protected $answers;
 
