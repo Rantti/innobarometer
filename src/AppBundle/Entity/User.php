@@ -34,39 +34,7 @@ class User extends BaseUser
 
     
 
-    /**
-     * Add assignment
-     *
-     * @param \AppBundle\Entity\Assignment $assignment
-     *
-     * @return User
-     */
-    public function addAssignment(\AppBundle\Entity\Assignment $assignment)
-    {
-        $this->assignments[] = $assignment;
 
-        return $this;
-    }
-
-    /**
-     * Remove assignment
-     *
-     * @param \AppBundle\Entity\Assignment $assignment
-     */
-    public function removeAssignment(\AppBundle\Entity\Assignment $assignment)
-    {
-        $this->assignments->removeElement($assignment);
-    }
-
-    /**
-     * Get assignments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAssignments()
-    {
-        return $this->assignments;
-    }
 
     /**
      * Add team
