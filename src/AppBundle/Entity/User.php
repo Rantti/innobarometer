@@ -23,49 +23,13 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="TeamMember", mappedBy="user", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="TeamMember", mappedBy="user", cascade={"remove", "persist"})
      * */
     protected $teams;
 
     public function __construct(){
         parent::__construct();
 
-    }
-
-    
-
-    /**
-     * Add assignment
-     *
-     * @param \AppBundle\Entity\Assignment $assignment
-     *
-     * @return User
-     */
-    public function addAssignment(\AppBundle\Entity\Assignment $assignment)
-    {
-        $this->assignments[] = $assignment;
-
-        return $this;
-    }
-
-    /**
-     * Remove assignment
-     *
-     * @param \AppBundle\Entity\Assignment $assignment
-     */
-    public function removeAssignment(\AppBundle\Entity\Assignment $assignment)
-    {
-        $this->assignments->removeElement($assignment);
-    }
-
-    /**
-     * Get assignments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAssignments()
-    {
-        return $this->assignments;
     }
 
     /**

@@ -2,56 +2,78 @@
 
 {% block body %}
 
-   <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Project</th>
-          <th>Team</th>
-          <th>Roles</th>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} | 
-                <ul>
-                {% for role in app.user.roles %}
-                    <li>{{ role }}</li>
-                {% endfor %}
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Project</th>
+        <th>Team</th>
+        <th>Roles</th>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} | 
+        <ul>
+          {% for role in app.user.roles %}
+          <li>{{ role }}</li>
+          {% endfor %}
 
-                </ul>
-                
+        </ul>
 
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
-          <th>Last Login</th>
 
-        </tr>
-      </thead>
-      {% for user in users %}
-        <tr>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>N/A</td>
-          <td>
-          {% if user.teams is not empty %}
-            {% for team in user.teams %}
-                {{ team.team.teamName }}
-            {% endfor %}
-          {% else %}
-            N/A
-          {% endif %}
-          </td>
-          <td>{%for role in user.roles%}{{role}}, {% endfor %}
-          <td>{{ user.lastLogin|date('d-M-y H:i:s') }}</td>
-          <td><a href="{{ path('removeuser', { id: user.id }) }}"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
-        </tr>
-       {% endfor %}
-      </tbody>
-    </table>
-  </div>
+        <a href="{{ path('fos_user_security_logout') }}">
+          {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+        </a>
+        {% else %}
+        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+        <th>Last Login</th>
+
+      </tr>
+    </thead>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>N/A</td>
+      <td>
+        {% if user.teams is not empty %}
+        {% for team in user.teams %}
+        {% if team.team.teamName %}
+        {{ team.team.teamName }}
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        N/A
+        {% endif %}
+      </td>
+      <td>{%for role in user.roles%}{{role}}, {% endfor %}
+        <td>{{ user.lastLogin|date('d-M-y H:i:s') }}</td>
+        <td><a data-toggle="modal" data-target="#{{ user.id }}"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
+        <div class="modal fade" id="{{ user.id }}" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Deleting user {{ user.username }}</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure?</p>
+              </div>
+              <div class="modal-footer">
+              <a class="btn btn-danger" href="{{ path('removeuser', { id: user.id }) }}">Remove {{ user.username }}</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 
 

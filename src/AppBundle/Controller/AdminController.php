@@ -76,7 +76,9 @@ class AdminController extends Controller
                 $member = new TeamMember();
                 $member->setUser($user);
                 $member->setRole("user");
+                $member->setTeam($team);
                 $team->addMember($member);
+                $user->addTeam($member);
             }
             $em->persist($team);
             $em->flush();
@@ -87,6 +89,57 @@ class AdminController extends Controller
            'form' => $form->createView(),
            ));
     }
+
+    /**
+  * Displays a form to edit an existing team entity.
+  *
+  * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="team_edit")
+  * @Method({"GET", "POST"})
+  */
+  public function editAction(Team $team, Request $request)
+  {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $editForm = $this->createForm(new TeamType($em), $team);
+    $deleteForm = $this->createDeleteForm($team);
+    $oldStatements = new ArrayCollection();
+    foreach ($team->getMembers() as $member) {
+      $oldMembers->add($member);
+    }
+
+    $editForm->handleRequest($request);
+
+
+    if ($editForm->isSubmitted() && $editForm->isValid()) {
+      $statements = $editForm["statements"]->getData();
+      foreach ($oldStatements as $statement) {
+        if (false === $questionnaire->getStatements()->contains($statement)) {
+          $statement->getQuestionnaire()->removeElement($questionnaire);
+
+          $em->persist($statement);
+        }
+      }
+
+      foreach ($statements as $statement) {
+
+        $id = $statement->getId();
+        $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
+        if ($em->getRepository('AppBundle:Statement')) {
+          $dbStatement->addQuestionnaire($questionnaire);
+        }
+      }
+      $em->persist($questionnaire);
+      $em->flush();
+      return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getId()));
+    }
+
+    return $this->render('Questionnaire/edit.html.twig', array(
+      'questionnaire'    => $questionnaire,
+      'edit_form'    => $editForm->createView(),
+      'delete_form'  => $deleteForm->createView(),
+    ));
+  }
 
 
 }

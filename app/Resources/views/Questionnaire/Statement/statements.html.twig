@@ -5,11 +5,8 @@
 <h1 class="page-header">Dashboard</h1>
 
 <h2 class="sub-header">Statement overview</h2>
-<ul class="nav nav-pills">
-  <li role="presentation" class="active"><a href="#">Statements</a></li>
-  <li role="presentation"><a href="{{ path('statement_post_new')}}">Create statements</a></li>
-</ul>
-
+  <a class="btn btn-info" href="{{ path('statement_post_new')}}">New Statement</a>
+{% if statements is not empty %}
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -45,6 +42,9 @@
     </tbody>
   </table>
 </div>
+{% else %}
+<p>No statements defined yet.</p>
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}

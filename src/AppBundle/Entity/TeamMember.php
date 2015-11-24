@@ -23,13 +23,13 @@ class TeamMember
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="teams")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="teams", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="members")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="members",cascade={"persist"})
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      * */
     protected $team;
