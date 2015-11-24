@@ -238,40 +238,6 @@ class Questionnaire
         return $this->answers;
     }
 
-    /**
-     * Add assignedUser
-     *
-     * @param \AppBundle\Entity\Assignment $assignedUser
-     *
-     * @return Questionnaire
-     */
-    public function addAssignedUser(\AppBundle\Entity\Assignment $assignedUser)
-    {
-        $this->assignedUsers[] = $assignedUser;
-
-        return $this;
-    }
-
-    /**
-     * Remove assignedUser
-     *
-     * @param \AppBundle\Entity\Assignment $assignedUser
-     */
-    public function removeAssignedUser(\AppBundle\Entity\Assignment $assignedUser)
-    {
-        $this->assignedUsers->removeElement($assignedUser);
-    }
-
-    /**
-     * Get assignedUsers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAssignedUsers()
-    {
-        return $this->assignedUsers;
-    }
-
     public function __toString()
     {
         return strval($this->id);
