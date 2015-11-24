@@ -1,10 +1,12 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% extends 'base.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block fos_user_content %}
+{% block body %}
+<h1 class="page-header">Welcome</h1>
     <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
+    {#}{% if targetUrl %}
     <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
-{% endblock fos_user_content %}
+  {% endif %}#}
+{% endblock body %}
