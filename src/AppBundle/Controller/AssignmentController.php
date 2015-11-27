@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\AssignmentType;
 use AppBundle\Entity\Questionnaire;
-use AppBundle\Entity\Assignment;
+use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

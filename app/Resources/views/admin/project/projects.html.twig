@@ -12,14 +12,14 @@
         <tr>
           <th>Project Name</th>
           <th>Teams</th>
-          
+
         </tr>
       </thead>
       <tbody>
-        
-        
+
+
           {% for project in projects %}
-             <tr> <td>{{project.projectName}}</td>
+             <tr> <td>{{ project.project }}</td>
              <td>
 
              {% for team in project.teams if project.teams %}
@@ -27,8 +27,8 @@
               {% endfor %}
               </td></tr>
           {% endfor %}
-       
-       
+
+
 
      </tbody>
    </table>
@@ -44,5 +44,3 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 {% endblock %}
-
-

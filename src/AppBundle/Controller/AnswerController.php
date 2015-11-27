@@ -32,7 +32,17 @@ class AnswerController extends Controller
          * then list them
          */
         $em = $this->getDoctrine()->getManager();
-        $questionnaires = $em->getRepository('AppBundle:Questionnaire')->findAll();
+        $userTeams = $this->getUser()->getTeams();
+        $questionnaires = Array();
+        foreach ($userTeams as $membership) {
+          foreach ($membership->getTeam()->getProjects() as $project){
+            if ($project->getQuestionnaire() != null )
+            foreach ($project->getQuestionnaire() as $q){
+              $questionnaires[] = $q;
+            }
+          }
+        }
+        //$questionnaires = $em->getRepository('AppBundle:Questionnaire')->findAll();
 
 
 

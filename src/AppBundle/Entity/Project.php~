@@ -24,7 +24,7 @@ class Project{
   /**
    * @ORM\Column(type="string", length=255)
    */
-  protected $project;
+  protected $projectName;
 
   /** @ORM\Column(type="datetime", name="startDate") */
   protected $startDate;
@@ -41,10 +41,10 @@ class Project{
 
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="projects")
-   * @ORM\JoinTable(name="questionnaire_projects")
+   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", mappedBy="projects")
+   * @ORM\JoinTable(name="questionnaires_projects")
    */
-  protected $questionnaire;
+  protected $questionnaires;
 
   /**
    * @ORM\Column(type="integer")
@@ -72,27 +72,27 @@ class Project{
     }
 
     /**
-     * Set project
+     * Set projectName
      *
-     * @param string $project
+     * @param string $projectName
      *
      * @return Project
      */
-    public function setProject($project)
+    public function setProjectName($projectName)
     {
-        $this->project = $project;
+        $this->projectName = $projectName;
 
         return $this;
     }
 
     /**
-     * Get project
+     * Get projectName
      *
      * @return string
      */
-    public function getProject()
+    public function getProjectName()
     {
-        return $this->project;
+        return $this->projectName;
     }
 
     /**
@@ -233,15 +233,5 @@ class Project{
     public function getQuestionnaire()
     {
         return $this->questionnaire;
-    }
-
-    /**
-     * Get questionnaires
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getQuestionnaires()
-    {
-        return $this->questionnaires;
     }
 }
