@@ -2,16 +2,8 @@
 
 {% block body %}
 <h1 class="page-header">Dashboard</h1>
-<div class="row">
   <a class="btn btn-info" href="{{ path("team_new") }}">New Team</a>
-  <div class="col-xs-6 col-sm-3">
-    
-    <div>
-      {% block fos_user_content %}
-      {% endblock fos_user_content %}
-    </div>
-  </div>
-
+{% if teams is not empty %}
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -54,7 +46,10 @@
      </tbody>
    </table>
  </div>
-</div>
+ {% else %}
+     <p>No teams created yet. :(</p>
+ {% endif %}
+
 
 
 

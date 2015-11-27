@@ -2,9 +2,11 @@
 
 {% block body %}
 <h1 class="page-header">Dashboard</h1>
-<div class="row">
+
   <a class="btn btn-info" href="{{ path("project_new") }}">New Project</a>
+  {% if projects is not empty %}
   <div class="table-responsive">
+
     <table class="table table-striped">
       <thead>
         <tr>
@@ -17,9 +19,12 @@
         
         
           {% for project in projects %}
-             <tr> <td>{{project.projectName}}</td><td>{#{% for team in project.teams %}
+             <tr> <td>{{project.projectName}}</td>
+             <td>
+
+             {% for team in project.teams if project.teams %}
                   {{team.teamName}}, 
-              {% endfor %} #}
+              {% endfor %}
               </td></tr>
           {% endfor %}
        
@@ -28,7 +33,10 @@
      </tbody>
    </table>
  </div>
-</div>
+ {% else %}
+     <p>No projects created yet. :c</p>
+ {% endif %}
+
 
 
 
