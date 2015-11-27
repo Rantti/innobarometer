@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Questionnaire\QuestionnaireType;
 use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Statement;
+use AppBundle\Entity\Project;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -66,10 +67,21 @@ class QuestionnaireController extends controller {
     // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
     if ($form->isSubmitted() && $form->isValid()) {
 
-      $em->persist($questionnaire);
-      $em->flush();
+      $projects = $form["projects"]->getData();
+
+      foreach ($projects as $project) {
+        $id = $project->getId();
+        $dbProject = $em->getRepository('AppBundle:Project')->find($id);
+
+        if (!$dbProject) {
+          throw $this-createNotFoundException(
+          'No $dbProject found for id '.$id);
+        }
+        $dbProject->addQuestionnaire($questionnaire);
+      }
 
       $statements = $form["statements"]->getData();
+
       foreach ($statements as $statement) {
         $id = $statement->getId();
         $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
@@ -79,8 +91,11 @@ class QuestionnaireController extends controller {
           'No dbStatement found for id '.$id);
         }
         $dbStatement->addQuestionnaire($questionnaire);
-        $em->flush();
+
       }
+
+      $em->persist($questionnaire);
+      $em->flush();
 
       return $this->redirectToRoute('questionnaire_post_index');
     }

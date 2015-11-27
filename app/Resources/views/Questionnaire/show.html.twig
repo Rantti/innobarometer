@@ -21,6 +21,12 @@
                 <th>{{ 'label.extraRound'|trans }}</th>
                 <td>{{ questionnaire.extraRound }}</td>
             </tr>
+            <tr>
+                <th>{{ 'label.projects'|trans }}</th>
+                {% for project in questionnaire.projects %}
+                  <td>{{ project.project }}</td>
+                {% endfor %}
+            </tr>
         </tbody>
     </table>
 {% endblock %}

@@ -22,6 +22,7 @@
         <td colspan="5">Statements</td>
 
         <td>ExtraRound</td>
+        <td>Projects</td>
         <td>Actions</td>
       </tr>
       {% for questionnaire in questionnaires %}
@@ -32,6 +33,9 @@
           <td>{{ statement.statement }}</td>
         {% endfor %}
         <td>{{ questionnaire.extraRound }}</td>
+        {% for project in questionnaire.projects %}
+          <td>{{ project.project }}</td>
+        {% endfor %}
 
         <td>
           <div class="item-actions">

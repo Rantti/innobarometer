@@ -41,8 +41,7 @@ class Questionnaire
   protected $answers;
 
   /**
-   * @var \Doctrine\Common\Collections\ArrayCollection
-  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="questionnaire")
+  * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Project", mappedBy="questionnaires")
   */
   protected $projects;
 

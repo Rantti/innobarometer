@@ -1,6 +1,6 @@
 <?php
 /**
-* Questionnaire creation class
+* Questionnaire form creation class
 * @author Turo Mikkonen <turo.mikkonen@gmail.com> 6.10.2015
 */
 
@@ -24,14 +24,19 @@ class QuestionnaireType extends AbstractType
   {
     $builder
     ->add('sprintRound', 'integer', array(
-        'label' => 'label.sprintRound'))
+        'label' => 'Sprint Round'))
     ->add('statements', 'entity', array(
       'class' => 'AppBundle:Statement',
       'property' => 'statement',
       'multiple' => true,
       'expanded' => true,
       'max_length' => 5))
-    ->add('extraRound', null, array('label' => 'label.extraRound'));
+    ->add('extraRound', null, array('label' => 'Extra Round'))
+    ->add('projects', 'entity', array(
+      'class' => 'AppBundle:Project',
+      'property' => 'project',
+      'multiple' => true,
+      'expanded' => true));
   }
 
   /**
