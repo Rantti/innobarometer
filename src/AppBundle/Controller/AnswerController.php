@@ -38,14 +38,13 @@ class AnswerController extends Controller
           foreach ($membership->getTeam()->getProjects() as $project){
             if ($project->getQuestionnaire() != null )
             foreach ($project->getQuestionnaire() as $q){
-              $questionnaires[] = $q;
+            if (!in_array($q, $questionnaires)) {
+            $questionnaires[] = $q;
+            }
+
             }
           }
         }
-        //$questionnaires = $em->getRepository('AppBundle:Questionnaire')->findAll();
-
-
-
         return $this->render('Questionnaire/Answer/answer.html.twig', array('questionnaires' => $questionnaires));
     }
 
