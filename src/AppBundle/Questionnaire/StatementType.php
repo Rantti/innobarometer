@@ -31,7 +31,9 @@ class StatementType extends AbstractType
         'Workplace' => 'Workplace',
         'Miscellaneous' => 'Miscellaneous'),
       'required' => true,
-      'label' => 'Category'));
+      'label' => 'Category'))
+    ->add('external_id', 'text', array(
+      'label' => 'external id'));
   }
 
   /**
