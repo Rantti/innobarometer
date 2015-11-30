@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+<h1 class="page-header">User Administration</h1>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -11,8 +11,8 @@
         <th>Project</th>
         <th>Team</th>
         <th>Roles</th>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} | 
-        <ul>
+        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+        <ul class="list-unstyled">
           {% for role in app.user.roles %}
           <li>{{ role }}</li>
           {% endfor %}
@@ -80,5 +80,3 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 {% endblock %}
-
-

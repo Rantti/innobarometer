@@ -8,7 +8,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>sprint #</th>
+          <th>Sprint Number</th>
         </tr>
       </thead>
       <tbody>
@@ -16,10 +16,13 @@
         <tr>
           <td>{{ questionnaire.id }}</td>
           <td>{{ questionnaire.sprintRound }}</td>
-          <td><a href="{{ path('answerform', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a></td>
+          {# {% if answer in aswer %}
+          <td><a href="{{ path('answer_post_edit', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a></td>
+          {% else %}#}
+          <td><a href="{{ path('answer_post_new', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a></td>
         </tr>
        {% endfor %}
-        
+
       </tbody>
     </table>
   </div>
@@ -34,5 +37,3 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 {% endblock %}
-
-

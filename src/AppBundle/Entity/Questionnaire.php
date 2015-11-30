@@ -2,8 +2,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Statement;
-use AppBundle\Entity\Project;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -36,7 +34,7 @@ class Questionnaire
   protected $statements;
 
   /**
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire")
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="questionnaire", cascade={"persist", "remove"})
    */
   protected $answers;
 

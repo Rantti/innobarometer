@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="page-header">Dashboard</h1>
-    <div class="row placeholders">
-      <div class="col-xs-6 col-sm-3 placeholder">
+    <h1 class="page-header">Welcome to Mobile Barometer</h1>
+
+
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <ul>
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                <ul class="list-unstyled">
                 {% for role in app.user.roles %}
                     <li>{{ role }}</li>
                 {% endfor %}
@@ -20,7 +20,7 @@
             {% else %}
                 <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
-        </div>
+
 
         {% for type, messages in app.session.flashBag.all %}
             {% for message in messages %}
@@ -34,9 +34,7 @@
             {% block fos_user_content %}
             {% endblock fos_user_content %}
       </div>
-    </div>
 
-</div>
 
 
 

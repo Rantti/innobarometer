@@ -39,18 +39,18 @@ class TeamType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        
 
 
-        
+
+
         $builder
-        ->add('teamName', 'text', array('label' => 'label.teamName'))
-        ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'), 
+        ->add('teamName', 'text', array('label' => 'Team Name'))
+        ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'),
             'required' => true,))
 
         ->add('users', 'entity', array(
             'class' => 'AppBundle:User',
-            'choice_label' => 'username',
+            'choice_label' => 'User Name',
             'property' => 'user',
             'multiple' => 'true',
             'expanded' => 'true'
