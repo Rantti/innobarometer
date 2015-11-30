@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
 <h1 class="page-header">User Administration</h1>
 <div class="table-responsive">
   <table class="table table-striped">
@@ -37,14 +43,14 @@
       <td>N/A</td>
       <td>
         {% if user.teams is not empty %}
-        {% for team in user.teams if team.team %}
-        {{ team.team.teamName }}
+        {% for team in user.teams %}
+        {{ team.team.teamName }}{% if not loop.last %}, {% endif %}
         {% endfor %}
         {% else %}
         N/A
         {% endif %}
       </td>
-      <td>{%for role in user.roles%}{{role}}, {% endfor %}
+      <td>{%for role in user.roles%}{{role}}{% if not loop.last %}, {% endif %} {% endfor %}
         <td>{{ user.lastLogin|date('d-M-y H:i:s') }}</td>
         <td><a data-toggle="modal" data-target="#{{ user.id }}"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
         <div class="modal fade" id="{{ user.id }}" role="dialog">

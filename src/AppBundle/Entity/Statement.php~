@@ -190,4 +190,28 @@ class Statement
     {
         return $this->answers;
     }
+
+    /**
+     * Set externalId
+     *
+     * @param string $externalId
+     *
+     * @return Statement
+     */
+    public function setExternalId($externalId)
+    {
+        $this->external_id = $externalId;
+
+        return $this;
+    }
+
+    /**
+     * Get externalId
+     *
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->external_id;
+    }
 }

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+<h1 class="page-header">Editing project {{ project.project }}</h1>
+{{ form_start(edit_form) }}
+{{ form_widget(edit_form) }}
+{{ form_end(edit_form) }}
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+
+
+
+
+
+
+

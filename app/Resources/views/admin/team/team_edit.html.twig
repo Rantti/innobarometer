@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
 <h1 class="page-header">Editing team {{ team.teamName }}</h1>
 {{ form_start(teamForm) }}
 {{ form_widget(teamForm) }}
+{{ form_end(teamForm) }}
 <h4>Team Members</h4>
 
 <div class="row">
@@ -20,12 +27,11 @@
         </ul>
     </div>
 </div>
+{{ form_start(memberForm) }}
+{{ form_widget(memberForm) }}
+{{ form_end(memberForm) }}
 
 
-
-<input type="submit" value="Save Changes"
-class="{{ button_css|default("btn btn-primary") }}" />
-{{ form_end(teamForm) }}
 
 
 
