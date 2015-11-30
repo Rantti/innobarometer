@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1 class="page-header">Dashboard</h1>
+<h1 class="page-header">Project Administration</h1>
 
   <a class="btn btn-info" href="{{ path("project_new") }}">New Project</a>
   {% if projects is not empty %}
@@ -23,7 +23,7 @@
              <td>
 
              {% for team in project.teams if project.teams %}
-                  {{team.teamName}}, 
+                  {{team.teamName}},
               {% endfor %}
               </td></tr>
           {% endfor %}
@@ -34,7 +34,7 @@
    </table>
  </div>
  {% else %}
-     <p>No projects created yet. :c</p>
+     <p>No projects created yet.</p>
  {% endif %}
 
 

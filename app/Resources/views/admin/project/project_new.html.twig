@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="page-header">Dashboard</h1>
+    <h1 class="page-header">New Project</h1>
     <div class="row placeholders">
 
 
    {{ form_start(form) }}
     {{ form_widget(form) }}
 
-        
+
 
     <input type="submit" value="Create Project"
            class="{{ button_css|default("btn btn-primary") }}" />
 
     {% if include_back_to_home_link is not defined or include_back_to_home_link == true %}
-        <a href="{{ path('homepage') }}" class="btn btn-link">
-            {{ 'action.back_to_list'|trans }}
+        <a href="{{ path('projects') }}" class="btn btn-link">
+            {{ 'Back to Project listing'|trans }}
         </a>
     {% endif %}
 {{ form_end(form) }}
@@ -27,10 +27,3 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 {% endblock %}
-
-
-
-
-
-
-

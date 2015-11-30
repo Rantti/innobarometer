@@ -1,5 +1,6 @@
 <?php
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,13 +18,13 @@ class Answer{
  */
 protected $id;
     /**
-     * @ORM\ManyToOne(targetEntity="Questionnaire", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="answers", cascade={"persist"})
      * @ORM\JoinColumn(name="questionnaire_id", referencedColumnName="id", nullable=FALSE)
      **/
 protected $questionnaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Statement", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Statement", inversedBy="answers")
      * @ORM\JoinColumn(name="statement_id", referencedColumnName="id", nullable=FALSE)
      **/
 protected $statement;

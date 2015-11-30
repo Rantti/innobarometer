@@ -8,6 +8,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class AnswerType extends AbstractType
 {
@@ -32,8 +33,11 @@ class AnswerType extends AbstractType
       'property' => 'statement',
       'multiple' => true,
       'expanded' => true))
-      ->add('value', 'integer', array(
-        'label' => 'label.value'));
+    ->add('value', 'choice', array(
+      'choice_list' => new ChoiceList(
+        array(1, 2, 3, 4),
+        array('I don\'t agree', 'I disagree a little', 'I agree a little', 'I agree completely' )
+    )));
   }
 
 /**

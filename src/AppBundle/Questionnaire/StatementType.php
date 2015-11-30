@@ -31,7 +31,7 @@ class StatementType extends AbstractType
         'Workplace' => 'Workplace',
         'Miscellaneous' => 'Miscellaneous'),
       'required' => true,
-      'label' => 'category'));
+      'label' => 'Category'));
   }
 
   /**

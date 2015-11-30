@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1 class="page-header">Dashboard</h1>
+<h1 class="page-header">Team Administration</h1>
   <a class="btn btn-info" href="{{ path("team_new") }}">New Team</a>
 {% if teams is not empty %}
   <div class="table-responsive">
@@ -22,7 +22,7 @@
           <td>{{ team.country }}</td>
           <td>
            {% for project in team.projects if team.projects %}
-            {{project.project}}, 
+            {{project.project}},
             {% endfor %}
             {% if team.projects is empty %}
             n-a
@@ -30,12 +30,12 @@
        </td>
        <td>
             {% for member in team.members if team.members is not empty %}
-            {{member.user.username}}, 
+            {{member.user.username}},
             {% endfor %}
             {% if team.members is empty %}
-            n-a
+            N/A
             {% endif %}
-       
+
        </td>
        <td><a href="{{ path('team_edit', { id: team.getId }) }}" >
               <span class="glyphicon glyphicon-pencil"></span>
@@ -46,7 +46,7 @@
    </table>
  </div>
  {% else %}
-     <p>No teams created yet. :(</p>
+     <p>No teams created yet.</p>
  {% endif %}
 
 
@@ -56,5 +56,3 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 {% endblock %}
-
-

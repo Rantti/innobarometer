@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% block main %}
+    <h1>{{ 'answer.edit_answer'|trans({'%id%': answer.getId}) }}</h1>
+
+    {{ include('Questionnaire/Answer/form.html.twig', {
+        form: edit_form,
+        button_label: 'action.save'|trans,
+    }, with_context = false) }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        {{ include('Questionnaire/Answer/form.html.twig', {
+            form: delete_form,
+            button_label: 'action.delete_answer'|trans,
+            button_css: 'btn btn-lg btn-block btn-danger',
+            include_back_to_home_link: false
+        }, with_context = false) }}
+    </div>
+
+    {{ parent() }}
+
+{% endblock %}
+{% endblock %}

@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\AnswerType;
 use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Statement;
 use AppBundle\Entity\Answer;
@@ -100,8 +101,85 @@ class AnswerController extends Controller
 
 
     }
-    public function EditAnswer(Answer $answer, $statements, Request $request)
+
+
+      /**
+      * Creates new answer entity.
+      *
+      * @Route("/new", name="answer_post_new")
+      * @Method({"GET", "POST", "DELETE"})
+      *
+      * NOTE: the Method annotation is optional, but it's a recommended practice
+      * to constraint the HTTP methods each controller responds to (by default
+      * it responds to all methods).
+      */
+      public function newAction(Request $request)
+      {
+        $answer = new Answer();
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new AnswerType($em), $answer);
+
+        $form->handleRequest($request);
+
+        // the isSubmitted() method is completely optional because the other
+        // isValid() method already checks whether the form is submitted.
+        // However, we explicitly add it to improve code readability.
+        // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
+        if ($form->isSubmitted() && $form->isValid()) {
+
+          $questionnaire = $form["questionnaire"]->getData();
+          $id = $questionnaire->getId();
+          $dbQuestionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
+
+          if (!$dbQuestionnaire) {
+            throw $this-createNotFoundException(
+            'No $dbQuestionnaire found for id '.$id);
+          }
+          $dbQuestionnaire->addAnswer($answer);
+
+          $statements = $form["statements"]->getData();
+
+          foreach ($statements as $statement) {
+            $id = $statement->getId();
+            $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
+
+            if (!$dbStatement) {
+              throw $this-createNotFoundException(
+              'No dbStatement found for id '.$id);
+            }
+            $dbStatement->addAnswer($answer);
+
+          }
+
+          $em->persist($answer);
+          $em->flush();
+
+          return $this->redirectToRoute('answer');
+        }
+
+        return $this->render('Questionnaire/Answer/new.html.twig', array(
+          'answer' => $answer,
+          'form' => $form->createView(),
+        ));
+      }
+
+
+
+    /**
+     * Displays a form to edit an existing answer entity.
+     *
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="answer_post_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function EditAnswer(Answer $answer, Request $request)
     {
+      // $id = $this->getRequest()->get('id');
+      // $em = $this->getDoctrine()->getManager();
+      // $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
+      // $statements = $questionnaire->getStatements();
+      // return $this->render('Questionnaire/Answer/form.html.twig', array('statements' => $statements, 'id' => $id));
+
       $em = $this->getDoctrine()->getManager();
 
       $editForm = $this->createForm(new AnswerType(), $answer);
@@ -112,10 +190,14 @@ class AnswerController extends Controller
       if($editForm->isSubmitted() && $editForm->isValid()) {
         $em->flush();
 
-        $questionnaire = $editForm["questionnaire"]->getData();
-        return $this->redirectToRoute('answer_post_edit', array('id' => $statement , ));
-
+        return $this->redirectToRoute('answer_post_edit', array('id' => $answer->getId()));
       }
+
+      return $this->render('Questionnaire/Answer/edit.html.twig', array(
+        'answer'    => $answer,
+        'edit_form'    => $editForm->createView(),
+        'delete_form'  => $deleteForm->createView(),
+      ));
     }
 
   /**

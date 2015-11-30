@@ -3,9 +3,9 @@
 {% block body %}
 
 {% block main %}
-    <h1 class="page-header">{{ 'New Questionnaire'|trans }}</h1>
+    <h1>{{ 'answer.answer_post_new'|trans }}</h1>
 
-    {{ include('Questionnaire/_form.html.twig') }}
+    {{ include('Questionnaire/Answer/answer_form.html.twig') }}
 {% endblock %}
 
 {% block sidebar %}

@@ -2,9 +2,8 @@
 
 {% block body %}
 
-<h1 class="page-header">Dashboard</h1>
+<h1 class="page-header">Questionnaire overview</h1>
 
-<h2 class="sub-header">Questionnaire overview</h2>
   <a class="btn btn-info" href="{{ path('questionnaire_post_new')}}">New Questionnaire</a>
 
 {% if questionnaires is not empty %}
@@ -12,38 +11,30 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>{{ 'label.questionnaire'|trans }}</th>
+        <th>SprintRound</th>
+        <th colspan="5">Statements</th>
+        <th>ExtraRound</th>
+        <th>Projects</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>ID</td>
-        <td>SprintRound</td>
-        <td colspan="5">Statements</td>
-
-        <td>ExtraRound</td>
-        <td>Projects</td>
-        <td>Actions</td>
-      </tr>
       {% for questionnaire in questionnaires %}
       <tr>
-        <td>{{ questionnaire.id }}</td>
         <td>{{ questionnaire.sprintRound }}</td>
         {% for statement in questionnaire.statements %}
           <td>{{ statement.statement }}</td>
         {% endfor %}
         <td>{{ questionnaire.extraRound }}</td>
-        {% for project in questionnaire.projects %}
-          <td>{{ project.project }}</td>
-        {% endfor %}
+        <td>{% for project in questionnaire.projects %}{{ project.project }} {% endfor %}</td>
 
         <td>
           <div class="item-actions">
             <a href="{{ path('questionnaire_post_show', { id: questionnaire.getId }) }}" class="btn btn-sm btn-default">
-              {{ 'action.show'|trans }}
+              {{ 'Show Details'|trans }}
             </a>
             <a href="{{ path('questionnaire_post_edit', { id: questionnaire.getId }) }}" class="btn btn-sm btn-primary">
-              <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
+              <i class="fa fa-edit"></i> {{ 'Edit Questionnaire'|trans }}
             </a>
           </div>
         </td>
