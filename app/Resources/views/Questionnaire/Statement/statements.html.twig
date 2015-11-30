@@ -45,6 +45,50 @@
 {% else %}
 <p>No statements defined yet.</p>
 {% endif %}
+{% if is_granted("ROLE_ADMIN") and statements|length != 0 %}
+<a data-toggle="modal" data-target="#deleteCheckModal" class="btn btn-danger" />Delete All Statements</a>
+
+        <div class="modal fade" id="deleteCheckModal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Deleting all statements.</h4>
+              </div>
+              <div class="modal-body">
+                <p>You're about to delete all statements. Are you sure?</p>
+              </div>
+              <div class="modal-footer">
+              <a class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#deleteAllModal">Remove all Statements.</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Take Me Out of here!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="deleteAllModal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Deleting all statements.</h4>
+              </div>
+              <div class="modal-body">
+                <p>Oh wow, you almost removed all of the statements. This cannot be undone. Are you sure about that?</p>
+              </div>
+              <div class="modal-footer">
+              <a class="btn btn-danger" href="{{ path('statement_deleteall') }}">I'm determined. Remove all Statements.</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Take Me Out of here!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}
@@ -53,8 +97,6 @@
     <i class="fa fa-plus"></i> {{ 'action.create_statement'|trans }}
   </a>
 </div>
-
-{{ parent() }}
 
 
 {% endblock %}

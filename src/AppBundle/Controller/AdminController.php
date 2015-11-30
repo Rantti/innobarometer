@@ -24,10 +24,10 @@ class AdminController extends Controller
     {
     	$userManager = $this->get('fos_user.user_manager');
     	$users = $userManager->findUsers();
-        return $this->render('admin/users.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'users' =>   $users,
-            ));
+      return $this->render('admin/users.html.twig', array(
+        'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        'users' =>   $users,
+        ));
     }
 
     /**
@@ -37,14 +37,14 @@ class AdminController extends Controller
      *
      */
     public function userRemoveAction(Request $request){
-        $id = $this->getRequest()->get('id');
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
-        if (!$user instanceof User) {
-            throw new NotFoundHttpException('User not found for id ' . $id);
-        }
-        $userManager->deleteUser($user);
-        return new RedirectResponse("users");
+      $id = $this->getRequest()->get('id');
+      $userManager = $this->get('fos_user.user_manager');
+      $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+      if (!$user instanceof User) {
+        throw new NotFoundHttpException('User not found for id ' . $id);
+      }
+      $userManager->deleteUser($user);
+      return new RedirectResponse("users");
     }
 
 
@@ -53,12 +53,12 @@ class AdminController extends Controller
      */
     public function teamAction(Request $request){
         //$form = $this->createForm(new TeamType(), $post);
-        $em = $this->getDoctrine()->getManager();
-        $teams = $em->getRepository('AppBundle:Team')->findAll();
-        return $this->render('admin/teams.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'teams' => $teams,
-            ));
+      $em = $this->getDoctrine()->getManager();
+      $teams = $em->getRepository('AppBundle:Team')->findAll();
+      return $this->render('admin/teams.html.twig', array(
+        'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        'teams' => $teams,
+        ));
     }
 
     /**
@@ -67,80 +67,102 @@ class AdminController extends Controller
      */
     public function newTeamAction(Request $request)
     {
-        $team = new Team();
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new TeamType($em), $team);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            foreach($form["users"]->getData() as $user){
-                $member = new TeamMember();
-                $member->setUser($user);
-                $member->setRole("user");
-                $member->setTeam($team);
-                $team->addMember($member);
-                $user->addTeam($member);
-            }
-            $em->persist($team);
-            $em->flush();
-            return $this->redirectToRoute('teams');
+      $team = new Team();
+      $em = $this->getDoctrine()->getManager();
+      $form = $this->createForm(new TeamType($em), $team);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        foreach($form["users"]->getData() as $user){
+          $member = new TeamMember();
+          $member->setUser($user);
+          $member->setRole("user");
+          $member->setTeam($team);
+          $team->addMember($member);
+          $user->addTeam($member);
         }
-        return $this->render('admin/teams_new.html.twig', array(
-           'team' => $team,
-           'form' => $form->createView(),
-           ));
+        $em->persist($team);
+        $em->flush();
+        return $this->redirectToRoute('teams');
+      }
+      return $this->render('admin/teams_new.html.twig', array(
+       'team' => $team,
+       'form' => $form->createView(),
+       ));
     }
 
     /**
   * Displays a form to edit an existing team entity.
   *
-  * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="team_edit")
+  * @Route("team/{id}/edit", requirements={"id" = "\d+"}, name="team_edit")
   * @Method({"GET", "POST"})
   */
-  public function editAction(Team $team, Request $request)
-  {
+    public function editAction(Team $team, Request $request)
+    {
 
-    $em = $this->getDoctrine()->getManager();
+      $em = $this->getDoctrine()->getManager();
 
-    $editForm = $this->createForm(new TeamType($em), $team);
-    $deleteForm = $this->createDeleteForm($team);
-    $oldStatements = new ArrayCollection();
-    foreach ($team->getMembers() as $member) {
-      $oldMembers->add($member);
+      $teamForm = $this->createFormBuilder($team)
+      ->add('teamName', 'text', array('label' => 'label.teamName'))
+      ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'), 
+        'required' => true,))
+      ->getForm();
+
+
+    $teamMembers = $team->getMembers();
+    $users = array();
+    foreach ($teamMembers as $teamMember) {
+      $users[] = $teamMember->getUser();
     }
+    $allUsers = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+    $choiceArray = array_diff($allUsers, $users);
+    $memberForm = $this->createFormBuilder($team)
 
-    $editForm->handleRequest($request);
+    ->add('users', 'entity', array(
+            'class' => 'AppBundle:User',
+            'choice_label' => 'username',
+            'property' => 'user',
+            'multiple' => 'true',
+            'expanded' => 'true'
+            ))
 
 
-    if ($editForm->isSubmitted() && $editForm->isValid()) {
-      $statements = $editForm["statements"]->getData();
-      foreach ($oldStatements as $statement) {
-        if (false === $questionnaire->getStatements()->contains($statement)) {
-          $statement->getQuestionnaire()->removeElement($questionnaire);
+    ->add('save', 'submit', array('label' => 'Add Member'))
+    ->getForm();
 
-          $em->persist($statement);
+      $teamForm->handleRequest($request);
+
+
+      if ($teamForm->isSubmitted() && $teamForm->isValid()) {
+        $em->flush();
+        return $this->render('admin/team/team_edit.html.twig', array(
+        'team'    => $team,
+        'teamForm'    => $teamForm->createView()
+        ));
         }
-      }
 
-      foreach ($statements as $statement) {
-
-        $id = $statement->getId();
-        $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
-        if ($em->getRepository('AppBundle:Statement')) {
-          $dbStatement->addQuestionnaire($questionnaire);
-        }
-      }
-      $em->persist($questionnaire);
+      return $this->render('admin/team/team_edit.html.twig', array(
+        'team'    => $team,
+        'teamForm'    => $teamForm->createView()
+        ));
+    }
+    /**
+     * @Route("/team/removemember/{id}", name="removemember",
+     * requirements = { "id" = "\d+" },
+     * methods = { "GET", "POST" })
+     *
+     */
+    public function memberRemoveAction(Request $request, TeamMember $member){
+      $em = $this->getDoctrine()->getManager();
+      $team = $member->getTeam();
+      $team->removeMember($member);
+      $user = $member->getUser();
+      $user->removeTeam($member);
+      $em->remove($member);
       $em->flush();
-      return $this->redirectToRoute('questionnaire_post_edit', array('id' => $questionnaire->getId()));
+      return $this->redirectToRoute('team_edit', array(
+        'id' => $team->getId()));
     }
 
-    return $this->render('Questionnaire/edit.html.twig', array(
-      'questionnaire'    => $questionnaire,
-      'edit_form'    => $editForm->createView(),
-      'delete_form'  => $deleteForm->createView(),
-    ));
+
   }
-
-
-}
-?>
+  ?>

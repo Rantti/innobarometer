@@ -18,6 +18,14 @@ class Statement
   */
   protected $id;
 
+  //TARVITAAN
+  //
+  //oma id (decima/string)
+  //
+  //class (sc_engineering_wtf eli category oikeastaan)
+  //
+  //indicator (en tiedä en muista :-D)
+
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="statements")

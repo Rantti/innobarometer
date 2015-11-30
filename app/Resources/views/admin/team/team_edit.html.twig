@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1 class="page-header">Editing team {{ team.teamName }}</h1>
+{{ form_start(teamForm) }}
+{{ form_widget(teamForm) }}
+<h4>Team Members</h4>
+
+<div class="row">
+    <div class=" col-sm-4">
+        <ul class="list-group">
+            {% for member in team.members %}
+            <li class="list-group-item open">
+                {{ member.user.username }}
+                <span class="show-menu">
+                    <a href="{{ path('removemember', { id: member.id }) }}"><span class="glyphicon glyphicon glyphicon-remove pull-right"></span></a>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+
+<input type="submit" value="Save Changes"
+class="{{ button_css|default("btn btn-primary") }}" />
+{{ form_end(teamForm) }}
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+
+
+
+
+
+
+
