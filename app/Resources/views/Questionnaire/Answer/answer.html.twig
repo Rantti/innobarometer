@@ -29,9 +29,10 @@
         <td>{{ questionnaire.id }}</td>
         <td>{{ questionnaire.sprintRound }}</td>
           {# {% if answer in aswer %}
-          <td><a href="{{ path('answer_post_edit', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a></td>
+          <td><a href="{{ path('answer_post_edit', { id: questionnaire.id }) }}" class="btn btn-success">Edit your answer</a></td>
           {% else %}#}
-          <td><a href="{{ path('answer_post_new', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a></td>
+          <td><a href="{{ path('answerform', { id: questionnaire.id }) }}" class="btn btn-success">Fill questionnaire</a>
+          <a href="{{ path('answer_post_new', { id: questionnaire.getId }) }}" class="btn btn-success">Give new answer</a></td>
         </tr>
         {% endfor %}
 

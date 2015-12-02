@@ -22,23 +22,25 @@ class AnswerType extends AbstractType
 
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
+
     $builder
-    ->add('questionnaire', 'entity', array(
-      'class' => 'AppBundle:Questionnaire',
-      'property' => 'questionnaire',
-      'multiple' => true,
-      'expanded' => true))
-    ->add('statements', 'entity', array(
+    // ->add('questionnaire', 'entity', array(
+    //   'class' => 'AppBundle:Questionnaire',
+    //   'property' => 'id'))
+    ->add('statement', 'entity', array(
       'class' => 'AppBundle:Statement',
-      'property' => 'statement',
-      'multiple' => true,
-      'expanded' => true))
+      'property' => 'statement'))
     ->add('value', 'choice', array(
       'choice_list' => new ChoiceList(
         array(1, 2, 3, 4),
         array('I don\'t agree', 'I disagree a little', 'I agree a little', 'I agree completely' )
     )));
   }
+
+  // function __construct(AppBundle\Entity\Questionnaire $questionnaire, AppBundle\Entity\Statement $statement) {
+  //   $this->questionnaire = $questionnaire;
+  //   $this->statement = $statement;
+  // }
 
 /**
  * @param  OptionsResolver $resolver

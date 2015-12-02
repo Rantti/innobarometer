@@ -6,15 +6,15 @@
     {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
 #}
 
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{% for sform in form %}
+    {{ form_widget(sform) }}
+{% endfor %}
 
-    <input type="submit" value="{{ button_label|default("Create Questionnaire") }}"
-           class="{{ button_css|default("btn btn-primary") }}" />
+<input type="submit" value="{{ button_label|default("Give Answers") }}"
+       class="{{ button_css|default("btn btn-primary") }}" />
 
-    {% if include_back_to_home_link is not defined or include_back_to_home_link == true %}
-        <a href="{{ path('questionnaire_post_index') }}" class="btn btn-link">
-            Back to listing
-        </a>
-    {% endif %}
-{{ form_end(form) }}
+{% if include_back_to_home_link is not defined or include_back_to_home_link == true %}
+    <a href="{{ path('answer') }}" class="btn btn-link">
+        Back to listing
+    </a>
+{% endif %}

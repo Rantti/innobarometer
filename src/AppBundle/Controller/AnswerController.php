@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -119,13 +121,15 @@ class AnswerController extends Controller
     {
       $qid = $this->get('request')->request->get('questionnaireid');
 
-            //$qid = $post->request->get('questionnaireid');
-      $em = $this->getDoctrine()->getManager();
-      $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
-      $statements = $questionnaire->getStatements();
-      foreach ($statements as $statement) {
-        $answer = new Answer();
-        $answer->setStatement($statement);
+
+
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new AnswerType($em), $answer);
+        $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
+        $statements = $questionnaire->getStatements();
+        foreach ($statements as $statement) {
+            $answer = new Answer();
+            $answer->setStatement($statement);
                 // $value = $post->request->get($statement->getId());
         $value = $this->get('request')->request->get($statement->getId());
         $answer->setValue($value);
@@ -140,64 +144,104 @@ class AnswerController extends Controller
 
 
       /**
-      * Creates new answer entity.
+      * Gives new answers to existing Questionnaire Entity
       *
-      * @Route("/new", name="answer_post_new")
+      * @Route("/new/{id}", requirements={"id" = "\d+"}, name="answer_post_new")
       * @Method({"GET", "POST", "DELETE"})
       *
       * NOTE: the Method annotation is optional, but it's a recommended practice
       * to constraint the HTTP methods each controller responds to (by default
       * it responds to all methods).
       */
-      public function newAction(Request $request)
+      public function newAction(Questionnaire $questionnaire, Statement $statement, Request $request)
       {
-        $answer = new Answer();
         $em = $this->getDoctrine()->getManager();
+        // $repository = $this->getDoctrine()->getRepository('AppBundle:Statement');
+        // $statements = $repository->findAll();
+        //
+        // $statementCollection = new Answer;
+        //
+        // foreach ($statements as $statement) {
+        //
+        //   $statementCollection->getStatement()->add($statement);
+        // }
+        //
+        // $collection = $this->createForm(new AnswerType, $statementCollection);
+        //
+        // return $this->render('Questionnaire/Answer/new.html.twig', array(
+        //   'collection' => $collection->createView()
+        // ));
 
-        $form = $this->createForm(new AnswerType($em), $answer);
 
-        $form->handleRequest($request);
+        // $repo_statement = $this->getDoctrine()->getRepository('AppBundle:Statement');
+        // $repo_questionnaire = $this->getDoctrine()->getRepository('AppBundle:Questionnaire');
+        // $questionnaire = $repo_questionnaire->findOneById($id);
+        //
+        // if (is_null($questionnaire)) {
+        //     throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+        // }
+        //
+        // // $statement = $repo_statement->findOneBy(
+        // //     array('questionnaire'=>$questionnaire,'statement'=>$this->getStatement())
+        // // );
 
-        // the isSubmitted() method is completely optional because the other
-        // isValid() method already checks whether the form is submitted.
-        // However, we explicitly add it to improve code readability.
-        // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
-        if ($form->isSubmitted() && $form->isValid()) {
 
-          $questionnaire = $form["questionnaire"]->getData();
-          $id = $questionnaire->getId();
-          $dbQuestionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
+        foreach($questionnaire->getstatements() as $key => $statement){
 
-          if (!$dbQuestionnaire) {
-            throw $this-createNotFoundException(
-              'No $dbQuestionnaire found for id '.$id);
-          }
-          $dbQuestionnaire->addAnswer($answer);
+            $answer[$key] = new Answer($statement);
+            $form[$key] = $this->createForm(new AnswerType(), $answer[$key])->createView();
+        }
 
-          $statements = $form["statements"]->getData();
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+          $form->bindRequest($request);
 
-          foreach ($statements as $statement) {
-            $id = $statement->getId();
-            $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
+          // the isSubmitted() method is completely optional because the other
+          // isValid() method already checks whether the form is submitted.
+          // However, we explicitly add it to improve code readability.
+          // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
+          if ($form->isSubmitted() && $form->isValid()) {
 
-            if (!$dbStatement) {
-              throw $this-createNotFoundException(
-                'No dbStatement found for id '.$id);
+            $questionnaireAns = $form["questionnaireAns"]->getData();
+            foreach ($questionnaireAns as $questionnaire) {
+              $id = $questionnaire->getId();
+              $dbQuestionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
+              if (!$dbQuestionnaire) {
+                throw $this-createNotFoundException(
+                'No $dbQuestionnaire found for id '.$id);
+              }
+              $dbQuestionnaire->addAnswer($answer);
             }
-            $dbStatement->addAnswer($answer);
 
+            $statements = $form["statements"]->getData();
+
+            foreach ($statements as $statement) {
+              $id = $statement->getId();
+              $dbStatement = $em->getRepository('AppBundle:Statement')->find($id);
+
+
+              if (!$dbStatement) {
+                throw $this-createNotFoundException(
+                'No dbStatement found for id '.$id);
+              }
+              $dbStatement->addAnswer($answer);
+            }
+
+            $em->persist($answer);
+            $em->flush();
+
+            return $this->redirectToRoute('answer');
           }
-
-          $em->persist($answer);
-          $em->flush();
-
-          return $this->redirectToRoute('answer');
         }
 
         return $this->render('Questionnaire/Answer/new.html.twig', array(
+          'questionnaire' => $questionnaire,
+          'statement' => $statement,
           'answer' => $answer,
           'form' => $form->createView(),
           ));
+
+
       }
 
 
