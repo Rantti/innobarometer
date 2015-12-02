@@ -41,8 +41,9 @@ This program is designed to take a CSV file and turn it into SQL insert clauses 
 - The program will create CSVtoSQL.ini the first time you run it. It will contain: Host name, user, password, database name and file name. ** Make sure you add this file to your gitignore. **
 - You need Python 2.7 to run this program. Instal python & add python to your system variable. You may also need to import some libraries. 
 
-- Ask Jyri if you have any questions regarding this.
+- Ask Jyri if you have any questions regarding this program or it's function.
 
+---
 
 For updates and more explained, check  out the [blog](https://slothfuldesigns.wordpress.com).
 
