@@ -53,7 +53,7 @@ class ProjectType extends AbstractType
       'expanded' => true))
         ->add('sprintRound', 'integer', array(
         'label' => 'Sprint round number'))
-        ;
+        ->add('save', 'submit', array('label' => 'Save Changes'));
     }
 
     /**

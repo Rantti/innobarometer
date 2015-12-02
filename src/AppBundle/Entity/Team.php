@@ -25,6 +25,12 @@ class Team
     protected $id;
 
     /**
+     * @ORM\Column(type="string", length=6)
+     * @var string 
+     */
+    protected $inviteToken;
+    
+    /**
      * name of the team
      * @var string
      * @ORM\Column(type="string", length=255)
@@ -183,5 +189,29 @@ class Team
     public function getProjects()
     {
         return $this->projects;
+    }
+
+    /**
+     * Set inviteToken
+     *
+     * @param string $inviteToken
+     *
+     * @return Team
+     */
+    public function setInviteToken($inviteToken)
+    {
+        $this->inviteToken = $inviteToken;
+
+        return $this;
+    }
+
+    /**
+     * Get inviteToken
+     *
+     * @return string
+     */
+    public function getInviteToken()
+    {
+        return $this->inviteToken;
     }
 }

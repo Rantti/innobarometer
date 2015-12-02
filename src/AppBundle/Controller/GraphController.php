@@ -51,12 +51,6 @@ class GraphController extends Controller
         foreach ($averages as $key => $value) {
             $chartValues[]=$value;
         }
-
-
-        // $projects = array();    
-        // foreach ($userprojects as $userproject) {
-        //     $projects[] = $userproject->getProject();
-        // }
         return $this->render('graph/show.html.twig', array('answers'=>$answers, 'averages'=>$averages, 'labels'=>$labels, 'values'=>$chartValues));   
     }
 

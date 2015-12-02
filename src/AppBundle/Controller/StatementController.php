@@ -58,10 +58,6 @@ class StatementController extends controller {
 
      $form->handleRequest($request);
 
-     // the isSubmitted() method is completely optional because the other
-     // isValid() method already checks whether the form is submitted.
-     // However, we explicitly add it to improve code readability.
-     // See http://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
      if ($form->isSubmitted() && $form->isValid()) {
 
        $em = $this->getDoctrine()->getManager();
@@ -162,6 +158,32 @@ class StatementController extends controller {
           ->setMethod('DELETE')
           ->getForm();
    }
+
+     /**
+  * Lists all statement entities.
+  *
+  * This controller responds to two different routes with the same URL:
+  *   * 'statement_post_index' is the route with a name that follows the same
+  *     structure as the rest of the controllers of this class.
+  *   * 'statement_index' is a nice shortcut to the backend homepage. This allows
+  *     to create simpler links in the templates. Moreover, in the future we
+  *     could move this annotation to any other controller while maintaining
+  *     the route name and therefore, without breaking any existing link.
+  *
+  * @Route("/statement_deleteall", name="statement_deleteall")
+  * @Method("GET")
+  */
+
+  public function judgementDay666()
+  {
+    $em = $this->getDoctrine()->getManager();
+    $statements = $em->getRepository('AppBundle:Statement')->findAll();
+    foreach ($statements as $statement) {
+      $em->remove($statement);
+    }
+    $em->flush();
+    return $this->redirectToRoute('statement');
+  }
 }
 
 ?>

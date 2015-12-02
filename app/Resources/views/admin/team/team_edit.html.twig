@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+<h1 class="page-header">Editing team {{ team.teamName }}</h1>
+{{ form_start(teamForm) }}
+{{ form_widget(teamForm) }}
+{{ form_end(teamForm) }}
+<h4>Team Members</h4>
+
+<div class="row">
+    <div class=" col-sm-4">
+        <ul class="list-group">
+            {% for member in team.members %}
+            <li class="list-group-item open">
+                {{ member.user.username }}
+                <span class="show-menu">
+                    <a href="{{ path('removemember', { id: member.id }) }}"><span class="glyphicon glyphicon glyphicon-remove pull-right"></span></a>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{{ form_start(memberForm) }}
+{{ form_widget(memberForm) }}
+{{ form_end(memberForm) }}
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+
+
+
+
+
+
+

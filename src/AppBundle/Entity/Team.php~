@@ -25,6 +25,12 @@ class Team
     protected $id;
 
     /**
+     * @ORM\Column(type="string", length=6)
+     * @var string 
+     */
+    protected $inviteToken;
+    
+    /**
      * name of the team
      * @var string
      * @ORM\Column(type="string", length=255)

@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
 <h1 class="page-header">Team Administration</h1>
   <a class="btn btn-info" href="{{ path("team_new") }}">New Team</a>
 {% if teams is not empty %}
@@ -12,7 +18,7 @@
           <th>Country</th>
           <th>Project</th>
           <th>Users</th>
-          <th colspan="2"><th>
+          <th colspan="2">Actions<th>
         </tr>
       </thead>
       <tbody>
@@ -29,8 +35,8 @@
             {% endif %}
        </td>
        <td>
-            {% for member in team.members if team.members is not empty %}
-            {{member.user.username}},
+            {% for member in team.members%}
+            {{member.user.username}}{% if not loop.last %}, {% endif %}
             {% endfor %}
             {% if team.members is empty %}
             N/A
@@ -40,7 +46,28 @@
        <td><a href="{{ path('team_edit', { id: team.getId }) }}" >
               <span class="glyphicon glyphicon-pencil"></span>
             </a></td>
+            <td><a data-toggle="modal" data-target="#{{ team.id }}"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
        </tr>
+       <div class="modal fade" id="{{ team.id }}" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Deleting team {{ team.teamName }}</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure?</p>
+              </div>
+              <div class="modal-footer">
+              <a class="btn btn-danger" href="{{ path('removeteam', { id: team.id }) }}">Remove {{ team.teamName }}</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
        {% endfor %}
      </tbody>
    </table>

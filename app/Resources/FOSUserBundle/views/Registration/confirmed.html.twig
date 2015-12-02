@@ -6,7 +6,5 @@
 {% block body %}
 <h1 class="page-header">Welcome</h1>
     <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {#}{% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-  {% endif %}#}
+    
 {% endblock body %}

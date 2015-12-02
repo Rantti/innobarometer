@@ -20,7 +20,7 @@
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <li><p class="navbar-text"> Logged in as {{ app.user.username }}
         </li>
-        <li><a href="/logout">LOG OUT</a></li>
+        <li><a href={{ path('fos_user_security_logout') }}>LOG OUT</a></li>
         {% else %}
         <li><a href="{{ path('fos_user_security_login') }}">Sign Up / Login</a> </li>
         {% endif %}
@@ -40,7 +40,7 @@
     <ul class="nav nav-sidebar">
 
       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-      <li><a class="{% if app.request.attributes.get('_route') == 'profile'%}active{% endif %}" href="">Profile</a></li>
+      <li><a class="{% if app.request.attributes.get('_route') == 'profile'%}active{% endif %}" href="{{ path('profile') }}">Profile</a></li>
       <li><a  href="{{ path('answer') }}">My Questionnaires</a> </li>
       <li><a href="{{ path('graphs') }}">Graphs</a> </li>
     </ul>

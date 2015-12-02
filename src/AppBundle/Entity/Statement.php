@@ -17,6 +17,20 @@ class Statement
   */
   protected $id;
 
+  //TARVITAAN
+  //
+  //oma id (decima/string)
+  //
+  //class (sc_engineering_wtf eli category oikeastaan)
+  //
+  //indicator (en tiedä en muista :-D)
+  
+  /**
+  * @ORM\Column(type="string", length=255)
+  */
+  protected $external_id;
+  
+
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Questionnaire", inversedBy="statements")
@@ -175,5 +189,29 @@ class Statement
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Set externalId
+     *
+     * @param string $externalId
+     *
+     * @return Statement
+     */
+    public function setExternalId($externalId)
+    {
+        $this->external_id = $externalId;
+
+        return $this;
+    }
+
+    /**
+     * Get externalId
+     *
+     * @return string
+     */
+    public function getExternalId()
+    {
+        return $this->external_id;
     }
 }
