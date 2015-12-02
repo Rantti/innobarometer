@@ -10,6 +10,9 @@ use AppBundle\Form\AnswerType;
 use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Statement;
 use AppBundle\Entity\Answer;
+use AppBundle\Entity\Team;
+use AppBundle\Entity\User;
+use AppBundle\Entity\TeamMember;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use AppBundle\Controller\QuestionnaireController;
 
@@ -23,7 +26,7 @@ class AnswerController extends Controller
 {
     /**
      * @Route("/", name="answer")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
@@ -33,21 +36,54 @@ class AnswerController extends Controller
          * then list them
          */
         $em = $this->getDoctrine()->getManager();
+
+        $inviteForm = $this->createFormBuilder()
+          ->add('id', 'text', array('label' => 'Team id'))
+          ->add('save', 'submit', array('label' => 'Submit'))
+          ->getForm();
+          $inviteForm->handleRequest($request);
+          if ($inviteForm->isSubmitted() && $inviteForm->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          $team = $em->getRepository('AppBundle:Team')->find($inviteForm["id"]->getData());
+          if (!$team) {
+            $this->get('session')->getFlashBag()->add(
+            'danger',
+            'No team found!'
+        );
+          return $this->redirectToRoute('answer');
+          }
+          $membership = new TeamMember();
+          $membership->setUser($this->getUser());
+          $membership->setTeam($team);
+          $membership->setRole("user");
+          $em->persist($membership);
+          $this->getUser()->addTeam($membership);
+          $team->addMember($membership);
+          $em->flush();
+          $this->get('session')->getFlashBag()->add(
+            'notice',
+            'Joined new team succesfully!'
+        );
+    }
+
         $userTeams = $this->getUser()->getTeams();
         $questionnaires = Array();
         foreach ($userTeams as $membership) {
           foreach ($membership->getTeam()->getProjects() as $project){
             if ($project->getQuestionnaire() != null )
-            foreach ($project->getQuestionnaire() as $q){
-            if (!in_array($q, $questionnaires)) {
-            $questionnaires[] = $q;
-            }
+              foreach ($project->getQuestionnaire() as $q){
+                if (!in_array($q, $questionnaires)) {
+                  $questionnaires[] = $q;
+                }
 
+              }
             }
           }
+          
+    
+
+          return $this->render('Questionnaire/Answer/answer.html.twig', array('questionnaires' => $questionnaires, 'inviteForm' => $inviteForm->createView()));
         }
-        return $this->render('Questionnaire/Answer/answer.html.twig', array('questionnaires' => $questionnaires));
-    }
 
     /**
      * Finds and displays Answer entity.
@@ -56,10 +92,10 @@ class AnswerController extends Controller
      * @Method("GET")
      */
     public function showAction(){
-        $em = $this->getDoctrine()->getManager();
-        $answers = $em->getRepository('AppBundle:Answer')->findAll();
-        return $this->render('Questionnaire/Answer/show.html.twig', array(
-          'answers' => $answers,
+      $em = $this->getDoctrine()->getManager();
+      $answers = $em->getRepository('AppBundle:Answer')->findAll();
+      return $this->render('Questionnaire/Answer/show.html.twig', array(
+        'answers' => $answers,
         ));
     }
 
@@ -69,11 +105,11 @@ class AnswerController extends Controller
      */
     public function answerAction(Request $request)
     {
-        $id = $this->getRequest()->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
-        $statements = $questionnaire->getStatements();
-        return $this->render('Questionnaire/Answer/form.html.twig', array('statements' => $statements, 'id' => $id));
+      $id = $this->getRequest()->get('id');
+      $em = $this->getDoctrine()->getManager();
+      $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
+      $statements = $questionnaire->getStatements();
+      return $this->render('Questionnaire/Answer/form.html.twig', array('statements' => $statements, 'id' => $id));
     }
     /**
      * @Route("/post", name="postnew")
@@ -81,23 +117,23 @@ class AnswerController extends Controller
      */
     public function postAnswerAction(Request $request)
     {
-        $qid = $this->get('request')->request->get('questionnaireid');
+      $qid = $this->get('request')->request->get('questionnaireid');
 
             //$qid = $post->request->get('questionnaireid');
-        $em = $this->getDoctrine()->getManager();
-        $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
-        $statements = $questionnaire->getStatements();
-        foreach ($statements as $statement) {
-            $answer = new Answer();
-            $answer->setStatement($statement);
+      $em = $this->getDoctrine()->getManager();
+      $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
+      $statements = $questionnaire->getStatements();
+      foreach ($statements as $statement) {
+        $answer = new Answer();
+        $answer->setStatement($statement);
                 // $value = $post->request->get($statement->getId());
-            $value = $this->get('request')->request->get($statement->getId());
-            $answer->setValue($value);
-            $answer->setQuestionnaire($questionnaire);
-            $em->persist($answer);
-            $em->flush();
-        }
-        return $this->redirectToRoute('answer');
+        $value = $this->get('request')->request->get($statement->getId());
+        $answer->setValue($value);
+        $answer->setQuestionnaire($questionnaire);
+        $em->persist($answer);
+        $em->flush();
+      }
+      return $this->redirectToRoute('answer');
 
 
     }
@@ -134,7 +170,7 @@ class AnswerController extends Controller
 
           if (!$dbQuestionnaire) {
             throw $this-createNotFoundException(
-            'No $dbQuestionnaire found for id '.$id);
+              'No $dbQuestionnaire found for id '.$id);
           }
           $dbQuestionnaire->addAnswer($answer);
 
@@ -146,7 +182,7 @@ class AnswerController extends Controller
 
             if (!$dbStatement) {
               throw $this-createNotFoundException(
-              'No dbStatement found for id '.$id);
+                'No dbStatement found for id '.$id);
             }
             $dbStatement->addAnswer($answer);
 
@@ -161,7 +197,7 @@ class AnswerController extends Controller
         return $this->render('Questionnaire/Answer/new.html.twig', array(
           'answer' => $answer,
           'form' => $form->createView(),
-        ));
+          ));
       }
 
 
@@ -197,7 +233,7 @@ class AnswerController extends Controller
         'answer'    => $answer,
         'edit_form'    => $editForm->createView(),
         'delete_form'  => $deleteForm->createView(),
-      ));
+        ));
     }
 
   /**
@@ -205,32 +241,32 @@ class AnswerController extends Controller
    * @Route("/{id}", name="answer_post_delete")
    * @Method("DELETE")
    */
-    public function deleteAction(Request $request, Answer $answer)
-    {
-      $form = $this->createDeleteForm($answer);
-      $form->handleRequest($request);
+  public function deleteAction(Request $request, Answer $answer)
+  {
+    $form = $this->createDeleteForm($answer);
+    $form->handleRequest($request);
 
-      if ($form->isSubmitted() && $form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
+    if ($form->isSubmitted() && $form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
 
-        $em->remove($answer);
-        $em->flush();
-      }
-      return $this->redirectToRoute('answer');
+      $em->remove($answer);
+      $em->flush();
     }
+    return $this->redirectToRoute('answer');
+  }
 
   /**
    * Creates a form to delete Answer entity by id.
    * @param  Answer $answer The answer object
    * @return \Symfony\Component\Form the form
    */
-    private function createDeleteForm(Answer $answer)
-    {
-      return $this->createFormBuilder()
-        ->setAction($this->generateUrl('answer_post_delete', array('id' => $answer->getId())))
-        ->setMethod('DELETE')
-        ->getForm();
-    }
+  private function createDeleteForm(Answer $answer)
+  {
+    return $this->createFormBuilder()
+    ->setAction($this->generateUrl('answer_post_delete', array('id' => $answer->getId())))
+    ->setMethod('DELETE')
+    ->getForm();
+  }
 
 }
 
