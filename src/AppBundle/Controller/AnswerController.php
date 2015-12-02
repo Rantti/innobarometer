@@ -116,7 +116,7 @@ class AnswerController extends Controller
       * to constraint the HTTP methods each controller responds to (by default
       * it responds to all methods).
       */
-      public function newAction($id, Request $request)
+      public function newAction(Questionnaire $questionnaire, Statement $statement, Request $request)
       {
         $em = $this->getDoctrine()->getManager();
         // $repository = $this->getDoctrine()->getRepository('AppBundle:Statement');
@@ -136,16 +136,18 @@ class AnswerController extends Controller
         // ));
 
 
-        $repo_statement = $this->getDoctrine()->getRepository('AppBundle:Statement');
-        $repo_questionnaire = $this->getDoctrine()->getRepository('AppBundle:Questionnaire');
-        $questionnaire = $repo_questionnaire->findOneById($id);
+        // $repo_statement = $this->getDoctrine()->getRepository('AppBundle:Statement');
+        // $repo_questionnaire = $this->getDoctrine()->getRepository('AppBundle:Questionnaire');
+        // $questionnaire = $repo_questionnaire->findOneById($id);
+        //
+        // if (is_null($questionnaire)) {
+        //     throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+        // }
+        //
+        // // $statement = $repo_statement->findOneBy(
+        // //     array('questionnaire'=>$questionnaire,'statement'=>$this->getStatement())
+        // // );
 
-        if (is_null($questionnaire)) {
-            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
-        }
-        $statement = $repo_statement->findOneBy(
-            array('questionnaire'=>$questionnaire,'statement'=>$this->getStatement())
-        );
 
         foreach($questionnaire->getstatements() as $key => $statement){
 
