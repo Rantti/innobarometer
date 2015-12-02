@@ -28,8 +28,20 @@ The project uses Friends of Symphony UserBundle to work with the users.
 + `$php app/console doctrine:schema:update --force`  
 
 
+##How to use CSVtoSQL.py
 
+This program is designed to take a CSV file and turn it into SQL insert clauses which are run to add statements into your database.
 
+- The table it currently uses (hard coded) Statement
+- the CSV has to be in following format: 
+  Seperated by Semicolon ;
+  First row: header. 
+  First column: External id, Third column: Statement, Sixth column: Category. Other columns not used at this time.
+
+- The program will create CSVtoSQL.ini the first time you run it. It will contain: Host name, user, password, database name and file name. ** Make sure you add this file to your gitignore. **
+- You need Python 2.7 to run this program. Instal python & add python to your system variable. You may also need to import some libraries. 
+
+- Ask Jyri if you have any questions regarding this.
 
 
 For updates and more explained, check  out the [blog](https://slothfuldesigns.wordpress.com).
