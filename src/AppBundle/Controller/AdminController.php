@@ -58,6 +58,7 @@ class AdminController extends Controller
      *
      */
     public function teamRemoveAction(Request $request){
+      $em = $this->getDoctrine()->getManager();
       $id = $this->getRequest()->get('id');
       $team = $this->getDoctrine()->getRepository('AppBundle:Team')->find($id);
       $members = $team->getMembers();
@@ -67,7 +68,7 @@ class AdminController extends Controller
 
       }
       $em->remove($team);
-      $em->flush;
+      $em->flush();
       $this->get('session')->getFlashBag()->add(
             'notice',
             'Team was removed succesfully!'
