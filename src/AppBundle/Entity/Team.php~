@@ -190,4 +190,28 @@ class Team
     {
         return $this->projects;
     }
+
+    /**
+     * Set inviteToken
+     *
+     * @param string $inviteToken
+     *
+     * @return Team
+     */
+    public function setInviteToken($inviteToken)
+    {
+        $this->inviteToken = $inviteToken;
+
+        return $this;
+    }
+
+    /**
+     * Get inviteToken
+     *
+     * @return string
+     */
+    public function getInviteToken()
+    {
+        return $this->inviteToken;
+    }
 }
