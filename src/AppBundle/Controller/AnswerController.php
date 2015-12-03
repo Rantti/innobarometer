@@ -40,19 +40,19 @@ class AnswerController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $inviteForm = $this->createFormBuilder()
-          ->add('id', 'text', array('label' => 'Team id'))
-          ->add('save', 'submit', array('label' => 'Submit'))
-          ->getForm();
-          $inviteForm->handleRequest($request);
-          if ($inviteForm->isSubmitted() && $inviteForm->isValid()) {
+        ->add('id', 'text', array('label' => 'Team id'))
+        ->add('save', 'submit', array('label' => 'Submit'))
+        ->getForm();
+        $inviteForm->handleRequest($request);
+        if ($inviteForm->isSubmitted() && $inviteForm->isValid()) {
           $em = $this->getDoctrine()->getManager();
           $team = $em->getRepository('AppBundle:Team')->find($inviteForm["id"]->getData());
           if (!$team) {
             $this->get('session')->getFlashBag()->add(
-            'danger',
-            'No team found!'
-        );
-          return $this->redirectToRoute('answer');
+              'danger',
+              'No team found!'
+              );
+            return $this->redirectToRoute('answer');
           }
           $membership = new TeamMember();
           $membership->setUser($this->getUser());
@@ -65,8 +65,8 @@ class AnswerController extends Controller
           $this->get('session')->getFlashBag()->add(
             'notice',
             'Joined new team succesfully!'
-        );
-    }
+            );
+        }
 
         $userTeams = $this->getUser()->getTeams();
         $questionnaires = Array();
@@ -82,7 +82,7 @@ class AnswerController extends Controller
             }
           }
           
-    
+
 
           return $this->render('Questionnaire/Answer/answer.html.twig', array('questionnaires' => $questionnaires, 'inviteForm' => $inviteForm->createView()));
         }
@@ -123,13 +123,13 @@ class AnswerController extends Controller
 
 
 
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new AnswerType($em), $answer);
-        $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
-        $statements = $questionnaire->getStatements();
-        foreach ($statements as $statement) {
-            $answer = new Answer();
-            $answer->setStatement($statement);
+      $em = $this->getDoctrine()->getManager();
+      
+      $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
+      $statements = $questionnaire->getStatements();
+      foreach ($statements as $statement) {
+        $answer = new Answer();
+        $answer->setStatement($statement);
                 // $value = $post->request->get($statement->getId());
         $value = $this->get('request')->request->get($statement->getId());
         $answer->setValue($value);
@@ -188,8 +188,8 @@ class AnswerController extends Controller
 
         foreach($questionnaire->getstatements() as $key => $statement){
 
-            $answer[$key] = new Answer($statement);
-            $form[$key] = $this->createForm(new AnswerType(), $answer[$key])->createView();
+          $answer[$key] = new Answer($statement);
+          $form[$key] = $this->createForm(new AnswerType(), $answer[$key])->createView();
         }
 
         $request = $this->getRequest();
@@ -208,7 +208,7 @@ class AnswerController extends Controller
               $dbQuestionnaire = $em->getRepository('AppBundle:Questionnaire')->find($id);
               if (!$dbQuestionnaire) {
                 throw $this-createNotFoundException(
-                'No $dbQuestionnaire found for id '.$id);
+                  'No $dbQuestionnaire found for id '.$id);
               }
               $dbQuestionnaire->addAnswer($answer);
             }
@@ -222,7 +222,7 @@ class AnswerController extends Controller
 
               if (!$dbStatement) {
                 throw $this-createNotFoundException(
-                'No dbStatement found for id '.$id);
+                  'No dbStatement found for id '.$id);
               }
               $dbStatement->addAnswer($answer);
             }
