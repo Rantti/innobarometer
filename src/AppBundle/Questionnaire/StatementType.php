@@ -33,7 +33,7 @@ class StatementType extends AbstractType
       'required' => true,
       'label' => 'Category'))
     ->add('external_id', 'text', array(
-      'label' => 'external id'));
+      'label' => 'External id'));
   }
 
   /**

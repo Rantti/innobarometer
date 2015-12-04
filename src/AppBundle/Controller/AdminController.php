@@ -132,14 +132,14 @@ class AdminController extends Controller
   */
     public function editAction(Team $team, Request $request)
     {
-      
+
       $em = $this->getDoctrine()->getManager();
 
       $teamForm = $this->get("form.factory")->createNamedBuilder("teamForm", "form", $team)
-      ->add('teamName', 'text', array('label' => 'label.teamName'))
-      ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'), 
+      ->add('teamName', 'text', array('label' => 'Team Name'))
+      ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'),
         'required' => true,))
-      ->add('save', 'submit', array('label' => 'Save Changes'))
+      // ->add('save', 'submit', array('label' => 'Save Changes'))
       ->getForm();
 
 
@@ -156,11 +156,12 @@ class AdminController extends Controller
       'property' => 'username',
       'choices' => $choiceArray,
       ))
-    ->add('save', 'submit', array('label' => 'Add Member'))
+    ->add('save', 'submit', array('label' => 'Add Member',
+      'attr' => array('class' => 'btn btn-primary')))
     ->getForm();
 
     if('POST' === $request->getMethod()) {
- 
+
         if ($request->request->has('memberForm')) {
         $memberForm->handleRequest($request);
         $newMember = new TeamMember();
@@ -177,9 +178,9 @@ class AdminController extends Controller
             'New member was added succesfully!'
         );
         }
- 
+
         if ($request->request->has('teamForm')) {
-        $teamForm->handleRequest($request);  
+        $teamForm->handleRequest($request);
         $em->flush();
         $this->get('session')->getFlashBag()->add(
             'notice',
@@ -193,7 +194,7 @@ class AdminController extends Controller
         'teamForm'    => $teamForm->createView(),
         'memberForm' => $memberForm->createView()
         ));
-    
+
 
     }
 

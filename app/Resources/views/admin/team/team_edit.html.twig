@@ -10,6 +10,11 @@
 <h1 class="page-header">Editing team {{ team.teamName }}</h1>
 {{ form_start(teamForm) }}
 {{ form_widget(teamForm) }}
+  <input type="submit" value="{{ button_label|default('Save Team changes'|trans) }}"
+       class="{{ button_css|default("btn btn-primary") }}" />
+    <a href="{{ path('teams') }}" class="btn btn-default">
+        {{ 'Back to Team listing'|trans }}
+    </a>
 {{ form_end(teamForm) }}
 <h4>Team Members</h4>
 
@@ -40,10 +45,3 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 {% endblock %}
-
-
-
-
-
-
-

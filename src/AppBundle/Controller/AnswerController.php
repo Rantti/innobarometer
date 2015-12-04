@@ -87,7 +87,6 @@ class AnswerController extends Controller
 
             //$qid = $post->request->get('questionnaireid');
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new AnswerType($em), $answer);
         $questionnaire = $em->getRepository('AppBundle:Questionnaire')->find($qid);
         $statements = $questionnaire->getStatements();
         foreach ($statements as $statement) {
@@ -150,8 +149,10 @@ class AnswerController extends Controller
 
 
         foreach($questionnaire->getstatements() as $key => $statement){
-
-            $answer[$key] = new Answer($statement);
+            $repo_statement = $this->getDoctrine()->getRepository('AppBundle:Statement');
+            $statement = $repo_statement->findOneBy(
+                 array('questionnaire'=>$questionnaire,'statement'=>$this->getStatement()));
+            $answer[$key] = new Answer($key);
             $form[$key] = $this->createForm(new AnswerType(), $answer[$key])->createView();
         }
 

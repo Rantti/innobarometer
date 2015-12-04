@@ -14,7 +14,7 @@
            class="{{ button_css|default("btn btn-primary") }}" />
 
     {% if include_back_to_home_link is not defined or include_back_to_home_link == true %}
-        <a href="{{ path('projects') }}" class="btn btn-link">
+        <a href="{{ path('projects') }}" class="btn btn-default">
             {{ 'Back to Project listing'|trans }}
         </a>
     {% endif %}

@@ -12,7 +12,7 @@
       <tr>
         <th>Statement</th>
         <th>Category</th>
-        <th>Actions</th>
+        <th colspan="2">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -22,14 +22,14 @@
         <td>{{ statement.category }}</td>
 
         <td>
-          <div class="item-actions">
-            <a href="{{ path('statement_post_show', { id: statement.getId }) }}" class="btn btn-sm btn-default">
-              {{ 'Show statement details'|trans }}
-            </a>
-            <a href="{{ path('statement_post_edit', { id: statement.getId }) }}" class="btn btn-sm btn-primary">
-              <i class="fa fa-edit"></i> {{ 'Edit statement'|trans }}
-            </a>
-          </div>
+          <a href="{{ path('statement_post_show', { id: statement.getId }) }}">
+            <span class="glyphicon glyphicon-eye-open"></span>
+          </a>
+        </td>
+        <td>
+          <a href="{{ path('statement_post_edit', { id: statement.getId }) }}">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
         </td>
       </tr>
       {% endfor %}
@@ -37,7 +37,7 @@
   </table>
 </div>
 {% else %}
-<p>No statements defined yet.</p>
+<p>No Statements defined yet.</p>
 {% endif %}
 {% if is_granted("ROLE_ADMIN") and statements|length != 0 %}
 <a data-toggle="modal" data-target="#deleteCheckModal" class="btn btn-danger" />Delete All Statements</a>
@@ -52,7 +52,7 @@
                 <h4 class="modal-title">Deleting all statements.</h4>
               </div>
               <div class="modal-body">
-                <p>You're about to delete all statements. Are you sure?</p>
+                <p>You're about to delete all Statements. Are you sure?</p>
               </div>
               <div class="modal-footer">
               <a class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#deleteAllModal">Remove all Statements.</a>
@@ -69,10 +69,10 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Deleting all statements.</h4>
+                <h4 class="modal-title">Deleting all Statements.</h4>
               </div>
               <div class="modal-body">
-                <p>Oh wow, you almost removed all of the statements. This cannot be undone. Are you sure about that?</p>
+                <p>Oh wow, you almost removed all of the Statements. This cannot be undone. Are you sure about that?</p>
               </div>
               <div class="modal-footer">
               <a class="btn btn-danger" href="{{ path('statement_deleteall') }}">I'm determined. Remove all Statements.</a>
@@ -87,8 +87,8 @@
 
 {% block sidebar %}
 <div class="section actions">
-  <a href="{{ path('statement_post_new') }}" class="btn btn-lg btn-block btn-success">
-    <i class="fa fa-plus"></i> {{ 'action.create_statement'|trans }}
+  <a href="{{ path('statement_post_new') }}" class="btn btn-lg btn-block btn-info">
+    {{ 'Create Statement'|trans }}
   </a>
 </div>
 

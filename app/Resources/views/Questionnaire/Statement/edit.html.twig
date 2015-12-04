@@ -3,23 +3,48 @@
 {% block body %}
 
 {% block main %}
-    <h1>{{ 'statement.edit_statement'|trans({'%id%': statement.getId}) }}</h1>
+    <h1>{{ 'Edit statement'|trans({'%id%': statement.getId}) }}</h1>
 
     {{ include('Questionnaire/Statement/_form.html.twig', {
         form: edit_form,
-        button_label: 'action.save'|trans,
+        button_label: 'Save this Statement'|trans,
     }, with_context = false) }}
 {% endblock %}
 
 {% block sidebar %}
-    <div class="section actions">
-        {{ include('Questionnaire/Statement/_form.html.twig', {
-            form: delete_form,
-            button_label: 'action.delete_statement'|trans,
-            button_css: 'btn btn-lg btn-block btn-danger',
-            include_back_to_home_link: false
-        }, with_context = false) }}
-    </div>
+<br>
+<div class="section">
+  <a style="text-decoration: none" data-toggle="modal" data-target="#{{ statement.id }}">
+    <button class="btn btn-lg btn-block btn-danger">Delete Statement</button>
+</div>
+
+
+<div class="modal fade" id="{{ statement.id }}" role="dialog">
+   <div class="modal-dialog">
+
+     <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <h4 class="modal-title">Deleting Statement {{ statement.statement }}</h4>
+       </div>
+       <div class="modal-body">
+         <p>Are you sure?</p>
+       </div>
+       <div class="modal-footer">
+         <a class="btn btn-link">
+         {{ include('Questionnaire/Statement/_form.html.twig', {
+             form: delete_form,
+             button_label: "Delete Statement",
+             button_css: 'btn btn-danger',
+             include_back_to_home_link: false
+         }, with_context = true) }}</a>
+         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+       </div>
+     </div>
+
+   </div>
+ </div>
 
     {{ parent() }}
 

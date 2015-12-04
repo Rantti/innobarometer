@@ -44,7 +44,7 @@ class TeamType extends AbstractType
 
 
         $builder
-        ->add('teamName', 'text', array('label' => 'Team Name'))
+        ->add('teamName', 'text', array('label' => 'Team name'))
         ->add('country', 'choice', array('choices' => array('FIN' => 'Finland', 'EST' => 'Estonia', 'NOR' => 'Norway', 'RU' => 'Russia', 'SWE' => 'Sweden'),
             'required' => true,))
 

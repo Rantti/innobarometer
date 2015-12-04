@@ -24,7 +24,7 @@ protected $id;
 protected $questionnaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Statement", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Statement", inversedBy="answers", cascade={"persist"})
      * @ORM\JoinColumn(name="statement_id", referencedColumnName="id", nullable=FALSE)
      **/
 protected $statement;

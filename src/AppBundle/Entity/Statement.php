@@ -24,12 +24,12 @@ class Statement
   //class (sc_engineering_wtf eli category oikeastaan)
   //
   //indicator (en tiedä en muista :-D)
-  
+
   /**
   * @ORM\Column(type="string", length=255)
   */
   protected $external_id;
-  
+
 
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
@@ -39,7 +39,7 @@ class Statement
   protected $questionnaire;
 
   /**
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="statement")
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Answer", mappedBy="statement", cascade={"persist", "remove"})
    */
   protected $answers;
 

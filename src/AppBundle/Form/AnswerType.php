@@ -28,8 +28,12 @@ class AnswerType extends AbstractType
     //   'class' => 'AppBundle:Questionnaire',
     //   'property' => 'id'))
     ->add('statement', 'entity', array(
+      'required' => false,
       'class' => 'AppBundle:Statement',
-      'property' => 'statement'))
+      'property'      => 'statement',
+      'property_path' => '[id]', # in square brackets!
+      'multiple'      => true,
+      'expanded'      => true))
     ->add('value', 'choice', array(
       'choice_list' => new ChoiceList(
         array(1, 2, 3, 4),
@@ -47,7 +51,7 @@ class AnswerType extends AbstractType
  */
   public function configureOptions(OptionsResolver $resolver)
   {
-    $resolver->setDefaults(array('data_class' => 'AppBundle\Entity\Answer'));
+    $resolver->setDefaults(array('data_class' => null,'csrf_protection' => false));
   }
  /**
   * @return string

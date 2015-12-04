@@ -6,8 +6,8 @@
     {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
 #}
 
-{% for sform in form %}
-    {{ form_widget(sform) }}
+{% for entity in foo_entity_collection %}
+    {{ form_widget(form.statement_id[statement.id]) }}
 {% endfor %}
 
 <input type="submit" value="{{ button_label|default("Give Answers") }}"
