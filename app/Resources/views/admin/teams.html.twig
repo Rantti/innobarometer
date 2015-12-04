@@ -18,6 +18,7 @@
           <th>Country</th>
           <th>Project</th>
           <th>Users</th>
+          <th>Invite ID</th>
           <th colspan="2">Actions<th>
         </tr>
       </thead>
@@ -43,6 +44,9 @@
             {% endif %}
 
        </td>
+       <td>
+        {{ team.Id }}
+      </td>
        <td><a href="{{ path('team_edit', { id: team.getId }) }}" >
               <span class="glyphicon glyphicon-pencil"></span>
             </a></td>
