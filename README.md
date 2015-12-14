@@ -5,22 +5,54 @@ A Symfony project created on September 16, 2015, 3:27 pm.
 
 The project uses Friends of Symphony UserBundle to work with the users.
 
-#Installation
----
-1. Clone project
-2. Go to the directory. On commandline:
-  + `$composer install`
+## Requirements and Installation
 
-3. Open innobarometer/app/config/parameter.yml and setup correct settings for your database.
+Mobilebarometer uses Symfony 2-framework. This requires MySql and PHP. The project also uses composer to install some project dependencies like bootstrap.  
+Symfony installation: http://symfony.com/doc/current/book/installation.html  
+Composer installation https://getcomposer.org/doc/00-intro.md  
+After the installation clone the repository from git
+- `$git git@github.com:Rantti/innobarometer.git`
+- `$cd innobarometer`
+- `$composer install`
+- go to app/config/ and copy the contents of the parameters.yml.dist into a new file in the same directory named parameters.yml.
+- Inside this file define the basic parameters used by the Symfony project. Only the database-parameters matter in this project.
+- Go back to the direcotory root and run.
+- `php app/console doctrine:generate:entities AppBundle`
+- `php app/console doctrine:schema:update --force`
+- Start up the web-server by running `$php app/console server:run`
+- Open up your browser and go to `localhost:8000` to get access to your new mobilebarometer-project.
 
-4. Set up project entities.
-  + $`php app/console doctrine:generate:entities AppBundle`
+#### User promotion
+After creating yourself a new user, go to commandline and type (replace 'username' with your username)  
+`$php app/console fos:user:promote username ROLE_ADMIN`  
+to promote yourself to admin-priviledges. You should be now able to access all different entity-controls, including initiating questionnaires.
 
-5. Create database and schema for project.
-  + `php app/console doctrine:schema:update --force`
+### Web Server Configuration
+To use this project on an Apache WebServer, you have to create a configuration which directs to your mobilebarometer location.
 
-6. Start up web-server.
-  + `$php app/console server:run`
+- `$cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/mobilebarometer.conf`
+- `$sudoedit /etc/apache2/sites-available/mobilebarometer.conf`  
+- Paste the following inside the file and replace the [path/to/your/mobilebarometer/folder/web] with your own path.
+```
+<Directory />
+        Allow from All
+</Directory>
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName serverName.local
+        ServerAlias serverAlias.local
+        DocumentRoot path/to/your/mobilebarometer/folder/web
+
+        <Directory path/to/your/mobilebarometer/folder/web>
+                AllowOverride All
+                Order allow,deny
+                allow from all
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+- After saving the file run `$sudo a2ensite mobilebarometer` and navigate to localhost to find your own mobilebarometer project.
 
 ###Some useful commands for cmd
 + `$php app/console fos:user:promote username ROLE_ADMIN`  
@@ -50,19 +82,6 @@ For updates and more explained, check  out the [blog](https://slothfuldesigns.wo
 [Antti Eloranta](https://anttieloranta.wordpress.com)
 
 [Turo Mikkonen](https://turomikkonen.wordpress.com)
-
-#TODO
-
-+ päivitä entityt
-+ korjaa kontrolleriin tiimin luonti (lisää jäsenet ja tiimit teammember-tauluun)
-+ tee uusi projektikontrolleri
-+ muuta answer+entity niin että siihen tallennetaan ihan kaikki
-+ uuden questionnairen yhteydessä kehitetään vastaukset jotka on tyhjiä -> täytetään kun käyttäjä täyttää, muutoin näytetään sivuilla questionnaire saatavilla olevana
-
-+ tiimi projektiin kiinni
-+ projekti kyselyyn kiinni
-+ miten käyttäjän vastauksen tilaa tarkkaillaan
-+ käyttäjän, tiimin ja projektin muokattavuus / poistaminen
 
 
 
