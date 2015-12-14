@@ -3,13 +3,24 @@
     <script src="{{ asset('assets/js/Chart.min.js') }}"></script>
 <h4>{{answers|length/5}} persons have answered this questionnaire.</h4>
 <div style="width: 50%">
-            <canvas id="canvas" height="450" width="600"></canvas>
+            <canvas id="canvas" height="600" width="800"></canvas>
 </div>
   <script>
+    Chart.types.Bar.extend({  // hide X-axis labels from graph
+      name: "BarAlt",
+      initialize: function(data){
+          Chart.types.Bar.prototype.initialize.apply(this, arguments);
+          var xLabels = this.scale.xLabels;
+          for (var i = 0; i < xLabels.length; i++)
+              xLabels[i] = '';
+      }
+    });
     var barChartData = {
+
         labels : [{% for label in labels %}"{{label}}",{% endfor %}],
         datasets : [
             {
+
                 fillColor : "rgba(88, 143, 185, 0.9)",
                 strokeColor : "rgba(220,220,220,0.8)",
                 highlightFill: "rgba(220,220,220,0.75)",
@@ -20,8 +31,8 @@
     }
     window.onload = function(){
         var ctx = document.getElementById("canvas").getContext("2d");
-        window.myBar = new Chart(ctx).Bar(barChartData, {
-            responsive : true
+        window.myBar = new Chart(ctx).BarAlt(barChartData, {
+          responsive : true
         });
     }
     </script>
