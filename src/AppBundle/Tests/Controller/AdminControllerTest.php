@@ -39,66 +39,53 @@ class AdminControllerTest extends WebTestCase
         $crawler = $client->click($link);
 
         //Test that the page contains text Statement overview
-        $this->assertContains('Statement overview', $crawler->filter('h2')->text());
+        $this->assertContains('Statement overview', $crawler->filter('h1')->text());
 
         //click the link and go to Create Statement
-        $link = $crawler->filter('a:contains("Create statements")')->eq(0)->link();
+        $link = $crawler->filter('a:contains("New Statement")')->eq(0)->link();
         $crawler = $client->click($link);
 
         //Test that the page contains text New Statement
-        $this->assertContains('statement.statement_new', $crawler->filter('h1')->text());
+        $this->assertContains('New Statement', $crawler->filter('h1')->text());
 
         // Save statement
         $form = $crawler->filter('form')->form();
-        $crawler = $client->submit($form, array('app_statement[statement]' => 'asd', 'app_statement[category]' => 'Communications'));
+        $crawler = $client->submit($form, array('app_statement[statement]' => 'asd', 'app_statement[category]' => 'Communications','app_statement[external_id]' => '123123'));
 
         //Test that the page contains text statement asd
-        $this->assertContains('asd', $crawler->filter('html')->text());
+        $this->assertContains ('asd', $crawler->filter('html')->text());
 
-            // edit Statement should go here
-
-            // $message = $crawler->filterXPath('td')->text();
-            // $message = $crawler->extract(array('_text', 'td'));
-
-            //var_dump($message);
-
-            // $link = $crawler->filter('a:contains("Create statements")')->eq(0)->link();
-            // $crawler = $client->click($link);
-
-            // var_dump($client->getResponse()->getContent());
-            // submit the form, need to put a couple assertation here
+        // edit Statement should go here
 
 
-
-       //  Go to Questionnaires, SECOND LINK with the title Questionnaires.
+        //  Go to Questionnaires, SECOND LINK with the title Questionnaires.
         $link = $crawler->filter('a:contains("Questionnaires")')->eq(1)->link();
         $crawler = $client->click($link);
-        //var_dump($client->getResponse()->getContent());
 
         //Test that the page contains text Questionnaire overview
-        $this->assertContains('Questionnaire overview', $crawler->filter('h2')->text());
+        $this->assertContains('Questionnaire overview', $crawler->filter('h1')->text());
 
         //Go to Create Questionnaires
-        $link = $crawler->filter('a:contains("Create questionnaires")')->eq(0)->link();
+        $link = $crawler->filter('a:contains("New Questionnaire")')->eq(0)->link();
         $crawler = $client->click($link);
 
-        //Test that the page contains text questionnaire.questionnaire_post_new
-        $this->assertContains('questionnaire.questionnaire_post_new', $crawler->filter('h1')->text());
+        //Test that the page contains text New Questionnaire
+        $this->assertContains('New Questionnaire', $crawler->filter('h1')->text());
 
         // Save Questionnaire (has to have at least 5 statements
         $form = $crawler->filter('form')->form();
         $form['app_questionnaire[sprintRound]'] = '1';
-        $form['app_questionnaire[statements][0]'] ->tick();
-        $form['app_questionnaire[statements][1]'] ->tick();
-        $form['app_questionnaire[statements][2]'] ->tick();
-        $form['app_questionnaire[statements][3]'] ->tick();
         $form['app_questionnaire[statements][4]'] ->tick();
+        $form['app_questionnaire[statements][5]'] ->tick();
+        $form['app_questionnaire[statements][6]'] ->tick();
+        $form['app_questionnaire[statements][7]'] ->tick();
+        $form['app_questionnaire[statements][8]'] ->tick();
         $form['app_questionnaire[extraRound]'] = '1';
         $crawler = $client->submit($form);
 
 
         //Test that the page contains text
-        $this->assertContains('Questionnaire overview', $crawler->filter('h2')->text());
+        $this->assertContains('In our company we always conduct the requirements analysis from a business case study.', $crawler->filter('html')->text());
 
 
         //Log out
@@ -109,8 +96,7 @@ class AdminControllerTest extends WebTestCase
          $this->assertContains('Sign up', $crawler->filter('html')->text());
 
 
-        // dump the variables to console
-        //var_dump($client->getResponse()->getContent());
+
     }
 
 
